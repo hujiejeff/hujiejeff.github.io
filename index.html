@@ -284,6 +284,811 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/07/01/Java并发/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hujie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="树先生の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/01/Java并发/" itemprop="url">Java 并发梳理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-01T20:02:00+08:00">
+                2019-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  21
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          Java 并发线程what：cpu调度的最小单位
+创建方式：
+
+继承Thread，实现重写run方法，创建Thread对象，调用start方法。
+实现Runnable，实现run方法，创建Runnable对象，传入Thread对象，调用start方法
+后文的中Callable
+
+线程的状态：新建，可执行，执行，阻塞，死亡
+
+yield只是让出cpu的使用权，下次还有可能抢占cpu
+调用其它线程的join，当前线程会阻塞，知道那个线程执行完毕。
+线程安全问题多线程访并发访问共享资源，会导致数据安全问题。
+synchronized 加悲观锁通过synchronized添加锁，可以加载方法上和代码块上。在被锁起来的地方只会又一个线程进入，直到该代码执行完毕。该实现为jvm内置实现
+123public synchronized void test()&#123;&#125;synchronized(obj)&#123;&#125;
+
+线程8锁问题：
+synchronized锁需要看锁的对象是谁，线程需要锁对象为同一个的情况下，进入了锁区域另外的线程就必须等待。
+
+锁对象为普通对象
+所对象为cl
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/01/Java并发/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/07/01/Java反射/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hujie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="树先生の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/01/Java反射/" itemprop="url">Java 反射</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-01T19:02:00+08:00">
+                2019-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  519
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          Java 反射
+类加载器
+反射
+动态代理
+
+what：在运行时加载某个类，获得某个类的相关信息，以及进行操作。
+类加载器what:用于将节字码文件加载到JVM
+
+启动类加载器：bootstrap，c++编写，jvm自带，负责加载rt.jar（runtime），无法直接获取，它是所有类加载器的父加载器
+扩展类加载器：extension ，jdk_home/lib/ext目录下的jar包或者 -D java.ext.dirs指定目录下的jar包装入工作库
+System ClassLoader ：负责java -classpath或者-D java.class.path所指目录 下的类和jar包装入
+
+委托、可见性以及单一性原理
+委托:即子加载器会请求父加载器是否加载,并且加载,如果不能加载就交会子加载器,即自下而上请求,自上而下加载.
+可见性: 子类加载器可以看到父类加载器加载的类，而反之则不行
+单一性: 父加载器加载过的类不能被子加载器加载第二次
+反射what：运行时获得类信息，注意是运行时。
+Class：字节码在jvm存在形式即为Class的对象，是由jvm创建的。
+
+运行时构造任意一
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/01/Java反射/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/07/01/Java注解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hujie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="树先生の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/01/Java注解/" itemprop="url">Java 注解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-01T18:51:00+08:00">
+                2019-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  678
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          注解
+what：用于描述数据，并且可以被编译期以及jvm捕获的信息
+
+注解基本使用
+运行时处理注解
+编译处理注解
+其它用处
+
+注解基本使用how：
+12345678910111213141516//定义@interface One&#123;    //类似方法声明的方式来声明属性     String name();&#125;//使用class A &#123;    @One(name = "fdaf")    private int test() &#123;            &#125;&#125;//基本注解@Overrider 描述限定重现父类方法@Deprecated 描述某个类或方法过时@SupressWarnings 抑制编译期警告
+
+元注解：描述注解的注解，用于限定注解的行为
+1234567891011121314151617181920212223@Target 描述注解将注解的位置。public enum ElementType &#123;    TYPE, //类，接口，注解，枚举    FIELD,//属性    METHOD,//方法    PA
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/01/Java注解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/06/30/Java容器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hujie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="树先生の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/30/Java容器/" itemprop="url">Java 容器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T19:02:00+08:00">
+                2019-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  507
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          Java  容器
+List
+Set
+Map
+Queue
+Iterator
+工具类
+并发容器
+android中的特殊集合
+
+相关接口
+Iterable 代表可迭代，实现的方法需要产出一个迭代器
+
+Collection 除了Map外的祖先集合接口
+
+List
+
+Set
+
+Map
+Set 和 List都是一路继承Collection下来
+Map则是单独的
+
+
+List定义了以套通过索引进行获取，和添加的集合
+
+ArrayList     内部是一个动态扩容的数组实现。
+LinkedList   内部是一个双向链表实现
+Vector 内部也是动态扩容的数组实现，不过大部分方法通过synchronized进行锁住方法，是线程安全的，但是效率不高。
+Stack Vector的子类
+
+Set定义了一组不可重复的集合，通过哈希值来判断
+
+HashSet 内部是通过一个HashMap来实现，等同于HashMap的键，值恒为同一个Object
+TreeSet 内部是通过一个TreeMap来实现
+
+Map定义了通过键值映射的集合
+
+HashMap 内部通过 数组 + 链表 + 红黑树进行实现的Map
+Tre
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/30/Java容器/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/06/30/Java基础知识梳理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -303,7 +1108,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/30/Java基础知识梳理/" itemprop="url">Java基础知识梳理</a></h1>
+                <a class="post-title-link" href="/2019/06/30/Java基础知识梳理/" itemprop="url">Java 基础知识梳理</a></h1>
         
 
         <div class="post-meta">
@@ -325,6 +1130,28 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -386,7 +1213,7 @@
       
         
           
-          Java 基础内容
+          Java  基础内容
 数据类型
 运算符
 流程控制
@@ -398,7 +1225,6 @@ Object类
 
 数据类型计算机中最小的单位是bit，一个位0/1表示
 基础数据类型
-
 byte  1字节 
 
 short 2字节 
@@ -581,7 +1407,7 @@ foreach 需要容器实现Iterable接口和Iterator接口
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  535
+                  552
                 </span>
               
 
@@ -619,13 +1445,8 @@ foreach 需要容器实现Iterable接口和Iterator接口
 
       
         
-          
-          你好，Hexo缘由首先用hexo搭建博客还是蛮爽的，基本只需要配置加上写md文件即可，颜值高的我都想学前端了2333。最近我是想着准备找新工作了，但是呢，得复习知识，而我基本上又不怎么喜欢归纳知识，即使是归纳也只用印象笔记做做速记，所以我感觉自己很虚，太浮躁了。但是看别人得博客，他们怎么能写这么多呀！于是我觉得我得认真对待做笔记这件事了，写的博客不能像以前写速记似的。
-抛开关于工作学习上事情，其实用博客来记录生活也很必要。
-第一、我表达能力不过关，有时候后脑子可以想很多话语，但是落实到口头综合起来就不是一回事了，想法千奇百怪，转瞬即逝，综合到嘴巴说出来的就更少了。究其原因是我的语文水平驾驭不住这些意识，呃呃（比如现在2333），也就是俗称的看书看少了，写东西写少了。对于文字掌控能力，我感觉是其它很多技能的基础，所以咯，得做！
-第二、 记忆对抗，现在我闭上眼睛，一周平平淡淡，竟然回忆不到太多事情，随着时间的推移，能留在我记忆中东西更是少之又少，甚至我得拼命回忆才能回想到曾今得同学以及生活得情。尽可能得通过博客来记录生活的轨迹。我不想过的虚无缥缈。
-第三、写博客，是一次和自己对话的机会，试
-          ...
+          <h3 id="你好，Hexo"><a href="#你好，Hexo" class="headerlink" title="你好，Hexo"></a>你好，Hexo</h3><h4 id="缘由"><a href="#缘由" class="headerlink" title="缘由"></a>缘由</h4><p>首先用hexo搭建博客还是蛮爽的，基本只需要配置加上写md文件即可，颜值高的我都想学前端了2333。最近我是想着准备找新工作了，但是呢，得复习知识，而我基本上又不怎么喜欢归纳知识，即使是归纳也只用印象笔记做做速记，所以我感觉自己很虚，太浮躁了。但是看别人得博客，他们怎么能写这么多呀！于是我觉得我得认真对待做笔记这件事了，写的博客不能像以前写速记似的。</p>
+<p>抛开关于工作学习上事情，其实用博客来记录生活也很必要。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/06/29/你好-Hexo/#more" rel="contents">
@@ -886,7 +1707,7 @@ More info: Deployment
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -897,7 +1718,7 @@ More info: Deployment
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -908,7 +1729,7 @@ More info: Deployment
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -918,70 +1739,6 @@ More info: Deployment
 
           
 
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/yourname" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="mailto:yourname@gmail.com" target="_blank" title="E-Mail">
-                      
-                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://plus.google.com/yourname" target="_blank" title="Google">
-                      
-                        <i class="fa fa-fw fa-google"></i>Google</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://twitter.com/yourname" target="_blank" title="Twitter">
-                      
-                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://www.facebook.com/yourname" target="_blank" title="FB Page">
-                      
-                        <i class="fa fa-fw fa-facebook"></i>FB Page</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://vk.com/yourname" target="_blank" title="VK Group">
-                      
-                        <i class="fa fa-fw fa-vk"></i>VK Group</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://stackoverflow.com/yourname" target="_blank" title="StackOverflow">
-                      
-                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://youtube.com/yourname" target="_blank" title="YouTube">
-                      
-                        <i class="fa fa-fw fa-youtube"></i>YouTube</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://instagram.com/yourname" target="_blank" title="Instagram">
-                      
-                        <i class="fa fa-fw fa-instagram"></i>Instagram</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="skype:yourname?call|chat" target="_blank" title="Skype">
-                      
-                        <i class="fa fa-fw fa-skype"></i>Skype</a>
-                  </span>
-                
-            </div>
           
 
           

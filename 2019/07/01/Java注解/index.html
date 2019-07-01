@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="基础,">
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="Retrofitwhat: 超级解耦的封装OkHttp的库 @Query注解必须在@Path后面呀">
-<meta property="og:type" content="website">
-<meta property="og:title" content="树先生の博客">
-<meta property="og:url" content="http://hujiejeff.github.io/android/Retrofit.html">
+<meta name="description" content="注解 what：用于描述数据，并且可以被编译期以及jvm捕获的信息  注解基本使用 运行时处理注解 编译处理注解 其它用处  注解基本使用how： 12345678910111213141516//定义@interface One&amp;#123;    //类似方法声明的方式来声明属性     String name();&amp;#125;//使用class A &amp;#123;    @One(name =">
+<meta name="keywords" content="基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 注解">
+<meta property="og:url" content="http://hujiejeff.github.io/2019/07/01/Java注解/index.html">
 <meta property="og:site_name" content="树先生の博客">
-<meta property="og:description" content="Retrofitwhat: 超级解耦的封装OkHttp的库 @Query注解必须在@Path后面呀">
+<meta property="og:description" content="注解 what：用于描述数据，并且可以被编译期以及jvm捕获的信息  注解基本使用 运行时处理注解 编译处理注解 其它用处  注解基本使用how： 12345678910111213141516//定义@interface One&amp;#123;    //类似方法声明的方式来声明属性     String name();&amp;#125;//使用class A &amp;#123;    @One(name =">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-29T13:02:35.426Z">
+<meta property="og:updated_time" content="2019-07-01T11:45:43.744Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="树先生の博客">
-<meta name="twitter:description" content="Retrofitwhat: 超级解耦的封装OkHttp的库 @Query注解必须在@Path后面呀">
+<meta name="twitter:title" content="Java 注解">
+<meta name="twitter:description" content="注解 what：用于描述数据，并且可以被编译期以及jvm捕获的信息  注解基本使用 运行时处理注解 编译处理注解 其它用处  注解基本使用how： 12345678910111213141516//定义@interface One&amp;#123;    //类似方法声明的方式来声明属性     String name();&amp;#125;//使用class A &amp;#123;    @One(name =">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://hujiejeff.github.io/android/Retrofit.html">
+  <link rel="canonical" href="http://hujiejeff.github.io/2019/07/01/Java注解/">
 
 
 
 
 
-  <title> | 树先生の博客</title>
+  <title>Java 注解 | 树先生の博客</title>
   
 
 
@@ -272,35 +273,240 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/07/01/Java注解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hujie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="树先生の博客">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline"></h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <h2 id="Retrofit"><a href="#Retrofit" class="headerlink" title="Retrofit"></a>Retrofit</h2><p>what: 超级解耦的封装OkHttp的库</p>
-<p>@Query注解必须在@Path后面呀</p>
-
+          <h1 class="post-title" itemprop="name headline">Java 注解</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-01T18:51:00+08:00">
+                2019-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  678
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p><strong>注解</strong></p>
+<p>what：用于描述数据，并且可以被编译期以及jvm捕获的信息</p>
+<ul>
+<li>注解基本使用</li>
+<li>运行时处理注解</li>
+<li>编译处理注解</li>
+<li>其它用处</li>
+</ul>
+<h3 id="注解基本使用"><a href="#注解基本使用" class="headerlink" title="注解基本使用"></a>注解基本使用</h3><p>how：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义</span></span><br><span class="line"><span class="meta">@interface</span> One&#123;</span><br><span class="line">    <span class="comment">//类似方法声明的方式来声明属性</span></span><br><span class="line">     <span class="function">String <span class="title">name</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="meta">@One</span>(name = <span class="string">"fdaf"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//基本注解</span></span><br><span class="line"><span class="meta">@Overrider</span> 描述限定重现父类方法</span><br><span class="line"><span class="meta">@Deprecated</span> 描述某个类或方法过时</span><br><span class="line"><span class="meta">@SupressWarnings</span> 抑制编译期警告</span><br></pre></td></tr></table></figure>
+
+<p>元注解：描述注解的注解，用于限定注解的行为</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span> 描述注解将注解的位置。</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ElementType &#123;</span><br><span class="line">    TYPE, <span class="comment">//类，接口，注解，枚举</span></span><br><span class="line">    FIELD,<span class="comment">//属性</span></span><br><span class="line">    METHOD,<span class="comment">//方法</span></span><br><span class="line">    PARAMETER,<span class="comment">//参数</span></span><br><span class="line">    CONSTRUCTOR,<span class="comment">//构造方法</span></span><br><span class="line">    LOCAL_VARIABLE,<span class="comment">//局部变量</span></span><br><span class="line">    ANNOTATION_TYPE,<span class="comment">//注解</span></span><br><span class="line">    PACKAGE,<span class="comment">//包</span></span><br><span class="line">    TYPE_PARAMETER,<span class="comment">//Type parameter declaration</span></span><br><span class="line">    TYPE_USE<span class="comment">//Use of a type</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Retention</span> </span><br><span class="line">以下三种</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> RetentionPolicy &#123;</span><br><span class="line">    SOURCE,</span><br><span class="line">    CLASS,</span><br><span class="line">    RUNTIME</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Documented</span> 表示可以被javadoc工具提取成文档</span><br><span class="line"><span class="meta">@Inherited</span> 表示继承性，如果某个使用了该注解修饰的注解，那么其子类会自动具有该注解</span><br></pre></td></tr></table></figure>
+
+<p>通过注解在相应的位置，我们可以在下面的注解处理器，或者反射处理，获得到我们想要的得到的数据。这就是注解的任务啦。</p>
+<h3 id="运行处理注解"><a href="#运行处理注解" class="headerlink" title="运行处理注解"></a>运行处理注解</h3><p>通过反射获得Class对象，Method等等，从而通过getAnnotation继而获得值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> learn2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnnotationTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        AnnotationTest test = <span class="keyword">new</span> AnnotationTest();</span><br><span class="line">        test.test();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@TestAnnotation</span>(msg = <span class="string">"test"</span>)</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> someOne;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Class clazz = getClass();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Field field = clazz.getField(<span class="string">"someOne"</span>);</span><br><span class="line">            String msg = field.getAnnotation(TestAnnotation.class).msg();</span><br><span class="line">            System.out.println(field.getAnnotation(TestAnnotation.class));</span><br><span class="line">            System.out.println(msg);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchFieldException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Target</span>(ElementType.FIELD)</span><br><span class="line">    <span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line">    <span class="meta">@interface</span> TestAnnotation&#123;</span><br><span class="line">        <span class="function">String <span class="title">msg</span><span class="params">()</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编译处理注解"><a href="#编译处理注解" class="headerlink" title="编译处理注解"></a>编译处理注解</h3><p>编译时处理注解，生成java文件</p>
+<h3 id="处理注解时的相关类和API"><a href="#处理注解时的相关类和API" class="headerlink" title="处理注解时的相关类和API"></a>处理注解时的相关类和API</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//接口</span><br><span class="line">AnnotatedElement // 被注解的元素，这个接口声明的方法包含了一些获得注解注解对象的方法</span><br><span class="line">	AnnotatedType //被注解的类型，有一个getType的方法//这些接口都从1.8开始的，感觉和泛型相关</span><br><span class="line">		AnnotatedArrayType //被注解的数组类型</span><br><span class="line">		AnnotatedParameterizedType//被注解的参数化类型 </span><br><span class="line">		AnnotatedTypeVariable//被注解的类型变量</span><br><span class="line">		AnnotatedWildcardType//被注解的统配符类型 获取上界和下界的AnnotatedType</span><br><span class="line">//类</span><br><span class="line">Filed</span><br><span class="line">Class</span><br><span class="line">Method</span><br><span class="line">Package</span><br><span class="line">Construcotr</span><br><span class="line">Paramter</span><br><span class="line">Executable</span><br><span class="line">AccessibleObject</span><br><span class="line"></span><br><span class="line">注解一个普通的int产生的AnnotatedType对象是sun.reflect.annotation.AnnotatedTypeFactory$AnnotatedTypeBaseImpl@1d44bcfa</span><br><span class="line">而注解List&lt;String&gt; list类型产生的的AnnotatedType对象是sun.reflect.annotation.AnnotatedTypeFactory$AnnotatedParameterizedTypeImpl@1d44bcfa</span><br><span class="line">而对int[] list 产生的是</span><br><span class="line">sun.reflect.annotation.AnnotatedTypeFactory$AnnotatedArrayTypeImpl@1d44bcfa</span><br><span class="line">与之对应的是那几个接口的实现类，虽然我没搞懂有啥用。。</span><br></pre></td></tr></table></figure>
+
+<h3 id="其它用处"><a href="#其它用处" class="headerlink" title="其它用处"></a>其它用处</h3><p>用于设定常量</p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    hujie
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://hujiejeff.github.io/2019/07/01/Java注解/" title="Java 注解">http://hujiejeff.github.io/2019/07/01/Java注解/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/基础/" rel="tag"># 基础</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/30/Java容器/" rel="next" title="Java 容器">
+                <i class="fa fa-chevron-left"></i> Java 容器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/01/Java反射/" rel="prev" title="Java 反射">
+                Java 反射 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -362,7 +568,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -373,7 +579,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -384,7 +590,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -394,70 +600,6 @@
 
           
 
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/yourname" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="mailto:yourname@gmail.com" target="_blank" title="E-Mail">
-                      
-                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://plus.google.com/yourname" target="_blank" title="Google">
-                      
-                        <i class="fa fa-fw fa-google"></i>Google</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://twitter.com/yourname" target="_blank" title="Twitter">
-                      
-                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://www.facebook.com/yourname" target="_blank" title="FB Page">
-                      
-                        <i class="fa fa-fw fa-facebook"></i>FB Page</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://vk.com/yourname" target="_blank" title="VK Group">
-                      
-                        <i class="fa fa-fw fa-vk"></i>VK Group</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://stackoverflow.com/yourname" target="_blank" title="StackOverflow">
-                      
-                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://youtube.com/yourname" target="_blank" title="YouTube">
-                      
-                        <i class="fa fa-fw fa-youtube"></i>YouTube</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://instagram.com/yourname" target="_blank" title="Instagram">
-                      
-                        <i class="fa fa-fw fa-instagram"></i>Instagram</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="skype:yourname?call|chat" target="_blank" title="Skype">
-                      
-                        <i class="fa fa-fw fa-skype"></i>Skype</a>
-                  </span>
-                
-            </div>
           
 
           
@@ -481,7 +623,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Retrofit"><span class="nav-number">1.</span> <span class="nav-text">Retrofit</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#注解基本使用"><span class="nav-number">1.</span> <span class="nav-text">注解基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行处理注解"><span class="nav-number">2.</span> <span class="nav-text">运行处理注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译处理注解"><span class="nav-number">3.</span> <span class="nav-text">编译处理注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理注解时的相关类和API"><span class="nav-number">4.</span> <span class="nav-text">处理注解时的相关类和API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其它用处"><span class="nav-number">5.</span> <span class="nav-text">其它用处</span></a></li></ol></div>
             
 
           </div>

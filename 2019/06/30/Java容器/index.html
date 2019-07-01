@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="基础,">
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="注解 what：用于描述数据，并且可以被编译期以及jvm捕获的信息  注解基本使用 运行时处理注解 编译处理注解 其它用处  注解基本使用how： 12345678910111213141516//定义@interface One&amp;#123;    //类似方法声明的方式来声明属性     String name();&amp;#125;//使用class A &amp;#123;    @One(name =">
-<meta property="og:type" content="website">
-<meta property="og:title" content="树先生の博客">
-<meta property="og:url" content="http://hujiejeff.github.io/android/注解.html">
+<meta name="description" content="Java  容器 List Set Map Queue Iterator 工具类 并发容器 android中的特殊集合  相关接口 Iterable 代表可迭代，实现的方法需要产出一个迭代器  Collection 除了Map外的祖先集合接口  List  Set  Map Set 和 List都是一路继承Collection下来 Map则是单独的   List定义了以套通过索引进行获取，和添加的">
+<meta name="keywords" content="基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 容器">
+<meta property="og:url" content="http://hujiejeff.github.io/2019/06/30/Java容器/index.html">
 <meta property="og:site_name" content="树先生の博客">
-<meta property="og:description" content="注解 what：用于描述数据，并且可以被编译期以及jvm捕获的信息  注解基本使用 运行时处理注解 编译处理注解 其它用处  注解基本使用how： 12345678910111213141516//定义@interface One&amp;#123;    //类似方法声明的方式来声明属性     String name();&amp;#125;//使用class A &amp;#123;    @One(name =">
+<meta property="og:description" content="Java  容器 List Set Map Queue Iterator 工具类 并发容器 android中的特殊集合  相关接口 Iterable 代表可迭代，实现的方法需要产出一个迭代器  Collection 除了Map外的祖先集合接口  List  Set  Map Set 和 List都是一路继承Collection下来 Map则是单独的   List定义了以套通过索引进行获取，和添加的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-29T07:17:26.795Z">
+<meta property="og:updated_time" content="2019-07-01T11:08:27.639Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="树先生の博客">
-<meta name="twitter:description" content="注解 what：用于描述数据，并且可以被编译期以及jvm捕获的信息  注解基本使用 运行时处理注解 编译处理注解 其它用处  注解基本使用how： 12345678910111213141516//定义@interface One&amp;#123;    //类似方法声明的方式来声明属性     String name();&amp;#125;//使用class A &amp;#123;    @One(name =">
+<meta name="twitter:title" content="Java 容器">
+<meta name="twitter:description" content="Java  容器 List Set Map Queue Iterator 工具类 并发容器 android中的特殊集合  相关接口 Iterable 代表可迭代，实现的方法需要产出一个迭代器  Collection 除了Map外的祖先集合接口  List  Set  Map Set 和 List都是一路继承Collection下来 Map则是单独的   List定义了以套通过索引进行获取，和添加的">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://hujiejeff.github.io/android/注解.html">
+  <link rel="canonical" href="http://hujiejeff.github.io/2019/06/30/Java容器/">
 
 
 
 
 
-  <title> | 树先生の博客</title>
+  <title>Java 容器 | 树先生の博客</title>
   
 
 
@@ -272,51 +273,282 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/06/30/Java容器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hujie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="树先生の博客">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline"></h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <p><strong>注解</strong></p>
-<p>what：用于描述数据，并且可以被编译期以及jvm捕获的信息</p>
-<ul>
-<li>注解基本使用</li>
-<li>运行时处理注解</li>
-<li>编译处理注解</li>
-<li>其它用处</li>
+          <h1 class="post-title" itemprop="name headline">Java 容器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T19:02:00+08:00">
+                2019-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  507
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Java-容器"><a href="#Java-容器" class="headerlink" title="Java  容器"></a>Java  容器</h3><ul>
+<li>List</li>
+<li>Set</li>
+<li>Map</li>
+<li>Queue</li>
+<li>Iterator</li>
+<li>工具类</li>
+<li>并发容器</li>
+<li>android中的特殊集合</li>
 </ul>
-<h3 id="注解基本使用"><a href="#注解基本使用" class="headerlink" title="注解基本使用"></a>注解基本使用</h3><p>how：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义</span></span><br><span class="line"><span class="meta">@interface</span> One&#123;</span><br><span class="line">    <span class="comment">//类似方法声明的方式来声明属性</span></span><br><span class="line">     <span class="function">String <span class="title">name</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="meta">@One</span>(name = <span class="string">"fdaf"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//基本注解</span></span><br><span class="line"><span class="meta">@Overrider</span> 描述限定重现父类方法</span><br><span class="line"><span class="meta">@Deprecated</span> 描述某个类或方法过时</span><br><span class="line"><span class="meta">@SupressWarnings</span> 抑制编译期警告</span><br></pre></td></tr></table></figure>
+<h4 id="相关接口"><a href="#相关接口" class="headerlink" title="相关接口"></a>相关接口</h4><ul>
+<li><p>Iterable 代表可迭代，实现的方法需要产出一个迭代器</p>
+</li>
+<li><p>Collection 除了Map外的祖先集合接口</p>
+</li>
+<li><p>List</p>
+</li>
+<li><p>Set</p>
+</li>
+<li><p>Map</p>
+<p>Set 和 List都是一路继承Collection下来</p>
+<p>Map则是单独的</p>
+</li>
+</ul>
+<h4 id="List"><a href="#List" class="headerlink" title="List"></a>List</h4><p>定义了以套通过索引进行获取，和添加的集合</p>
+<ul>
+<li>ArrayList     内部是一个动态扩容的数组实现。</li>
+<li>LinkedList   内部是一个双向链表实现</li>
+<li>Vector 内部也是动态扩容的数组实现，不过大部分方法通过synchronized进行锁住方法，是线程安全的，但是效率不高。</li>
+<li>Stack Vector的子类</li>
+</ul>
+<h4 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h4><p>定义了一组不可重复的集合，通过哈希值来判断</p>
+<ul>
+<li>HashSet 内部是通过一个HashMap来实现，等同于HashMap的键，值恒为同一个Object</li>
+<li>TreeSet 内部是通过一个TreeMap来实现</li>
+</ul>
+<h4 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h4><p>定义了通过键值映射的集合</p>
+<ul>
+<li>HashMap 内部通过 数组 + 链表 + 红黑树进行实现的Map</li>
+<li>TreeMap  内部通过红黑树进行实现，保持内部排序顺序</li>
+<li>HashTable 古老实现，线程安全，效率不高</li>
+<li>Properties key和value都是String类型</li>
+</ul>
+<h4 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h4><p>队列</p>
+<h4 id="Iterator"><a href="#Iterator" class="headerlink" title="Iterator"></a>Iterator</h4><p>生成器，用于foreach循环</p>
+<h4 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h4><ul>
+<li>Arrays包含了许多对数组进行排序，复制等操作的工具类</li>
+<li>Collections包含许多对集合进行操作</li>
+<li>Comparators包含对比较器的工具</li>
+</ul>
+<h4 id="并发容器"><a href="#并发容器" class="headerlink" title="并发容器"></a>并发容器</h4><p>以上中只有Vectoer和HashTable是线程安全的，但是它是将整个集合都锁住了，效率不高。</p>
+<ul>
+<li>CopyOnWriteArryList</li>
+<li>CopyOnWriteArraySet 写时复制，在写入的时候创建一个副本进行写入，当迭代多于修改，应该使用写时复制容器</li>
+<li>ConcurrentHashMap </li>
+<li>ConcurrentSkipListSet </li>
+<li>阻塞队列</li>
+</ul>
+<p>ConcurrentMap容器:1.8以前采用锁分段技术，1.8开始使用CAS无锁技术。</p>
+<h4 id="android中特殊容器"><a href="#android中特殊容器" class="headerlink" title="android中特殊容器"></a>android中特殊容器</h4><p>SparseArray 使用稀疏数组实现的一个key为int，value为Object的集合</p>
+<p>LongSparseArray key为long value为object</p>
+<p>SparseLongArray key为int value为long</p>
+<p>SparseBooleanArray key为int value为boolean</p>
+<p>SparseIntArray key为int value为int</p>
 
-<p>元注解：描述注解的注解，用于限定注解的行为</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span> 描述注解将注解的位置。</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ElementType &#123;</span><br><span class="line">    TYPE, <span class="comment">//类，接口，注解，枚举</span></span><br><span class="line">    FIELD,<span class="comment">//属性</span></span><br><span class="line">    METHOD,<span class="comment">//方法</span></span><br><span class="line">    PARAMETER,<span class="comment">//参数</span></span><br><span class="line">    CONSTRUCTOR,<span class="comment">//构造方法</span></span><br><span class="line">    LOCAL_VARIABLE,<span class="comment">//局部变量</span></span><br><span class="line">    ANNOTATION_TYPE,<span class="comment">//注解</span></span><br><span class="line">    PACKAGE,<span class="comment">//包</span></span><br><span class="line">    TYPE_PARAMETER,<span class="comment">//Type parameter declaration</span></span><br><span class="line">    TYPE_USE<span class="comment">//Use of a type</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Retention</span> </span><br><span class="line">以下三种</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> RetentionPolicy &#123;</span><br><span class="line">    SOURCE,</span><br><span class="line">    CLASS,</span><br><span class="line">    RUNTIME</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Documented</span> 表示可以被javadoc工具提取成文档</span><br><span class="line"><span class="meta">@Inherited</span> 表示继承性，如果某个使用了该注解修饰的注解，那么其子类会自动具有该注解</span><br></pre></td></tr></table></figure>
-
-<p>通过注解在相应的位置，我们可以在下面的注解处理器，或者反射处理，获得到我们想要的得到的数据。这就是注解的任务啦。</p>
-<h3 id="运行处理注解"><a href="#运行处理注解" class="headerlink" title="运行处理注解"></a>运行处理注解</h3><p>通过反射获得Class对象，Method等等，从而通过getAnnotation继而获得值</p>
-<h3 id="编译处理注解"><a href="#编译处理注解" class="headerlink" title="编译处理注解"></a>编译处理注解</h3><p>编译时处理注解，生成java</p>
-<h3 id="其它用处"><a href="#其它用处" class="headerlink" title="其它用处"></a>其它用处</h3><p>用作常量限定</p>
-
-        
-      </div>
-      
-      
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    hujie
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://hujiejeff.github.io/2019/06/30/Java容器/" title="Java 容器">http://hujiejeff.github.io/2019/06/30/Java容器/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/基础/" rel="tag"># 基础</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/30/Java基础知识梳理/" rel="next" title="Java 基础知识梳理">
+                <i class="fa fa-chevron-left"></i> Java 基础知识梳理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/01/Java注解/" rel="prev" title="Java 注解">
+                Java 注解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -378,7 +610,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -389,7 +621,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -400,7 +632,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -410,70 +642,6 @@
 
           
 
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/yourname" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="mailto:yourname@gmail.com" target="_blank" title="E-Mail">
-                      
-                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://plus.google.com/yourname" target="_blank" title="Google">
-                      
-                        <i class="fa fa-fw fa-google"></i>Google</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://twitter.com/yourname" target="_blank" title="Twitter">
-                      
-                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://www.facebook.com/yourname" target="_blank" title="FB Page">
-                      
-                        <i class="fa fa-fw fa-facebook"></i>FB Page</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://vk.com/yourname" target="_blank" title="VK Group">
-                      
-                        <i class="fa fa-fw fa-vk"></i>VK Group</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://stackoverflow.com/yourname" target="_blank" title="StackOverflow">
-                      
-                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://youtube.com/yourname" target="_blank" title="YouTube">
-                      
-                        <i class="fa fa-fw fa-youtube"></i>YouTube</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://instagram.com/yourname" target="_blank" title="Instagram">
-                      
-                        <i class="fa fa-fw fa-instagram"></i>Instagram</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="skype:yourname?call|chat" target="_blank" title="Skype">
-                      
-                        <i class="fa fa-fw fa-skype"></i>Skype</a>
-                  </span>
-                
-            </div>
           
 
           
@@ -497,7 +665,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#注解基本使用"><span class="nav-number">1.</span> <span class="nav-text">注解基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行处理注解"><span class="nav-number">2.</span> <span class="nav-text">运行处理注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译处理注解"><span class="nav-number">3.</span> <span class="nav-text">编译处理注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其它用处"><span class="nav-number">4.</span> <span class="nav-text">其它用处</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-容器"><span class="nav-number">1.</span> <span class="nav-text">Java  容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#相关接口"><span class="nav-number">1.1.</span> <span class="nav-text">相关接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#List"><span class="nav-number">1.2.</span> <span class="nav-text">List</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Set"><span class="nav-number">1.3.</span> <span class="nav-text">Set</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Map"><span class="nav-number">1.4.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Queue"><span class="nav-number">1.5.</span> <span class="nav-text">Queue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Iterator"><span class="nav-number">1.6.</span> <span class="nav-text">Iterator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工具类"><span class="nav-number">1.7.</span> <span class="nav-text">工具类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#并发容器"><span class="nav-number">1.8.</span> <span class="nav-text">并发容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#android中特殊容器"><span class="nav-number">1.9.</span> <span class="nav-text">android中特殊容器</span></a></li></ol></li></ol></div>
             
 
           </div>
