@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="基础,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="what泛型我通俗的认为就是参数化类型，即传入类型提示。告诉它我即将要在这个类型的版本上使用你了。并且在写出大量代码时使用泛型可以写出一套模板代码。而且使用了泛型后，在编译期间泛型这个是能够检测你的代码有没有使用不规范类型的对象，在编译期间有点不好理解，但是当我们用IDE的时候，一旦你使用泛型，产生的对象，在IDE看来所给出的代码提示等检查也都是基于传入的泛型参数。但是呢，编译通过后在jvm中运行">
+<meta name="keywords" content="基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 泛型">
+<meta property="og:url" content="http://hujiejeff.github.io/2019/07/02/Java-泛型/index.html">
+<meta property="og:site_name" content="树先生の博客">
+<meta property="og:description" content="what泛型我通俗的认为就是参数化类型，即传入类型提示。告诉它我即将要在这个类型的版本上使用你了。并且在写出大量代码时使用泛型可以写出一套模板代码。而且使用了泛型后，在编译期间泛型这个是能够检测你的代码有没有使用不规范类型的对象，在编译期间有点不好理解，但是当我们用IDE的时候，一旦你使用泛型，产生的对象，在IDE看来所给出的代码提示等检查也都是基于传入的泛型参数。但是呢，编译通过后在jvm中运行">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-02T14:01:04.143Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 泛型">
+<meta name="twitter:description" content="what泛型我通俗的认为就是参数化类型，即传入类型提示。告诉它我即将要在这个类型的版本上使用你了。并且在写出大量代码时使用泛型可以写出一套模板代码。而且使用了泛型后，在编译期间泛型这个是能够检测你的代码有没有使用不规范类型的对象，在编译期间有点不好理解，但是当我们用IDE的时候，一旦你使用泛型，产生的对象，在IDE看来所给出的代码提示等检查也都是基于传入的泛型参数。但是呢，编译通过后在jvm中运行">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://hujiejeff.github.io/2019/07/02/Java-泛型/">
+
+
+
+
+
+  <title>Java 泛型 | 树先生の博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">树先生の博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">更好的成为更好的你</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/07/02/Java-泛型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hujie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="树先生の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java 泛型</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-02T08:54:39+08:00">
+                2019-07-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="what"><a href="#what" class="headerlink" title="what"></a>what</h3><p>泛型我通俗的认为就是参数化类型，即传入类型提示。告诉它我即将要在这个类型的版本上使用你了。并且在写出大量代码时使用泛型可以写出一套模板代码。而且使用了泛型后，在编译期间泛型这个是能够检测你的代码有没有使用不规范类型的对象，在编译期间有点不好理解，但是当我们用IDE的时候，一旦你使用泛型，产生的对象，在IDE看来所给出的代码提示等检查也都是基于传入的泛型参数。但是呢，编译通过后在jvm中运行表现看来，所有用于参数类型的对象表现为Object， 这也俗称类型擦除。<strong>泛型参数不能时基本类型</strong></p>
+<a id="more"></a>
+
+<h3 id="how"><a href="#how" class="headerlink" title="how"></a>how</h3><h4 id="泛型类"><a href="#泛型类" class="headerlink" title="泛型类"></a>泛型类</h4><p>首先列举下我们经常用到一些关于泛型的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HashMap&lt;String,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br></pre></td></tr></table></figure>
+
+<p>如何自行定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Class Person&lt;T&gt; &#123;</span><br><span class="line">    T t;</span><br><span class="line">    <span class="function">T <span class="title">getT</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setT</span><span class="params">(T t)</span></span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Person&lt;String&gt; person = <span class="keyword">new</span> Person&lt;&gt;();</span><br><span class="line">        person.setT(<span class="string">"ffff"</span>);</span><br><span class="line">        Person&lt;Integer&gt; person1 = <span class="keyword">new</span> Person&lt;&gt;();</span><br><span class="line">        person1.setT(<span class="number">9</span>);</span><br><span class="line">        System.out.println(person.getT().getClass());</span><br><span class="line">        System.out.println(person1.getT().getClass());</span><br><span class="line">        System.out.println(person.getClass());<span class="comment">//class learn2.GenericTest$Person</span></span><br><span class="line">        System.out.println(person1.getClass());<span class="comment">//class learn2.GenericTest$Person</span></span><br><span class="line">        GenericTest test = <span class="keyword">new</span> GenericTest();</span><br><span class="line">        test.getArray(<span class="number">1</span>,<span class="number">23</span>,<span class="number">4</span>);</span><br><span class="line">        test.getArray(<span class="string">"f"</span>, <span class="string">"f"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> &lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> T t;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setT</span><span class="params">(T t)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.t = t;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> T <span class="title">getT</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> t;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后你就能发挥想象创造代码了呀，别看它加了尖括号和类型，其实看穿了还是一个普通类。通过Class比较你都看不到关于泛型的东西</p>
+<p>以及后续的继承</p>
+<h4 id="泛型接口"><a href="#泛型接口" class="headerlink" title="泛型接口"></a>泛型接口</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Presenter</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">attachView</span><span class="params">(T t)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dettachView</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其实和泛型类没啥不同</p>
+<h4 id="泛型方法"><a href="#泛型方法" class="headerlink" title="泛型方法"></a>泛型方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> &lt;T&gt; T[] getArray(T ...ts) &#123;</span><br><span class="line">        <span class="keyword">return</span> ts;</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="keyword">static</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Test test = <span class="keyword">new</span> Test();</span><br><span class="line">        <span class="keyword">int</span>[] nums = test.getArray(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);</span><br><span class="line">        String[] strs = test.getArray(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个例子是我比较喜欢的，通过变长的参数返回数组。看在你传入参数一刹那，其实就是相当于把类型参数弄进入了。</p>
+<h4 id="进阶使用"><a href="#进阶使用" class="headerlink" title="进阶使用"></a>进阶使用</h4><p>在jdk的代码中以及框架呀大量使用关于泛型的东西，说明了这玩意很好使。通过接口实现，或者类的继承中加入泛型，又能够写出可复用的代码。以及配合通配符，配合多态呀，那简直爽的不要不要的。</p>
+<p><code>extends</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IPresenter</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">IView</span>&gt; </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//说明了传入的参数类型，得要是IView子类</span></span><br></pre></td></tr></table></figure>
+
+<p>好吧我老是把&lt;? extends T&gt; 和 <t extends sometype>搞混。。</t></p>
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><ul>
+<li><p>泛型参数不能是基本类型</p>
+</li>
+<li><p>不能带泛型用于<code>instancof</code>关键字</p>
+</li>
+<li><p>不可以用于泛型数组</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt;[] lists = <span class="keyword">new</span> ArrayList&lt;String&gt;[<span class="number">10</span>];<span class="comment">//无法这样不行的</span></span><br><span class="line">List&lt;String&gt;[] lists = <span class="keyword">new</span> ArrayList[<span class="number">10</span>];<span class="comment">//这样却是可以的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//唯一的方式就是创建类型擦出的数组，然后再转型</span></span><br><span class="line">List&lt;String&gt;[] lists = <span class="keyword">new</span> ArrayList[<span class="number">10</span>];</span><br><span class="line">lists[<span class="number">0</span>] = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">lists[<span class="number">0</span>].add(<span class="string">"aa"</span>);</span><br><span class="line">System.out.println(lists.getClass());</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>类型捕获</p>
+<p>通同getClass来获取真实的类型咯</p>
+</li>
+<li><p>泛型和重载</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span>&lt;<span class="title">T</span>,<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">//因为泛型擦初，所以二者有相同的方法签名</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(List&lt;T&gt; list)</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(List&lt;E&gt; list)</span> </span>&#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//同样</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(T t)</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(E e)</span> </span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自限定的类型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">C</span>&gt; </span>&#123;</span><br><span class="line"><span class="comment">//这自限定的例子比较简单，即限定比较对象为自己，其实仔细研究还是泛型的事</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(C o)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">A</span>&lt;<span class="title">T</span>&gt;&gt; </span>&#123;&#125; <span class="comment">//这个有点抽象，但是仔细看好像陷入一个无限循环样子</span></span><br><span class="line"><span class="comment">//首先我们继承它看看</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span>&lt;<span class="title">B</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">//这样写是否合理，就看B是否能套入&lt;T extentd A&lt;T&gt;&gt; 中，呃呃，看了好久，是可以</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//那么到底有什么用呢，这个通常用于继承关系中的限定。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">A</span>&lt;<span class="title">T</span>&gt;&gt; </span>&#123;</span><br><span class="line">         <span class="function"><span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(T t)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span>&lt;<span class="title">B</span>&gt; </span>&#123;<span class="comment">//这个泛型参数只能事继承链上的，换了其它的不可以，就是这是妙用啊</span></span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">set</span><span class="params">(B b)</span> </span>&#123;<span class="comment">//由于限定了这个实现的方法就必须为自己。其它不行。有意思呵呵</span></span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>异常处理中catch是不能捕获泛型类型的异常，因为再运行期间必须知道异常的确切类型</p>
+</li>
+</ul>
+<h3 id="why"><a href="#why" class="headerlink" title="why"></a>why</h3><p>编写用于多种类型的代码。</p>
+<h3 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h3><p>前面的其实都还好理解，到了这里就有点要想想了，不然傻傻分不清楚。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?&gt;</span><br><span class="line">&lt;? extends E&gt; <span class="comment">//这个E一般就代表声明出来的类型参数。指代你声明&lt;E&gt;</span></span><br><span class="line">&lt;? <span class="keyword">super</span> E&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="栗子"><a href="#栗子" class="headerlink" title="栗子"></a>栗子</h4><p>还是看栗子把2333</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> learn2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericTest2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        GenericTest2 test2 = <span class="keyword">new</span> GenericTest2();</span><br><span class="line">        List&lt;String&gt; stringList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        stringList.add(<span class="string">"aaa"</span>);</span><br><span class="line">        stringList.add(<span class="string">"bbb"</span>);</span><br><span class="line">        stringList.add(<span class="string">"ccc"</span>);</span><br><span class="line">        List&lt;Integer&gt; integerList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        integerList.add(<span class="number">1</span>);</span><br><span class="line">        integerList.add(<span class="number">2</span>);</span><br><span class="line">        integerList.add(<span class="number">3</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// ?任意</span></span><br><span class="line">        test2.runTest(stringList);</span><br><span class="line">        test2.runTest(integerList);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//上界为Number</span></span><br><span class="line">        List&lt;Long&gt; longList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        test2.runTest2(longList, <span class="number">2</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//下界Number</span></span><br><span class="line">        List&lt;Object&gt; objectList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        test2.runTest3(objectList, <span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">runTest</span><span class="params">(List&lt;?&gt; list)</span> </span>&#123;<span class="comment">//可以接受任意泛型参数的List</span></span><br><span class="line">        list.add(<span class="keyword">null</span>);<span class="comment">//只能写null</span></span><br><span class="line"><span class="comment">//        list.add(new Object());// error</span></span><br><span class="line">        System.out.println(list.get(<span class="number">3</span>).getClass());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">runTest2</span><span class="params">(List&lt;? extends Number&gt; list, Number number2)</span> </span>&#123;<span class="comment">//只能接受泛型参数继承Number的List</span></span><br><span class="line">        Number number = list.get(<span class="number">0</span>);<span class="comment">// 只可以读Number类型</span></span><br><span class="line">        <span class="comment">//list.add(new Object());//写不了</span></span><br><span class="line">        <span class="comment">//list.add(number2);//编译不通过</span></span><br><span class="line">        <span class="comment">//list.add(number);//编译不通过</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">runTest3</span><span class="params">(List&lt;? <span class="keyword">super</span> Number&gt; list, Number number)</span> </span>&#123;<span class="comment">//只能接受泛型参数为Number父类的List</span></span><br><span class="line">        list.add(number);<span class="comment">//可以写Number类型</span></span><br><span class="line">        <span class="comment">//list.add(new Object()); 不行</span></span><br><span class="line">        Object object = list.get(<span class="number">0</span>);<span class="comment">//只能捕获为Object</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="分析一波"><a href="#分析一波" class="headerlink" title="分析一波"></a>分析一波</h4><ul>
+<li><p><code>&lt;?&gt;</code>这个统配符代表，可以接受任意泛型参数，与之同时，对应的<code>List&lt;?&gt; list</code> 可以接受<code>List&lt;Number&gt;</code> <code>List&lt;String&gt;</code>对象等等，所以嘞，它也就根本不知道实际对象会是带什么泛型参数，所以只能<strong>写<code>null</code></strong>，我没想到的是居然<strong>写Object</strong>也不行，读还是的啊，但是只能为Object，没事啊，你可动态的<code>instance of</code>判断下嘛，写死转换肯定是不行的，因为它压根啥也不知道，咱也不敢问是吧。</p>
+</li>
+<li><p><code>&lt;? extends E&gt;</code>这个通配符代表了，可以接受带上界为E泛型参数。即你的泛型参数得是E或E的子类才行</p>
+<p>List&lt;? extends Number&gt; list这个能能接受<code>List&lt;Int&gt;</code> <code>List&lt;Long&gt;</code>等等为Number的子类泛型参数 。可能有人会觉得有了上界那不为所欲为。我以前也是这么觉得的哈哈。上述实践得知，只<code>能写为E</code>，<code>不能读为E</code>，当然能读为Object。因为它知道你传进来的肯定是带E后代泛型，所以呢，我里面的元素肯定能表现为E，所以读是没问题。但是写E就有问题了，比如我某一次识别的到是Long，然后你要写一个Number，你说怎么能写。</p>
+</li>
+<li><p><code>&lt;? super E&gt;</code> 这个就刚好了上面那个相反，E为下界，可以接受E父类等泛型参数。对于这个而言，就只<code>能写E</code>，<code>不能读E</code> ，你的泛型参数为超类，你压根不知到内容表现为具体是个啥东西，所以读就别想了。但是E可以表现为超类，所以写E就没问题咯。</p>
+</li>
+</ul>
+<p>总结下来就是：</p>
+<p>&lt;?&gt; 可以匹配任何泛型参数，但是只能写null</p>
+<p>&lt;? extends E&gt; 可以匹配E的子类泛型参数，只能读E，不能写E</p>
+<p>&lt;? super E&gt; 可以匹配E的超类泛型参数，不能读E，只能写E</p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>其实泛型这个东西呢，以前我想的太简单了，传个类型参数就完事了，以前我也是这么认为的，但是看了《Java编程思想》，卧槽还有这么多东西，而且稍稍不深入就会被带跑偏呃呃。目前还是归纳的不够详细，以后学到再补充！✌，对了想不通的地方，没事一定要敲一敲，比瞎想强，总有好处的。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    hujie
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://hujiejeff.github.io/2019/07/02/Java-泛型/" title="Java 泛型">http://hujiejeff.github.io/2019/07/02/Java-泛型/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/基础/" rel="tag"># 基础</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/01/Java-并发/" rel="next" title="Java 并发梳理">
+                <i class="fa fa-chevron-left"></i> Java 并发梳理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/03/Android-梳理一波Activity/" rel="prev" title="梳理一波Activity基础使用">
+                梳理一波Activity基础使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="hujie">
+            
+              <p class="site-author-name" itemprop="name">hujie</p>
+              <p class="site-description motion-element" itemprop="description">慎独</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#what"><span class="nav-number">1.</span> <span class="nav-text">what</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#how"><span class="nav-number">2.</span> <span class="nav-text">how</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#泛型类"><span class="nav-number">2.1.</span> <span class="nav-text">泛型类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#泛型接口"><span class="nav-number">2.2.</span> <span class="nav-text">泛型接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#泛型方法"><span class="nav-number">2.3.</span> <span class="nav-text">泛型方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进阶使用"><span class="nav-number">2.4.</span> <span class="nav-text">进阶使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注意事项"><span class="nav-number">2.5.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#why"><span class="nav-number">3.</span> <span class="nav-text">why</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通配符"><span class="nav-number">4.</span> <span class="nav-text">通配符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#栗子"><span class="nav-number">4.1.</span> <span class="nav-text">栗子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析一波"><span class="nav-number">4.2.</span> <span class="nav-text">分析一波</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结语"><span class="nav-number">5.</span> <span class="nav-text">结语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hujie</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "./public/search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
