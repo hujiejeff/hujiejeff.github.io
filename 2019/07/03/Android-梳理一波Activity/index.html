@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="树先生の博客">
 <meta property="og:description" content="what首先初学android第一个学的绝逼是Activity，翻译为活动，即看的见，摸得着的玩意。android SDK提供了一套模板类即Activity，开发者需要继承它，并且在对的时间做相应的事情，比如UI初始化，数据加载等等，通过在Manifest文件中声明这个新的Activity就可以了。这次就先不探讨Activity是怎么工作的，从应用的角度来看看它，（AMS还得再学习学习2333）。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-03T07:23:04.238Z">
+<meta property="og:updated_time" content="2019-07-06T05:58:49.914Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="梳理一波Activity基础使用">
 <meta name="twitter:description" content="what首先初学android第一个学的绝逼是Activity，翻译为活动，即看的见，摸得着的玩意。android SDK提供了一套模板类即Activity，开发者需要继承它，并且在对的时间做相应的事情，比如UI初始化，数据加载等等，通过在Manifest文件中声明这个新的Activity就可以了。这次就先不探讨Activity是怎么工作的，从应用的角度来看看它，（AMS还得再学习学习2333）。">
@@ -354,6 +354,17 @@
 
           
           
+             <span id="/2019/07/03/Android-梳理一波Activity/" class="leancloud_visitors" data-flag-title="梳理一波Activity基础使用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -368,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1k
+                  1.1k
                 </span>
               
 
@@ -384,7 +395,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  4
                 </span>
               
             </div>
@@ -408,6 +419,8 @@
         <h2 id="what"><a href="#what" class="headerlink" title="what"></a>what</h2><p>首先初学android第一个学的绝逼是Activity，翻译为活动，即看的见，摸得着的玩意。android SDK提供了一套模板类即Activity，开发者需要继承它，并且在对的时间做相应的事情，比如UI初始化，数据加载等等，通过在Manifest文件中声明这个新的Activity就可以了。这次就先不探讨Activity是怎么工作的，从应用的角度来看看它，（AMS还得再学习学习2333）。</p>
 <h2 id="how"><a href="#how" class="headerlink" title="how"></a>how</h2><p>无非就是创建类然后实现Activity，然后注册到Manifest中。可以了。</p>
 <p>主要来看看Activity中重要的API吧。</p>
+<a id="more"></a>
+
 <h3 id="首先看看Activity继承结构。"><a href="#首先看看Activity继承结构。" class="headerlink" title="首先看看Activity继承结构。"></a>首先看看Activity继承结构。</h3><ul>
 <li><p>AppCompatActivity ：目前来说默认AS创建的Activity继承自AppcompatActivity,直接意思兼容的Activity咯，支持ActionBar,同时对MD控件提供支持。</p>
 </li>
@@ -443,6 +456,7 @@
 
 <p>携带数据</p>
 <p>Intent可以携带基本数据类型，数组，Parcelable，Serializable，不爽的话直接Bundle打包。不过内部实现也是一起打包在Bundle中。</p>
+<p>startActivityForResult 这则是启动activity后返回可以读取返回的数据，需要重写onActivityResult来读取Intent</p>
 <p>到了这里其实也能够做听过事了，不光能够自己应用内跳转，以及开启相机啊，相册，很多很多。</p>
 <h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><h3 id="返回栈"><a href="#返回栈" class="headerlink" title="返回栈"></a>返回栈</h3><p>用于管理任务栈，新Activity入栈，finish出栈。</p>
 <h3 id="活动状态"><a href="#活动状态" class="headerlink" title="活动状态"></a>活动状态</h3><ul>
@@ -518,6 +532,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/06/Android-梳理一波Service/" rel="prev" title="梳理一波Service">
+                梳理一波Service <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -598,7 +616,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1161,6 +1179,113 @@
 
 
   
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("LX0pOgHmWGbSfTBRLIeigP0V-MdYXbMMI", "dVHN22lr7TN0QHXWEoIAdMhK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 
