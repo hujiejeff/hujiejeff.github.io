@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="基础,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="广播whatandroid内部封装的一种通信方式，如其名，广播，向注册的接收者广播信息  标准广播：异步执行，所有接受器几乎同时收到，无法被拦截 有序广播：同步执行，有先后顺序，按照优先级，可以被拦截  接受系统广播在android系统内部会有巨多的广播，来向向应用扩散重要信息。比如开机，网络，sd卡等等。 想要接受系统广播首先需要定义广播接收器：  静态注册：在Manifest中声明关心的广播">
+<meta name="keywords" content="基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android-归纳下广播和内容提供器">
+<meta property="og:url" content="http://hujiejeff.github.io/2019/07/10/Android-归纳下广播和内容提供器/index.html">
+<meta property="og:site_name" content="树先生の博客">
+<meta property="og:description" content="广播whatandroid内部封装的一种通信方式，如其名，广播，向注册的接收者广播信息  标准广播：异步执行，所有接受器几乎同时收到，无法被拦截 有序广播：同步执行，有先后顺序，按照优先级，可以被拦截  接受系统广播在android系统内部会有巨多的广播，来向向应用扩散重要信息。比如开机，网络，sd卡等等。 想要接受系统广播首先需要定义广播接收器：  静态注册：在Manifest中声明关心的广播">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-10T08:25:14.227Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android-归纳下广播和内容提供器">
+<meta name="twitter:description" content="广播whatandroid内部封装的一种通信方式，如其名，广播，向注册的接收者广播信息  标准广播：异步执行，所有接受器几乎同时收到，无法被拦截 有序广播：同步执行，有先后顺序，按照优先级，可以被拦截  接受系统广播在android系统内部会有巨多的广播，来向向应用扩散重要信息。比如开机，网络，sd卡等等。 想要接受系统广播首先需要定义广播接收器：  静态注册：在Manifest中声明关心的广播">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://hujiejeff.github.io/2019/07/10/Android-归纳下广播和内容提供器/">
+
+
+
+
+
+  <title>Android-归纳下广播和内容提供器 | 树先生の博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">树先生の博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">更好的成为更好的你</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/07/10/Android-归纳下广播和内容提供器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hujie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="树先生の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android-归纳下广播和内容提供器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-10T14:35:55+08:00">
+                2019-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/10/Android-归纳下广播和内容提供器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/10/Android-归纳下广播和内容提供器/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/07/10/Android-归纳下广播和内容提供器/" class="leancloud_visitors" data-flag-title="Android-归纳下广播和内容提供器">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="广播"><a href="#广播" class="headerlink" title="广播"></a>广播</h2><h3 id="what"><a href="#what" class="headerlink" title="what"></a>what</h3><p>android内部封装的一种通信方式，如其名，广播，向注册的接收者广播信息</p>
+<ul>
+<li>标准广播：异步执行，所有接受器几乎同时收到，无法被拦截</li>
+<li>有序广播：同步执行，有先后顺序，按照优先级，可以被拦截</li>
+</ul>
+<h3 id="接受系统广播"><a href="#接受系统广播" class="headerlink" title="接受系统广播"></a>接受系统广播</h3><p>在android系统内部会有巨多的广播，来向向应用扩散重要信息。比如开机，网络，sd卡等等。</p>
+<p>想要接受系统广播首先需要定义<code>广播接收器</code>：</p>
+<ul>
+<li>静态注册：在Manifest中声明关心的广播</li>
+<li>动态注册：通过代码声明</li>
+</ul>
+<a id="more"></a>
+
+<h4 id="定义广播接收器"><a href="#定义广播接收器" class="headerlink" title="定义广播接收器"></a>定义广播接收器</h4><p>继承<code>BroadcastReceiver</code>重写onReceive即可判断广播</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NetworkChangeRecevier</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</span><br><span class="line">        ConnectivityManager connectivityManager = (ConnectivityManager)        getSystemService(Context.CONNECTIVITY_SERVICE);</span><br><span class="line">        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();</span><br><span class="line">        <span class="keyword">if</span> (networkInfo != <span class="keyword">null</span> &amp;&amp; networkInfo.isAvailable()) &#123;</span><br><span class="line">            Toast.makeText(MainActivity.<span class="keyword">this</span>,<span class="string">"网络可用"</span>,Toast.LENGTH_SHORT).show();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Toast.makeText(MainActivity.<span class="keyword">this</span>,<span class="string">"网络不可用"</span>,Toast.LENGTH_SHORT).show();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="静态注册"><a href="#静态注册" class="headerlink" title="静态注册"></a>静态注册</h4><p>直接在Manifest中书写<code>receiver</code>标签，同如activity和service，写好<code>intent-filter</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//1、新建一个BroadcastReceiver</span><br><span class="line">//2、在应用配置文件，设置好权限，以及监听的广播</span><br><span class="line"><span class="tag">&lt;<span class="name">receiver</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">".BootCompleteReceiver"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:enabled</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:exported</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.BOOT_COMPLETED"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">receiver</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br><span class="line">//enabled表示是否启用</span><br><span class="line">//exproted表示是否接受应用以外的广播</span><br></pre></td></tr></table></figure>
+
+<h4 id="动态注册"><a href="#动态注册" class="headerlink" title="动态注册"></a>动态注册</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">intentFilter = <span class="keyword">new</span> IntentFilter();</span><br><span class="line">intentFilter.addAction(<span class="string">"android.net.conn.CONNECTIVITY_CHANGE"</span>);</span><br><span class="line">recevier = <span class="keyword">new</span> NetworkChangeRecevier();</span><br><span class="line">registerReceiver(recevier,intentFilter);</span><br></pre></td></tr></table></figure>
+
+<p>只有注册完之后才能监听广播。</p>
+<p>记得在对应的生命周期取消注册。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unregisterReceiver(recevier);</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义广播"><a href="#自定义广播" class="headerlink" title="自定义广播"></a>自定义广播</h3><p>需要自行传达某些消息</p>
+<h4 id="发送标准广播"><a href="#发送标准广播" class="headerlink" title="发送标准广播"></a>发送标准广播</h4><p>8.0后自定义广播接受不到解决方案：</p>
+<ul>
+<li>使用动态注册</li>
+<li>静态注册，发送广播时携带ComponentName</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1、新建一个自定义的广播接受器</span></span><br><span class="line"><span class="comment">//2、静态注册接受自定义的广播</span></span><br><span class="line"><span class="comment">//3、发送广播</span></span><br><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="string">"com.example.tt.MY_BROADCAST"</span>);</span><br><span class="line">Log.d(<span class="string">"button"</span>, <span class="string">"onClick: "</span>);</span><br><span class="line">intent.setComponent(<span class="keyword">new</span> ComponentName(<span class="string">"com.example.hujie2.broadcasttest"</span>,</span><br><span class="line">        <span class="string">"com.example.hujie2.broadcasttest.MyBroadcastReceiver"</span>));</span><br><span class="line">sendBroadcast(intent);</span><br></pre></td></tr></table></figure>
+
+<h4 id="发送有序广播"><a href="#发送有序广播" class="headerlink" title="发送有序广播"></a>发送有序广播</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setOrderBroadcast(intent);</span><br><span class="line">Manifest通过设置android:priority设置优先级</span><br><span class="line">使用 abortBroadcast() 拦截广播</span><br></pre></td></tr></table></figure>
+
+<h4 id="粘性广播"><a href="#粘性广播" class="headerlink" title="粘性广播"></a>粘性广播</h4><p><strong>需要额外申请权限</strong>在Android系统粘性广播一般用来确保重要的状态改变后的信息被持久保存，并且能随时广播给新的广播接收器使用，使用isInitialStickyBroadcast来判断是否是一个粘性的初始广播值，比如我遇见的耳机插拔的时候就出现的粘性广播。</p>
+<p>声明权限</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.BROADCAST_STICKY"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>发送</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sendStickyBroadcast(intent);<span class="comment">//好像API写了废弃。。</span></span><br></pre></td></tr></table></figure>
+
+<p>判断</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">isInitialStickyBroadcast()</span><br></pre></td></tr></table></figure>
+
+<h3 id="本地广播"><a href="#本地广播" class="headerlink" title="本地广播"></a>本地广播</h3><p>只在本地应用实行的广播，如果不需要向外部广播，那就用本地广播咯</p>
+<p>发送和注册方式略有不同，通过获得<code>LocalBroadcastManager</code>实例来管理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">localBroadcastManager = LocalBroadcastManager.getInstance(<span class="keyword">this</span>);<span class="comment">//本地广播管理器</span></span><br><span class="line">Button button = findViewById(R.id.button2);</span><br><span class="line">button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">        Intent intent = <span class="keyword">new</span> Intent(<span class="string">"MY.LocalBroadcast"</span>);<span class="comment">//意图</span></span><br><span class="line">        localBroadcastManager.sendBroadcast(intent);<span class="comment">//发送本地广播</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">intentFilter = <span class="keyword">new</span> IntentFilter();<span class="comment">//意图过滤</span></span><br><span class="line">intentFilter.addAction(<span class="string">"MY.LocalBroadcast"</span>);<span class="comment">//设置监听广播行为</span></span><br><span class="line">localReceiver = <span class="keyword">new</span> LocalReceiver();<span class="comment">//自定义广播接收器</span></span><br><span class="line">localBroadcastManager.registerReceiver(localReceiver,intentFilter);<span class="comment">//注册广播接收器</span></span><br><span class="line">localBroadcastManager.unregisterReceiver(localReceiver);<span class="comment">//注销广播接受器</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="后续补充"><a href="#后续补充" class="headerlink" title="后续补充"></a>后续补充</h3><h2 id="内容提供器"><a href="#内容提供器" class="headerlink" title="内容提供器"></a>内容提供器</h2><h3 id="what-1"><a href="#what-1" class="headerlink" title="what"></a>what</h3><p>在andorid往往需要访问其它应用的数据共同协作。通过内容提供器的方式安全的提供给其他应用访问修改数据。比如读取通讯录，读取MediaCenter的数据，他们都是暴露除了内容提供器来供其它应用访问数据。其它应用通过内容解析器访问uri，如同访问数据库的方式一样访问修改数据。</p>
+<h3 id="FileContentProvider"><a href="#FileContentProvider" class="headerlink" title="FileContentProvider"></a>FileContentProvider</h3><p>从android 7.0开始直接使用<code>file://Uri</code>这样暴力的传达文件路径进行分享操作将不可用，会报<code>FileUriExposedException</code>异常，必须得用<code>content://Uri</code>这样得形式来解析分享文件的路径</p>
+<h4 id="声明FileContentProvider"><a href="#声明FileContentProvider" class="headerlink" title="声明FileContentProvider"></a>声明FileContentProvider</h4><p>Manifest中配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">provider</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">"android.support.v4.content.FileProvider"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:authorities</span>=<span class="string">"app的包名.fileProvider"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:grantUriPermissions</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:exported</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta-data</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">"android.support.FILE_PROVIDER_PATHS"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:resource</span>=<span class="string">"@xml/file_paths"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">provider</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="路径配置文件"><a href="#路径配置文件" class="headerlink" title="路径配置文件"></a>路径配置文件</h4><p>在xml资源文件夹下创键file_paths.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//每个节点都支持两个属性：name+path</span><br><span class="line">//path：需要临时授权访问的路径（.代表所有路径） </span><br><span class="line">//name：就是你给这个访问路径起个名字</span><br><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">paths</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">root-path</span> <span class="attr">name</span>=<span class="string">"root"</span> <span class="attr">path</span>=<span class="string">""</span> /&gt;</span> //代表设备的根目录new File("/");</span><br><span class="line">    <span class="tag">&lt;<span class="name">files-path</span> <span class="attr">name</span>=<span class="string">"files"</span> <span class="attr">path</span>=<span class="string">""</span> /&gt;</span> //context.getFilesDir()</span><br><span class="line">    <span class="tag">&lt;<span class="name">cache-path</span> <span class="attr">name</span>=<span class="string">"cache"</span> <span class="attr">path</span>=<span class="string">""</span> /&gt;</span> //context.getCacheDir()</span><br><span class="line">    <span class="tag">&lt;<span class="name">external-path</span> <span class="attr">name</span>=<span class="string">"external"</span> <span class="attr">path</span>=<span class="string">""</span> /&gt;</span> //Environment.getExternalStorageDirectory()</span><br><span class="line">    <span class="tag">&lt;<span class="name">external-files-path</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">path</span>=<span class="string">"path"</span> /&gt;</span> //context.getExternalFilesDirs()</span><br><span class="line">    <span class="tag">&lt;<span class="name">external-cache-path</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">path</span>=<span class="string">"path"</span> /&gt;</span> //getExternalCacheDirs()</span><br><span class="line"><span class="tag">&lt;/<span class="name">paths</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.N) &#123;</span><br><span class="line">    Uri uri = FileProvider.getUriForFile(CameraActivity.<span class="keyword">this</span>, <span class="string">"app的包名.fileProvider"</span>, photoFile);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    Uri uri = Uri.fromFile(photoFile);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>经过这样的包装形成uri:<code>content://app的包名/files/path/文件</code> 就可以匹配到具体实际路径了</p>
+<h3 id="访问应用数据"><a href="#访问应用数据" class="headerlink" title="访问应用数据"></a>访问应用数据</h3><p>android 的许多数据都可以获得，但是要申请权限</p>
+<p>比如：通讯录，短信，各种类别的文件</p>
+<h4 id="准备uri"><a href="#准备uri" class="headerlink" title="准备uri"></a>准备uri</h4><p>api的类一般都会暴露uri，比如：<code>MediaStore.Files.getContentUri(&quot;external&quot;)</code> </p>
+<h5 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">context.getContentResolver().query();</span><br><span class="line">context.getContentResolver().insert();</span><br><span class="line">context.getContentResolver().delete();</span><br><span class="line">context.getContentResolver().update();</span><br></pre></td></tr></table></figure>
+
+<p>就和操作数据库一样，因为内容提供器本身就是相当于包装了一层数据库访问操作。</p>
+<h3 id="自定义内容提供器"><a href="#自定义内容提供器" class="headerlink" title="自定义内容提供器"></a>自定义内容提供器</h3><h4 id="自然还是要Manifest声明"><a href="#自然还是要Manifest声明" class="headerlink" title="自然还是要Manifest声明"></a>自然还是要Manifest声明</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">provider</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:name</span>=<span class="string">".provider.MyContentProvider"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:authorities</span>=<span class="string">"com.my.demo.provider"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:enabled</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:exported</span>=<span class="string">"true"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="继承实现"><a href="#继承实现" class="headerlink" title="继承实现"></a>继承实现</h4><p>感觉是固定代码，内部访问数据库</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.hujie2.filepersistencetest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.ContentProvider;</span><br><span class="line"><span class="keyword">import</span> android.content.ContentValues;</span><br><span class="line"><span class="keyword">import</span> android.content.UriMatcher;</span><br><span class="line"><span class="keyword">import</span> android.database.Cursor;</span><br><span class="line"><span class="keyword">import</span> android.database.sqlite.SQLiteDatabase;</span><br><span class="line"><span class="keyword">import</span> android.net.Uri;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DatabaseContentProvider</span> <span class="keyword">extends</span> <span class="title">ContentProvider</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> BOOK_DIR = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> BOOK_ITEM = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CATEGORY_DIR = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CATEGORY_ITEM = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String AUTHORITY = <span class="string">"com.example.hujie2.filepersistencetest.provider"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> UriMatcher uriMatcher;</span><br><span class="line">    <span class="keyword">private</span>  MyDatabaseHelper dbHelper;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="comment">//uri匹配</span></span><br><span class="line">        uriMatcher = <span class="keyword">new</span> UriMatcher(UriMatcher.NO_MATCH);</span><br><span class="line">        uriMatcher.addURI(AUTHORITY, <span class="string">"book"</span>, BOOK_DIR);</span><br><span class="line">        uriMatcher.addURI(AUTHORITY, <span class="string">"book/#"</span>, BOOK_ITEM);</span><br><span class="line">        uriMatcher.addURI(AUTHORITY, <span class="string">"category"</span>, CATEGORY_DIR);</span><br><span class="line">        uriMatcher.addURI(AUTHORITY, <span class="string">"category/#"</span>, CATEGORY_ITEM);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DatabaseContentProvider</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//获得数据库辅助类对象</span></span><br><span class="line">        dbHelper = <span class="keyword">new</span> MyDatabaseHelper(getContext(), <span class="string">"BookStore.db"</span>, <span class="keyword">null</span>, <span class="number">2</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Cursor <span class="title">query</span><span class="params">(Uri uri, String[] projection, String selection,</span></span></span><br><span class="line"><span class="function"><span class="params">                        String[] selectionArgs, String sortOrder)</span> </span>&#123;</span><br><span class="line">        SQLiteDatabase db = dbHelper.getReadableDatabase();</span><br><span class="line">        Cursor cursor = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">switch</span> (uriMatcher.match(uri)) &#123;</span><br><span class="line">            <span class="keyword">case</span> BOOK_DIR:</span><br><span class="line">                cursor = db.query(<span class="string">"book"</span>, projection, selection, selectionArgs, <span class="keyword">null</span>, <span class="keyword">null</span>, sortOrder);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> BOOK_ITEM:</span><br><span class="line">                String bookId = uri.getPathSegments().get(<span class="number">1</span>);</span><br><span class="line">                cursor = db.query(<span class="string">"book"</span>, projection, <span class="string">"id = ?"</span>, <span class="keyword">new</span> String[]&#123;bookId&#125;, <span class="keyword">null</span>, <span class="keyword">null</span>, sortOrder);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> CATEGORY_DIR:</span><br><span class="line">                cursor = db.query(<span class="string">"category"</span>, projection, selection, selectionArgs, <span class="keyword">null</span>, <span class="keyword">null</span>, sortOrder);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> CATEGORY_ITEM:</span><br><span class="line">                String categoryId = uri.getPathSegments().get(<span class="number">1</span>);</span><br><span class="line">                cursor = db.query(<span class="string">"category"</span>, projection, <span class="string">"id = ?"</span>, <span class="keyword">new</span> String[]&#123;categoryId&#125;, <span class="keyword">null</span>, <span class="keyword">null</span>, sortOrder);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> cursor;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Uri <span class="title">insert</span><span class="params">(Uri uri, ContentValues values)</span> </span>&#123;</span><br><span class="line">        SQLiteDatabase db = dbHelper.getWritableDatabase();</span><br><span class="line">        Uri uriReturn = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">switch</span> (uriMatcher.match(uri)) &#123;</span><br><span class="line">            <span class="keyword">case</span> BOOK_DIR:</span><br><span class="line">            <span class="keyword">case</span> BOOK_ITEM:</span><br><span class="line">                <span class="keyword">long</span> newBookId = db.insert(<span class="string">"book"</span>, <span class="keyword">null</span>, values);</span><br><span class="line">                uriReturn = Uri.parse(<span class="string">"content://"</span> + AUTHORITY + <span class="string">"/book/"</span> + newBookId);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> CATEGORY_DIR:</span><br><span class="line">            <span class="keyword">case</span> CATEGORY_ITEM:</span><br><span class="line">                <span class="keyword">long</span> newCategoryId = db.insert(<span class="string">"category"</span>, <span class="keyword">null</span>, values);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> uriReturn;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">update</span><span class="params">(Uri uri, ContentValues values, String selection,</span></span></span><br><span class="line"><span class="function"><span class="params">                      String[] selectionArgs)</span> </span>&#123;</span><br><span class="line">        SQLiteDatabase db = dbHelper.getWritableDatabase();</span><br><span class="line">        <span class="keyword">int</span> updatedRows = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">switch</span> (uriMatcher.match(uri)) &#123;</span><br><span class="line">            <span class="keyword">case</span> BOOK_DIR:</span><br><span class="line">                updatedRows = db.update(<span class="string">"book"</span>, values, selection, selectionArgs);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> BOOK_ITEM:</span><br><span class="line">                String bookId = uri.getPathSegments().get(<span class="number">1</span>);</span><br><span class="line">                updatedRows = db.update(<span class="string">"book"</span>, values, <span class="string">"id = ?"</span>, <span class="keyword">new</span> String[]&#123;bookId&#125;);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> CATEGORY_DIR:</span><br><span class="line">                updatedRows = db.update(<span class="string">"category"</span>, values, selection, selectionArgs);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> CATEGORY_ITEM:</span><br><span class="line">                String categoryId = uri.getPathSegments().get(<span class="number">1</span>);</span><br><span class="line">                updatedRows = db.update(<span class="string">"category"</span>, values, <span class="string">"id = ?"</span>, <span class="keyword">new</span> String[]&#123;categoryId&#125;);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> updatedRows;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">delete</span><span class="params">(Uri uri, String selection, String[] selectionArgs)</span> </span>&#123;</span><br><span class="line">        SQLiteDatabase db = dbHelper.getWritableDatabase();</span><br><span class="line">        <span class="keyword">int</span> deletedRows = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">switch</span> (uriMatcher.match(uri)) &#123;</span><br><span class="line">            <span class="keyword">case</span> BOOK_DIR:</span><br><span class="line">                deletedRows = db.delete(<span class="string">"book"</span>, selection, selectionArgs);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> BOOK_ITEM:</span><br><span class="line">                String bookId = uri.getPathSegments().get(<span class="number">1</span>);</span><br><span class="line">                deletedRows = db.delete(<span class="string">"book"</span>, <span class="string">"id = ?"</span>, <span class="keyword">new</span> String[]&#123;bookId&#125;);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> CATEGORY_DIR:</span><br><span class="line">                deletedRows = db.delete(<span class="string">"category"</span>, selection, selectionArgs);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> CATEGORY_ITEM:</span><br><span class="line">                String categoryId = uri.getPathSegments().get(<span class="number">1</span>);</span><br><span class="line">                deletedRows = db.delete(<span class="string">"category"</span>, <span class="string">"id = ?"</span>, <span class="keyword">new</span> String[]&#123;categoryId&#125;);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> deletedRows;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getType</span><span class="params">(Uri uri)</span> </span>&#123;</span><br><span class="line">        String vndDir = <span class="string">"vnd.android.cursor.dir/"</span>;</span><br><span class="line">        String vndItem = <span class="string">"vnd.android.cursor.item/"</span>;</span><br><span class="line">        <span class="keyword">switch</span> (uriMatcher.match(uri)) &#123;</span><br><span class="line">            <span class="keyword">case</span> BOOK_DIR:</span><br><span class="line">                <span class="keyword">return</span> vndDir + <span class="string">"vnd."</span> + AUTHORITY + <span class="string">".book"</span>;</span><br><span class="line">            <span class="keyword">case</span> BOOK_ITEM:</span><br><span class="line">                <span class="keyword">return</span> vndItem + <span class="string">"vnd."</span> + AUTHORITY + <span class="string">".book"</span>;</span><br><span class="line">            <span class="keyword">case</span> CATEGORY_DIR:</span><br><span class="line">                <span class="keyword">return</span> vndDir + <span class="string">"vnd."</span> + AUTHORITY + <span class="string">".category"</span>;</span><br><span class="line">            <span class="keyword">case</span> CATEGORY_ITEM:</span><br><span class="line">                <span class="keyword">return</span> vndItem + <span class="string">"vnd."</span> + AUTHORITY + <span class="string">".category"</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    hujie
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://hujiejeff.github.io/2019/07/10/Android-归纳下广播和内容提供器/" title="Android-归纳下广播和内容提供器">http://hujiejeff.github.io/2019/07/10/Android-归纳下广播和内容提供器/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/基础/" rel="tag"># 基础</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/07/Android-关于Handler等/" rel="next" title="关于Handler消息机制梳理">
+                <i class="fa fa-chevron-left"></i> 关于Handler消息机制梳理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="hujie">
+            
+              <p class="site-author-name" itemprop="name">hujie</p>
+              <p class="site-description motion-element" itemprop="description">慎独</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#广播"><span class="nav-number">1.</span> <span class="nav-text">广播</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#what"><span class="nav-number">1.1.</span> <span class="nav-text">what</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接受系统广播"><span class="nav-number">1.2.</span> <span class="nav-text">接受系统广播</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义广播接收器"><span class="nav-number">1.2.1.</span> <span class="nav-text">定义广播接收器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#静态注册"><span class="nav-number">1.2.2.</span> <span class="nav-text">静态注册</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态注册"><span class="nav-number">1.2.3.</span> <span class="nav-text">动态注册</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义广播"><span class="nav-number">1.3.</span> <span class="nav-text">自定义广播</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#发送标准广播"><span class="nav-number">1.3.1.</span> <span class="nav-text">发送标准广播</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发送有序广播"><span class="nav-number">1.3.2.</span> <span class="nav-text">发送有序广播</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#粘性广播"><span class="nav-number">1.3.3.</span> <span class="nav-text">粘性广播</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地广播"><span class="nav-number">1.4.</span> <span class="nav-text">本地广播</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后续补充"><span class="nav-number">1.5.</span> <span class="nav-text">后续补充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内容提供器"><span class="nav-number">2.</span> <span class="nav-text">内容提供器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#what-1"><span class="nav-number">2.1.</span> <span class="nav-text">what</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FileContentProvider"><span class="nav-number">2.2.</span> <span class="nav-text">FileContentProvider</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#声明FileContentProvider"><span class="nav-number">2.2.1.</span> <span class="nav-text">声明FileContentProvider</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#路径配置文件"><span class="nav-number">2.2.2.</span> <span class="nav-text">路径配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用"><span class="nav-number">2.2.3.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问应用数据"><span class="nav-number">2.3.</span> <span class="nav-text">访问应用数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#准备uri"><span class="nav-number">2.3.1.</span> <span class="nav-text">准备uri</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#解析"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">解析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义内容提供器"><span class="nav-number">2.4.</span> <span class="nav-text">自定义内容提供器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自然还是要Manifest声明"><span class="nav-number">2.4.1.</span> <span class="nav-text">自然还是要Manifest声明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#继承实现"><span class="nav-number">2.4.2.</span> <span class="nav-text">继承实现</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hujie</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'LX0pOgHmWGbSfTBRLIeigP0V-MdYXbMMI',
+        appKey: 'dVHN22lr7TN0QHXWEoIAdMhK',
+        placeholder: 'いらっしゃいませ',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "./public/search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("DBck5CvARlltlgiTvTreiW8A-MdYXbMMI", "dKNw70SHkYhsPJ3v9TjXJxUg");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
