@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="树先生の博客">
 <meta property="og:description" content="Java  基础内容 数据类型 运算符 流程控制 面向对象 重要关键字 异常 编码 Object类  数据类型计算机中最小的单位是bit，一个位0/1表示 基础数据类型 byte  1字节   short 2字节   int  4字节  long 8字节  float 4字节  double 8字节  boolean 1字节  char 2字节 可以为unicode编码，位于栈 1char a =">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-01T11:45:19.096Z">
+<meta property="og:updated_time" content="2019-07-15T07:41:28.640Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 基础知识梳理">
 <meta name="twitter:description" content="Java  基础内容 数据类型 运算符 流程控制 面向对象 重要关键字 异常 编码 Object类  数据类型计算机中最小的单位是bit，一个位0/1表示 基础数据类型 byte  1字节   short 2字节   int  4字节  long 8字节  float 4字节  double 8字节  boolean 1字节  char 2字节 可以为unicode编码，位于栈 1char a =">
@@ -378,7 +378,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  690
+                  718
                 </span>
               
 
@@ -473,13 +473,13 @@
 <h5 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h5><p>通过父类或者接口引用访问实际对象的方法，称为动态绑定，实在运行时才能决定的。</p>
 <h5 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h5><p>静态绑定，即同名方法存在不同的参数列表（类型，数量）</p>
 <h5 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h5><p>成员和方法修饰为public ，实现的类需要实现方法，与接口间可以继承。只有声明，但是新版jdk可以存在默认方法，使用default定义</p>
-<h5 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h5><p>匿名内部类</p>
+<h5 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h5><p>匿名内部类，默认持有外部类this引用</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//只是将匿名内部类复制给了一个引用，其实再参数传递中的内部类，同样也是将匿名内部类对象传递给了，临时的引用。</span></span><br><span class="line">   <span class="comment">//方法实现</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    B b = <span class="keyword">new</span> B()&#123;</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">b</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="comment">//</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">B</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">b</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>成员内部类</p>
+<p>成员内部类，默认持有外部类this引用</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">B</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">        A a = <span class="keyword">new</span> A();</span><br><span class="line">        B b = a.new B();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>静态内部类</p>
+<p>静态内部类，不会持有外部引用</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Class A&#123;</span><br><span class="line">	<span class="keyword">static</span> B&#123;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mian</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		B b = <span class="keyword">new</span> A.B();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>内部类可以和成员一样访问外部类的成员。</p>
@@ -634,7 +634,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
