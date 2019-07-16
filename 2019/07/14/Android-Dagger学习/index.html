@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="树先生の博客">
 <meta property="og:description" content="What关于IOC（控制反转）和DI（依赖注入），DI只是IOC的实现的一种方式，另一种是依赖查找，详细见 控制反转维基百科 完全静态的依赖注入框架。依赖注入的概念真的是到哪都有，以前学Spring的就天天看它，到了android还是跑不了，现在的dagger是以半静态注入的形式，说白了，通过注解处理器分析注解，生成java代码，将对象池和需要对象的地方连接起来，其实就和自己创键差不多，我就简单总">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-16T14:23:18.943Z">
+<meta property="og:updated_time" content="2019-07-16T14:26:31.482Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dagger2学习">
 <meta name="twitter:description" content="What关于IOC（控制反转）和DI（依赖注入），DI只是IOC的实现的一种方式，另一种是依赖查找，详细见 控制反转维基百科 完全静态的依赖注入框架。依赖注入的概念真的是到哪都有，以前学Spring的就天天看它，到了android还是跑不了，现在的dagger是以半静态注入的形式，说白了，通过注解处理器分析注解，生成java代码，将对象池和需要对象的地方连接起来，其实就和自己创键差不多，我就简单总">
@@ -419,6 +419,8 @@
 <p>完全静态的依赖注入框架。依赖注入的概念真的是到哪都有，以前学Spring的就天天看它，到了android还是跑不了，现在的dagger是以半静态注入的形式，说白了，通过注解处理器分析注解，生成java代码，将对象池和需要对象的地方连接起来，其实就和自己创键差不多，我就简单总结下怎么用吧(里面的概念我也挺晕乎的，注解处理器那里我也是挺头疼的。)</p>
 <p>官网：  <a href="https://dagger.dev/users-guide" target="_blank" rel="noopener">Dagger users-guide</a> （果然还是还是官方文档讲的好呃呃）</p>
 <h2 id="How"><a href="#How" class="headerlink" title="How"></a>How</h2><h3 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">implementation <span class="string">'com.google.dagger:dagger:2.20'</span></span><br><span class="line">annotationProcessor <span class="string">'com.google.dagger:dagger-compiler:2.20'</span></span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
 
 <h3 id="最简单的例子"><a href="#最简单的例子" class="headerlink" title="最简单的例子"></a>最简单的例子</h3><p>首先需求是我需要一个对象。使用<code>@Inject</code>注解构造方法表示构造器注入</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Apple</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Apple</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
