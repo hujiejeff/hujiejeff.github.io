@@ -417,26 +417,19 @@
 
       
         
-          
-          
-MVVM一种android架构模式，谷歌官方架构中实现了，包括databinding，viewmodel，livedata，room，lifecycle，等一套用于mvvm架构的架构组件。
+          <blockquote>
+<p>MVVM一种android架构模式，谷歌官方架构中实现了，包括databinding，viewmodel，livedata，room，lifecycle，等一套用于mvvm架构的架构组件。</p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>整体学习MVVM之前，我们可以先来单独看看DataBinding是干嘛的</p>
+<p>首先附上官方文档地址：<a href="https://developer.android.google.cn/topic/libraries/data-binding" target="_blank" rel="noopener">Data Binding Library</a></p>
+<p>官方是这么说的：</p>
+<blockquote>
+<p>数据绑定库是一种支持库，借助该库，您可以使用声明性格式（而非程序化地）将布局中的界面组件绑定到应用中的数据源。</p>
+</blockquote>
+<p>就像下面这样：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">TextView</span> <span class="attr">android:text</span>=<span class="string">"@&#123;viewmodel.userName&#125;"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 
-前言整体学习MVVM之前，我们可以先来单独看看DataBinding是干嘛的
-首先附上官方文档地址：Data Binding Library
-官方是这么说的：
-
-数据绑定库是一种支持库，借助该库，您可以使用声明性格式（而非程序化地）将布局中的界面组件绑定到应用中的数据源。
-
-就像下面这样：
-1&lt;TextView android:text="@&#123;viewmodel.userName&#125;" /&gt;
-
-诶，好像似曾相识，对了，和那个jsp的el表达式，以及spring中表达式有点像啊。这样就好理解了，xml UI通过某种数据绑定，可以通过这种声明式将数据传到UI中。不得不说有点亲切，哈哈。我下面的写东西也基本上是总结(翻译233)官方文档，所以结构也是一样的。
-初步
-API要求14以上，gradle1.5以上
-
-构建环境开启DataBinding
-123456android
-          ...
+<p>诶，好像似曾相识，对了，和那个jsp的el表达式，以及spring中表达式有点像啊。这样就好理解了，xml UI通过某种数据绑定，可以通过这种声明式将数据传到UI中。不得不说有点亲切，哈哈。我下面的写东西也基本上是总结(翻译233)官方文档，所以结构也是一样的。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/07/30/Android-DataBinding/#more" rel="contents">
