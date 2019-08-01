@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="mvvm,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言之前归纳了databinding，说到底databinding也只是承载实体数据和UI进行关联，以及它们之间互通，转换。但是呢们开发过程中需要有中间人来控制逻辑，连接后台数据到绑定数据。这个时候ViewModel加上DataBinding以及LiveData就可以很好的组成一种架构模式。我们还是在了解LiveData和ViewModel之后，再结合之前的DataBinding来说MVVM吧。">
+<meta name="keywords" content="mvvm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android-MVVM之LiveData和ViewModel">
+<meta property="og:url" content="http://hujiejeff.github.io/2019/08/01/Android-LiveData and ViewModel/index.html">
+<meta property="og:site_name" content="树先生の博客">
+<meta property="og:description" content="前言之前归纳了databinding，说到底databinding也只是承载实体数据和UI进行关联，以及它们之间互通，转换。但是呢们开发过程中需要有中间人来控制逻辑，连接后台数据到绑定数据。这个时候ViewModel加上DataBinding以及LiveData就可以很好的组成一种架构模式。我们还是在了解LiveData和ViewModel之后，再结合之前的DataBinding来说MVVM吧。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://developer.android.google.cn/images/topic/libraries/architecture/viewmodel-lifecycle.png">
+<meta property="og:image" content="https://developer.android.google.cn/images/topic/libraries/architecture/viewmodel-loader.png">
+<meta property="og:image" content="https://developer.android.google.cn/images/topic/libraries/architecture/viewmodel-replace-loader.png">
+<meta property="og:image" content="https://developer.android.google.cn/topic/libraries/architecture/images/final-architecture.png">
+<meta property="og:updated_time" content="2019-08-01T12:11:05.241Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android-MVVM之LiveData和ViewModel">
+<meta name="twitter:description" content="前言之前归纳了databinding，说到底databinding也只是承载实体数据和UI进行关联，以及它们之间互通，转换。但是呢们开发过程中需要有中间人来控制逻辑，连接后台数据到绑定数据。这个时候ViewModel加上DataBinding以及LiveData就可以很好的组成一种架构模式。我们还是在了解LiveData和ViewModel之后，再结合之前的DataBinding来说MVVM吧。">
+<meta name="twitter:image" content="https://developer.android.google.cn/images/topic/libraries/architecture/viewmodel-lifecycle.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://hujiejeff.github.io/2019/08/01/Android-LiveData and ViewModel/">
+
+
+
+
+
+  <title>Android-MVVM之LiveData和ViewModel | 树先生の博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">树先生の博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">更好的成为更好的你</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/08/01/Android-LiveData and ViewModel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hujie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="树先生の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android-MVVM之LiveData和ViewModel</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-01T09:09:38+08:00">
+                2019-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/01/Android-LiveData and ViewModel/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/08/01/Android-LiveData and ViewModel/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前归纳了databinding，说到底databinding也只是承载实体数据和UI进行关联，以及它们之间互通，转换。但是呢们开发过程中需要有中间人来控制逻辑，连接后台数据到绑定数据。这个时候ViewModel加上DataBinding以及LiveData就可以很好的组成一种架构模式。我们还是在了解LiveData和ViewModel之后，再结合之前的DataBinding来说MVVM吧。</p>
+<h2 id="LiveData"><a href="#LiveData" class="headerlink" title="LiveData"></a>LiveData</h2><p>老规矩，首先附上官方文档地址：<a href="https://developer.android.google.cn/topic/libraries/architecture/livedata" target="_blank" rel="noopener">LiveData</a></p>
+<p>看看官方怎么定义LiveData的：</p>
+<blockquote>
+<p>LiveData是一个可观察对象持有类，不同于平常的可观察对象，LiveData是有生命周期感知的，意味着它会关心app组件的生命周期，比如Activity，fragment，service。这种感知特性保证LiveData只会在生命周期活跃的时候进行观察更新。</p>
+</blockquote>
+<p>LiveData考虑将观察者，在生命周期为<code>started</code>和<code>resumed</code>下保持活跃。LiveData仅仅会通知活跃的观察者进行更新，不活跃的观察者不会收到任何通知。</p>
+<p>你可以注册观察者并且给他配对实现了<a href="https://developer.android.google.cn/reference/androidx/lifecycle/LifecycleOwner.html" target="_blank" rel="noopener"><code>LifecycleOwner</code></a> 的接口的对象。在这层关系下，观察者会在<code>Lifecycle</code>对象进入<code>destory</code>时被移除，这个对于<code>fragment</code>和<code>activity</code>非常有用，它可以很安全的观察livedata对象，在<code>fragment</code>和<code>activity</code>生命周期销毁时，它们会立即解除订阅，不会产生内存泄漏。</p>
+<a id="more"></a>
+
+<h3 id="LiveData优点"><a href="#LiveData优点" class="headerlink" title="LiveData优点"></a>LiveData优点</h3><ul>
+<li><p>确保UI和数据状态匹配</p>
+<p>通过观察者模式，livedata会在生命周期发生改变通知观察者，通过书写固定更新UI代码，在数据发生改变时触发，而不是手动在数据改变时改变UI。</p>
+</li>
+<li><p>没有内存泄漏</p>
+<p>观察者会被绑定到<code>Lifecycle</code>对象，在关联的生命周期被销毁时，观察者会被清理。</p>
+</li>
+<li><p>activity停止不会崩溃</p>
+<p>如果观察者处于不活跃状态，比如activity在后台运行，观察者不会收到livedata的事件</p>
+</li>
+<li><p>不需要手动管理生命周期</p>
+<p>UI组件只会观察数据，不会停止和恢复观察，这些都是交由livedata自动管理。因为livedata可以感知</p>
+</li>
+<li><p>保持数据最新</p>
+<p>如果生命周期是不活跃的，它将在变为活跃是获取最新的数据。例如activity从后台来到前台将会收取最新的数据。</p>
+</li>
+<li><p>适配配置更改</p>
+<p>activity和fragment因为配置更改而重建，它们会收到最新的数据</p>
+</li>
+<li><p>共享资源</p>
+<p>使用单例模式继承LiveData，并且包裹系统服务，以便能够在在全局使用，一旦连接到系统服务，任何观察者都可以查看livedata。</p>
+</li>
+</ul>
+<h3 id="使用LiveData"><a href="#使用LiveData" class="headerlink" title="使用LiveData"></a>使用LiveData</h3><p>一般来讲是要声明依赖</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    <span class="keyword">def</span> lifecycle_version = <span class="string">"2.0.0"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// ViewModel and LiveData</span></span><br><span class="line">    implementation <span class="string">"androidx.lifecycle:lifecycle-extensions:$lifecycle_version"</span></span><br><span class="line">    <span class="comment">// alternatively - just ViewModel</span></span><br><span class="line">    implementation <span class="string">"androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"</span> <span class="comment">// For Kotlin use lifecycle-viewmodel-ktx</span></span><br><span class="line">    <span class="comment">// alternatively - just LiveData</span></span><br><span class="line">    implementation <span class="string">"androidx.lifecycle:lifecycle-livedata:$lifecycle_version"</span></span><br><span class="line">    <span class="comment">// alternatively - Lifecycles only (no ViewModel or LiveData). Some UI</span></span><br><span class="line">    <span class="comment">//     AndroidX libraries use this lightweight import for Lifecycle</span></span><br><span class="line">    implementation <span class="string">"androidx.lifecycle:lifecycle-runtime:$lifecycle_version"</span></span><br><span class="line"></span><br><span class="line">    annotationProcessor <span class="string">"androidx.lifecycle:lifecycle-compiler:$lifecycle_version"</span> <span class="comment">// For Kotlin use kapt instead of annotationProcessor</span></span><br><span class="line">    <span class="comment">// alternately - if using Java8, use the following instead of lifecycle-compiler</span></span><br><span class="line">    implementation <span class="string">"androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// optional - ReactiveStreams support for LiveData</span></span><br><span class="line">    implementation <span class="string">"androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version"</span> <span class="comment">// For Kotlin use lifecycle-reactivestreams-ktx</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// optional - Test helpers for LiveData</span></span><br><span class="line">    testImplementation <span class="string">"androidx.arch.core:core-testing:$lifecycle_version"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是呢，我在AS3.4的基础上打开Databing后，这些LiveData和ViewModel都有了。。这些组件也是几年前就有了就，估计因为现在是9012年的原因，直接都给你集成好了。</p>
+<p>一般来说是这样的步骤：</p>
+<ul>
+<li>在ViewModel中声明创键LiveData对象</li>
+<li>在UI控制器中，比如activity，fragment中创键观察者<code>Observer</code>对象，实现<code>onChange</code>逻辑</li>
+<li>通过在LiveData上调用<code>oberve</code>关联<code>Observer</code>和<code>LiveData</code>，需要传入<code>lifecycleOwner</code>，一般是在UI控制中执行</li>
+</ul>
+<blockquote>
+<p>如果oberver和livedata之间没有关联lifecycleOwner，则默认考虑这个observer总是处于活跃状态，即总是接受通知发生调用。你可以通过<code>removeOberver()</code>移除它</p>
+</blockquote>
+<p>当livedata数据发生改变，将会触发附着在生命周期上活跃的oberver</p>
+<p>livedata允许在控制器中订阅它，并且触发进行UI变化</p>
+<h4 id="创键LiveData对象"><a href="#创键LiveData对象" class="headerlink" title="创键LiveData对象"></a>创键LiveData对象</h4><p>LiveData一个可以包装对象，包括了集合，一个LiveData通常是在ViewModel中声明的，同时提供getter方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NameViewModel</span> <span class="keyword">extends</span> <span class="title">ViewModel</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Create a LiveData with a String</span></span><br><span class="line">    <span class="keyword">private</span> MutableLiveData&lt;String&gt; currentName;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> MutableLiveData&lt;String&gt; <span class="title">getCurrentName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (currentName == <span class="keyword">null</span>) &#123;</span><br><span class="line">            currentName = <span class="keyword">new</span> MutableLiveData&lt;String&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> currentName;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">// Rest of the ViewModel...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>确保在ViewModel中存储UI的LiveData对象，第一，避免activity和fragment过度膨胀，它们的职责应该是负责UI显示而不是保存数据状态，第二、将LiveData实例和activity，fragment进行解耦，并且允许在配置发生改变时依然存活</p>
+</blockquote>
+<h4 id="观察LiveData对象"><a href="#观察LiveData对象" class="headerlink" title="观察LiveData对象"></a>观察LiveData对象</h4><p>在大多数情况下，在app组件的<code>onCreate</code>方法中开启<code>LiveData</code>观察是非常适合的，原因如下：</p>
+<ul>
+<li>onResume调用时不会产生冗余调用在</li>
+<li>确保activity，fragment拥有数据，在处于活跃状态立即展示它，一旦进入<code>started</code>状态，立即收取最近的数据</li>
+</ul>
+<p>触发活跃状态下的oberver，例外，从非活跃转为活跃也会触发，如果第二次从非活跃到活跃，只有上次情况下的值发生改变了才会触发。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NameActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> NameViewModel model;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        <span class="comment">// Other code to setup the activity...</span></span><br><span class="line">        <span class="comment">// Get the ViewModel.</span></span><br><span class="line">        model = ViewModelProviders.of(<span class="keyword">this</span>).get(NameViewModel.class);</span><br><span class="line">        <span class="comment">// Create the observer which updates the UI.</span></span><br><span class="line">        <span class="keyword">final</span> Observer&lt;String&gt; nameObserver = <span class="keyword">new</span> Observer&lt;String&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onChanged</span><span class="params">(@Nullable <span class="keyword">final</span> String newName)</span> </span>&#123;</span><br><span class="line">                <span class="comment">// Update the UI, in this case, a TextView.</span></span><br><span class="line">                nameTextView.setText(newName);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">// Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.</span></span><br><span class="line">        model.getCurrentName().observe(<span class="keyword">this</span>, nameObserver);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>数据改变，触发监听</p>
+<h4 id="更新LiveData对象"><a href="#更新LiveData对象" class="headerlink" title="更新LiveData对象"></a>更新LiveData对象</h4><p>通过<code>setValue(T)</code>和<code>postValue</code>来更新数据，触发监听，更新UI</p>
+<p><code>setValue</code>只能在主线程中更新数据</p>
+<p><code>postValue</code>可以在子线程中，子线程中用它就对了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">button.setOnClickListener(<span class="keyword">new</span> OnClickListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">        String anotherName = <span class="string">"John Doe"</span>;</span><br><span class="line">        model.getCurrentName().setValue(anotherName);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="Room中使用LiveData"><a href="#Room中使用LiveData" class="headerlink" title="Room中使用LiveData"></a>Room中使用LiveData</h4><p>Room支持可观察的查询，返回LiveData对象，通过LiveData，以及设置观察者，保持UI数据和数据库同步，具体以后看Room的学习吧</p>
+<h4 id="LiveData使用协程"><a href="#LiveData使用协程" class="headerlink" title="LiveData使用协程"></a>LiveData使用协程</h4><p>支持kotlin的协程（呃呃，这个我还不是很会😭）</p>
+<h3 id="扩展LiveData"><a href="#扩展LiveData" class="headerlink" title="扩展LiveData"></a>扩展LiveData</h3><p>LiveData会根据oberver生命周期宿主是否是<code>STARTED</code>和<code>RESUME</code>来认定oberver是否处于活跃和非活跃状态</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StockLiveData</span> <span class="keyword">extends</span> <span class="title">LiveData</span>&lt;<span class="title">BigDecimal</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> StockManager stockManager;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> SimplePriceListener listener = <span class="keyword">new</span> SimplePriceListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPriceChanged</span><span class="params">(BigDecimal price)</span> </span>&#123;</span><br><span class="line">            setValue(price);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StockLiveData</span><span class="params">(String symbol)</span> </span>&#123;</span><br><span class="line">        stockManager = <span class="keyword">new</span> StockManager(symbol);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onActive</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        stockManager.requestPriceUpdates(listener);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onInactive</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        stockManager.removeUpdates(listener);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>onActive 当LiveData拥有活跃的oberver，可以开始监听数据，调用</li>
+<li>onInActive LiveData没有活跃的oberver，不会触发监听，调用</li>
+</ul>
+<p>通过扩展，可以加入自己的监听器</p>
+<p>这些obsever会随着生命周期变化，比如活跃状态，消亡状态</p>
+<p>通过单例进行分享</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StockLiveData</span> <span class="keyword">extends</span> <span class="title">LiveData</span>&lt;<span class="title">BigDecimal</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> StockLiveData sInstance;</span><br><span class="line">    <span class="keyword">private</span> StockManager stockManager;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> SimplePriceListener listener = <span class="keyword">new</span> SimplePriceListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPriceChanged</span><span class="params">(BigDecimal price)</span> </span>&#123;</span><br><span class="line">            setValue(price);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@MainThread</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> StockLiveData <span class="title">get</span><span class="params">(String symbol)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            sInstance = <span class="keyword">new</span> StockLiveData(symbol);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sInstance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">StockLiveData</span><span class="params">(String symbol)</span> </span>&#123;</span><br><span class="line">        stockManager = <span class="keyword">new</span> StockManager(symbol);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onActive</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        stockManager.requestPriceUpdates(listener);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onInactive</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        stockManager.removeUpdates(listener);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后你可以在fragment使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityCreated</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        StockLiveData.get(symbol).observe(<span class="keyword">this</span>, price -&gt; &#123;</span><br><span class="line">            <span class="comment">// Update the UI.</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="变换LiveData"><a href="#变换LiveData" class="headerlink" title="变换LiveData"></a>变换LiveData</h3><p>当你想要在发送通知前改变<code>LiveData</code>的值，或者你需要基于原来的<code>LiveData</code>返回一个另一<code>LiveData</code>，<code>LifeCycle</code>包里面提供了这样的工具类<code>Transformations</code></p>
+<h4 id="map"><a href="#map" class="headerlink" title="map"></a>map</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LiveData&lt;User&gt; userLiveData = ...;</span><br><span class="line">LiveData&lt;String&gt; userName = Transformations.map(userLiveData, user -&gt; &#123;</span><br><span class="line">    user.name + <span class="string">" "</span> + user.lastName</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="switchMap"><a href="#switchMap" class="headerlink" title="switchMap"></a>switchMap</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> LiveData&lt;User&gt; <span class="title">getUser</span><span class="params">(String id)</span> </span>&#123;</span><br><span class="line">  ...;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LiveData&lt;String&gt; userId = ...;</span><br><span class="line">LiveData&lt;User&gt; user = Transformations.switchMap(userId, id -&gt; getUser(id) );</span><br></pre></td></tr></table></figure>
+
+<p>变换是惰性的，只有在在正处于观察和返回数据时进行计算。</p>
+<h3 id="合并多个LiveData源"><a href="#合并多个LiveData源" class="headerlink" title="合并多个LiveData源"></a>合并多个LiveData源</h3><p>使用<code>MediatorLiveData</code>来合并多个<code>LiveData</code>，一旦其中的任何一个数据发生改变，<code>MediatorLiveData</code>的<code>Ovserver</code>会触发变化，一个典型的例子是我们有一个来自数据库的LiveData，一个来自网络的LiveData，以及聚合了二者的与UI相关的<code>MediatorLiveData</code>，无论在是数据库还是网络发生变化，都会触发UI的<code>MediatorLiveData</code>的observer。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>总的来讲LiveData对象，就是一个具有生命周期感知的，持有可观察数据，不仅仅局限于UI。使用它可以在MVVM的结构中使得ViewModel不依赖View这一层从而完成View的变化。</p>
+<p>View-&gt;ViewModel-&gt;Model</p>
+<h2 id="ViewModel"><a href="#ViewModel" class="headerlink" title="ViewModel"></a>ViewModel</h2><p>定义：在生命周期中，用于存储管理UI关联的数据。ViewModel允许在配置发生改变时存活</p>
+<p>缘由：</p>
+<p>Android framework管理者activity，fragment的生命周期，Android framework 也许会因为某些失控的事件和操作来进行销毁，重建activity，fragment。在发生这种情况下时候，瞬时的UI数据就会丢失，在之前的情况下我们会通过<code>onSaveInstanceState</code>去保存某些数据，以便下次重建时<code>onCreate</code>进行数据恢复，但是这个解决方式只适用于一些轻量的序列化数据，像那些<code>Bitmap</code>就不适用了。</p>
+<p>再者，UI控制器会经常性去做一些异步调用，并且有可能返回数据，为了防止内存泄漏，UI控制器需要管理这些调用，在UI控制器销毁时去清理。这种方式需要大量的维护，并且在配置发生改变，某些需要重建的资源对象在重建时会消耗大量资源。</p>
+<p>对于UI控制器来说，它的责任应该是UI展示，UI交互，处理和系统的交流比如权限请求。将过多的责任分配给UI控制器会导致代码臃肿。尝试将一些责任分配出去，也会便于测试。</p>
+<h3 id="实现ViewModel"><a href="#实现ViewModel" class="headerlink" title="实现ViewModel"></a>实现ViewModel</h3><p>架构组件提供ViewModel来帮助UI控制器承担UI数据贮备的职责，并且它会在配置改变时自动保存，下次恢复时立马可用。</p>
+<p>这个例子是用于加载用户列表数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyViewModel</span> <span class="keyword">extends</span> <span class="title">ViewModel</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> MutableLiveData&lt;List&lt;User&gt;&gt; users;</span><br><span class="line">    <span class="keyword">public</span> LiveData&lt;List&lt;User&gt;&gt; getUsers() &#123;</span><br><span class="line">        <span class="keyword">if</span> (users == <span class="keyword">null</span>) &#123;</span><br><span class="line">            users = <span class="keyword">new</span> MutableLiveData&lt;List&lt;User&gt;&gt;();</span><br><span class="line">            loadUsers();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> users;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">loadUsers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Do an asynchronous operation to fetch users.</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在UI控制器中监听数据变化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Create a ViewModel the first time the system calls an activity's onCreate() method.</span></span><br><span class="line">        <span class="comment">// Re-created activities receive the same MyViewModel instance created by the first activity.</span></span><br><span class="line"></span><br><span class="line">        MyViewModel model = ViewModelProviders.of(<span class="keyword">this</span>).get(MyViewModel.class);</span><br><span class="line">        model.getUsers().observe(<span class="keyword">this</span>, users -&gt; &#123;</span><br><span class="line">            <span class="comment">// update UI</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ViewModel不允许持有View引用、Lifecycle以及任何持有了activity context的对象的引用</strong>，<strong>即UI无关</strong></p>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p>ViewModel的作用域是通过<code>Lifecycle</code>通过<code>ViewModelProvider</code>传递的，<code>ViewModel</code>会保留在内存中，直到<code>Lifecycle</code>的作用域消失，比如，activity的finish，fragment的detach，可以见下图</p>
+<p><img src="https://developer.android.google.cn/images/topic/libraries/architecture/viewmodel-lifecycle.png" alt="ViewModel生命周期"></p>
+<p>通常来讲实在第一次请求<code>onCreate</code>创键<code>ViewModel</code>，过程中可能多次<code>onCreate</code>，但是在第一次请求<code>ViewModel</code>直到activity finished and destroyed 之间都是存在的。</p>
+<h3 id="在Fragment间共享数据，通信"><a href="#在Fragment间共享数据，通信" class="headerlink" title="在Fragment间共享数据，通信"></a>在Fragment间共享数据，通信</h3><p>通常一个activity会包含多个fragment，然而多个fragment之间会涉及相关联的数据以及操作，fragment之间需要通信，简单的解决方法是通过定义接口进行回调，但是很繁琐，每个都写那不得烦死，还得绑定，解绑，生命周期可见性，各种考虑。通过共享得ViewModel可以很好的解决这个问题。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SharedViewModel</span> <span class="keyword">extends</span> <span class="title">ViewModel</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> MutableLiveData&lt;Item&gt; selected = <span class="keyword">new</span> MutableLiveData&lt;Item&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">select</span><span class="params">(Item item)</span> </span>&#123;</span><br><span class="line">        selected.setValue(item);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> LiveData&lt;Item&gt; <span class="title">getSelected</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> selected;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MasterFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> SharedViewModel model;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        model = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);</span><br><span class="line">        itemSelector.setOnClickListener(item -&gt; &#123;</span><br><span class="line">            model.select(item);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DetailFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        SharedViewModel model = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);</span><br><span class="line">        model.getSelected().observe(<span class="keyword">this</span>, &#123; item -&gt;</span><br><span class="line">           <span class="comment">// Update the UI.</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>两个fragment共同处于一个activity，当然viewmodel也是同一个。</p>
+<p>优点</p>
+<ul>
+<li>activity不需要了解任何事情，甚至通信内容</li>
+<li>fragment只需要了解和Viewmodel之间的契约，其它的不需要了解，其中之一的fragment消失了，另一个还是会正常工作</li>
+<li>每个fragment都有各自的生命周期，它们之间互不影响，如果一个fragment被替换了，UI还是会正常工作。</li>
+</ul>
+<h3 id="使用ViewModel替换loader进行加载"><a href="#使用ViewModel替换loader进行加载" class="headerlink" title="使用ViewModel替换loader进行加载"></a>使用ViewModel替换loader进行加载</h3><p>以前使用loader来同步UI和数据库的数据</p>
+<p><img src="https://developer.android.google.cn/images/topic/libraries/architecture/viewmodel-loader.png" alt></p>
+<p>现在这样用</p>
+<p><img src="https://developer.android.google.cn/images/topic/libraries/architecture/viewmodel-replace-loader.png" alt></p>
+<h3 id="ViewModel中使用协程"><a href="#ViewModel中使用协程" class="headerlink" title="ViewModel中使用协程"></a>ViewModel中使用协程</h3><p>待学习</p>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p> 随着数据变得复杂，考虑将数据加载分离出去，当当当，这一步走完不就是MVVM了吗？哈哈</p>
+<h2 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h2><p>其实从DataBind到LiveData，再到ViewModel就差不多是MVVM的雏形了</p>
+<p>M：Model层，用于实际的数据加载，只负责加载数据</p>
+<p>V：View层，负责UI展示，交互</p>
+<p>VM：ViewMdoel层，负责View的数据，连通View和Model，负责获取Model的数据，转化为UI的数据，当然也包括了逻辑处理</p>
+<p>如果感觉VM层太繁重，可以继续分离一层Presenter来处理逻辑，亦或者分离一层Mediator来处理验证</p>
+<p>View -&gt; ViewModel -&gt; Model 现在的依赖单向，通过LiveData和双向绑定，ViewModel不需要依赖View了。</p>
+<p>现在的架构变成这样了，简洁明了</p>
+<p><img src="https://developer.android.google.cn/topic/libraries/architecture/images/final-architecture.png" alt></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    hujie
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://hujiejeff.github.io/2019/08/01/Android-LiveData and ViewModel/" title="Android-MVVM之LiveData和ViewModel">http://hujiejeff.github.io/2019/08/01/Android-LiveData and ViewModel/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mvvm/" rel="tag"># mvvm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/30/Android-DataBinding/" rel="next" title="Android-MVVM之DataBinding">
+                <i class="fa fa-chevron-left"></i> Android-MVVM之DataBinding
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="hujie">
+            
+              <p class="site-author-name" itemprop="name">hujie</p>
+              <p class="site-description motion-element" itemprop="description">慎独</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LiveData"><span class="nav-number">2.</span> <span class="nav-text">LiveData</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LiveData优点"><span class="nav-number">2.1.</span> <span class="nav-text">LiveData优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用LiveData"><span class="nav-number">2.2.</span> <span class="nav-text">使用LiveData</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创键LiveData对象"><span class="nav-number">2.2.1.</span> <span class="nav-text">创键LiveData对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#观察LiveData对象"><span class="nav-number">2.2.2.</span> <span class="nav-text">观察LiveData对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新LiveData对象"><span class="nav-number">2.2.3.</span> <span class="nav-text">更新LiveData对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Room中使用LiveData"><span class="nav-number">2.2.4.</span> <span class="nav-text">Room中使用LiveData</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LiveData使用协程"><span class="nav-number">2.2.5.</span> <span class="nav-text">LiveData使用协程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展LiveData"><span class="nav-number">2.3.</span> <span class="nav-text">扩展LiveData</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变换LiveData"><span class="nav-number">2.4.</span> <span class="nav-text">变换LiveData</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#map"><span class="nav-number">2.4.1.</span> <span class="nav-text">map</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#switchMap"><span class="nav-number">2.4.2.</span> <span class="nav-text">switchMap</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合并多个LiveData源"><span class="nav-number">2.5.</span> <span class="nav-text">合并多个LiveData源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">2.6.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ViewModel"><span class="nav-number">3.</span> <span class="nav-text">ViewModel</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现ViewModel"><span class="nav-number">3.1.</span> <span class="nav-text">实现ViewModel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期"><span class="nav-number">3.2.</span> <span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在Fragment间共享数据，通信"><span class="nav-number">3.3.</span> <span class="nav-text">在Fragment间共享数据，通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用ViewModel替换loader进行加载"><span class="nav-number">3.4.</span> <span class="nav-text">使用ViewModel替换loader进行加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ViewModel中使用协程"><span class="nav-number">3.5.</span> <span class="nav-text">ViewModel中使用协程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-1"><span class="nav-number">3.6.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVVM"><span class="nav-number">4.</span> <span class="nav-text">MVVM</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hujie</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'LX0pOgHmWGbSfTBRLIeigP0V-MdYXbMMI',
+        appKey: 'dVHN22lr7TN0QHXWEoIAdMhK',
+        placeholder: 'いらっしゃいませ',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "./public/search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
