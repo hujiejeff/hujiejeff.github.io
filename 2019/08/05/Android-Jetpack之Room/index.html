@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="db Jetpack,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言google官方的数据库框架，可以无缝结合LiveData以及Rxjava结合使用。 文档：Romm doc api详细：Room summary 基础使用步骤 引入依赖，开启androidx哦 123456789101112131415161718dependencies &amp;#123;    def room_version = &quot;2.2.0-alpha01&quot; // 2.1.0 for la">
+<meta name="keywords" content="db Jetpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jetpacak之Room">
+<meta property="og:url" content="http://hujiejeff.github.io/2019/08/05/Android-Jetpack之Room/index.html">
+<meta property="og:site_name" content="树先生の博客">
+<meta property="og:description" content="前言google官方的数据库框架，可以无缝结合LiveData以及Rxjava结合使用。 文档：Romm doc api详细：Room summary 基础使用步骤 引入依赖，开启androidx哦 123456789101112131415161718dependencies &amp;#123;    def room_version = &quot;2.2.0-alpha01&quot; // 2.1.0 for la">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-07T05:44:50.750Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jetpacak之Room">
+<meta name="twitter:description" content="前言google官方的数据库框架，可以无缝结合LiveData以及Rxjava结合使用。 文档：Romm doc api详细：Room summary 基础使用步骤 引入依赖，开启androidx哦 123456789101112131415161718dependencies &amp;#123;    def room_version = &quot;2.2.0-alpha01&quot; // 2.1.0 for la">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://hujiejeff.github.io/2019/08/05/Android-Jetpack之Room/">
+
+
+
+
+
+  <title>Jetpacak之Room | 树先生の博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">树先生の博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">更好的成为更好的你</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/08/05/Android-Jetpack之Room/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hujie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="树先生の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Jetpacak之Room</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-05T09:09:38+08:00">
+                2019-08-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/05/Android-Jetpack之Room/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/08/05/Android-Jetpack之Room/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>google官方的数据库框架，可以无缝结合LiveData以及Rxjava结合使用。</p>
+<p>文档：<a href="https://developer.android.google.cn/training/data-storage/room" target="_blank" rel="noopener">Romm doc</a></p>
+<p>api详细：<a href="https://developer.android.google.cn/reference/androidx/room/package-summary" target="_blank" rel="noopener">Room summary</a></p>
+<p>基础使用步骤</p>
+<p>引入依赖，开启androidx哦</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    <span class="keyword">def</span> room_version = <span class="string">"2.2.0-alpha01"</span> <span class="comment">// 2.1.0 for latest stable version</span></span><br><span class="line"></span><br><span class="line">    implementation <span class="string">"androidx.room:room-runtime:$room_version"</span></span><br><span class="line">    annotationProcessor <span class="string">"androidx.room:room-compiler:$room_version"</span> <span class="comment">// For Kotlin use kapt instead of annotationProcessor</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// optional - Kotlin Extensions and Coroutines support for Room</span></span><br><span class="line">    implementation <span class="string">"androidx.room:room-ktx:$room_version"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// optional - RxJava support for Room</span></span><br><span class="line">    implementation <span class="string">"androidx.room:room-rxjava2:$room_version"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// optional - Guava support for Room, including Optional and ListenableFuture</span></span><br><span class="line">    implementation <span class="string">"androidx.room:room-guava:$room_version"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Test helpers</span></span><br><span class="line">    testImplementation <span class="string">"androidx.room:room-testing:$room_version"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>定义实体类 - <code>Entity</code></li>
+<li>定义Dao类 - <code>Dao</code></li>
+<li>定义抽象数据库类 - <code>Database</code></li>
+<li>使用</li>
+</ul>
+<a id="more"></a>
+
+<h3 id="定义实体"><a href="#定义实体" class="headerlink" title="定义实体"></a>定义实体</h3><p>实体类对应着一张表</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PrimaryKey</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> uid;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ColumnInfo</span>(name = <span class="string">"first_name"</span>)</span><br><span class="line">    <span class="keyword">public</span> String firstName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ColumnInfo</span>(name = <span class="string">"last_name"</span>)</span><br><span class="line">    <span class="keyword">public</span> String lastName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="定义Dao"><a href="#定义Dao" class="headerlink" title="定义Dao"></a>定义Dao</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserDao</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"SELECT * FROM user"</span>)</span><br><span class="line">    <span class="function">List&lt;User&gt; <span class="title">getAll</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"SELECT * FROM user WHERE uid IN (:userIds)"</span>)</span><br><span class="line">    <span class="function">List&lt;User&gt; <span class="title">loadAllByIds</span><span class="params">(<span class="keyword">int</span>[] userIds)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"SELECT * FROM user WHERE first_name LIKE :first AND "</span> +</span><br><span class="line">           <span class="string">"last_name LIKE :last LIMIT 1"</span>)</span><br><span class="line">    <span class="function">User <span class="title">findByName</span><span class="params">(String first, String last)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Insert</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insertAll</span><span class="params">(User... users)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Delete</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">delete</span><span class="params">(User user)</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Updata</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(User user)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="定义room数据库"><a href="#定义room数据库" class="headerlink" title="定义room数据库"></a>定义room数据库</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Database</span>(entities = &#123;User.class&#125;, version = <span class="number">1</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AppDatabase</span> <span class="keyword">extends</span> <span class="title">RoomDatabase</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> UserDao <span class="title">userDao</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AppDatabase db = Room.databaseBuilder(getApplicationContext(),</span><br><span class="line">        AppDatabase.class, <span class="string">"database-name"</span>).build();</span><br><span class="line">db.userDao().insert(<span class="keyword">new</span> User());</span><br></pre></td></tr></table></figure>
+
+<h2 id="定义实体-1"><a href="#定义实体-1" class="headerlink" title="定义实体"></a>定义实体</h2><h3 id="基础注解"><a href="#基础注解" class="headerlink" title="基础注解"></a>基础注解</h3><ul>
+<li><code>@Entity</code> 标注为实体</li>
+<li><code>@PrimaryKey</code>标注为主键</li>
+<li><code>@ColumnInfo</code>附加字段信息，比如字段名</li>
+<li><code>@Ignore</code> 标注为忽略属性</li>
+</ul>
+<p>使用<code>@Entity</code>标注实体类，属性皆为对应表字段，前提是要<code>JavaBean</code>，要么属性public，要么提供set/get方法。</p>
+<p>使用<code>@PrimaryKey</code>标注主键，<code>autoGenerate</code>值设置自增</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PrimaryKey</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String firstName;</span><br><span class="line">    <span class="keyword">public</span> String lastName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以在<code>@Entity</code>中设置主键</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span>(primaryKeys = &#123;<span class="string">"firstName"</span>, <span class="string">"lastName"</span>&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String firstName;</span><br><span class="line">    <span class="keyword">public</span> String lastName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>默认是以类名为表名，可以自定义表名，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span>(tableName = <span class="string">"users"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>SQLite中表名忽略大小写的</strong></p>
+</blockquote>
+<p>自定属性对应字段名，使用<code>@ColumnInfo</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span>(tableName = <span class="string">"users"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PrimaryKey</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> id;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ColumnInfo</span>(name = <span class="string">"first_name"</span>)</span><br><span class="line">    <span class="keyword">public</span> String firstName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ColumnInfo</span>(name = <span class="string">"last_name"</span>)</span><br><span class="line">    <span class="keyword">public</span> String lastName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>忽略属性，从而不对应表字段，使用<code>@Ignore</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PrimaryKey</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String firstName;</span><br><span class="line">    <span class="keyword">public</span> String lastName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Ignore</span></span><br><span class="line">    Bitmap picture;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样可以在<code>@Entity声明</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span>(ignoredColumns = <span class="string">"picture"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RemoteUser</span> <span class="keyword">extends</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PrimaryKey</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> hasVpn;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="查询支持"><a href="#查询支持" class="headerlink" title="查询支持"></a>查询支持</h3><h4 id="FTS支持"><a href="#FTS支持" class="headerlink" title="FTS支持"></a>FTS支持</h4><p>FTS：Full  Text Search 全文检索</p>
+<p>要求：sdk大于16，Room2.1以上可以Fts3，Fts4</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Use `@Fts3` only if your app has strict disk space requirements or if you</span></span><br><span class="line"><span class="comment">// require compatibility with an older SQLite version.</span></span><br><span class="line"><span class="meta">@Fts</span>4</span><br><span class="line"><span class="meta">@Entity</span>(tableName = <span class="string">"users"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Specifying a primary key for an FTS-table-backed entity is optional, but</span></span><br><span class="line">    <span class="comment">// if you include one, it must use this type and column name.</span></span><br><span class="line">    <span class="meta">@PrimaryKey</span></span><br><span class="line">    <span class="meta">@ColumnInfo</span>(name = <span class="string">"rowid"</span>)<span class="comment">//FTS开启后必须int主键名为rowid</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> id;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ColumnInfo</span>(name = <span class="string">"first_name"</span>)</span><br><span class="line">    <span class="keyword">public</span> String firstName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用languageId来指定字段来存储多语言信息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Fts</span>4(languageId = <span class="string">"lid"</span>)</span><br><span class="line"><span class="meta">@Entity</span>(tableName = <span class="string">"users"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@ColumnInfo</span>(name = <span class="string">"lid"</span>)</span><br><span class="line">    <span class="keyword">int</span> languageId;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="索引支持"><a href="#索引支持" class="headerlink" title="索引支持"></a>索引支持</h4><p>如果app的sdk版本不支持FTS，为了加快查询速度，可以考虑使用索引，使用<code>@Index</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span>(indices = &#123;<span class="meta">@Index</span>(<span class="string">"name"</span>),<span class="meta">@Index</span>(value = &#123;<span class="string">"last_name"</span>, <span class="string">"address"</span>&#125;)&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PrimaryKey</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String firstName;</span><br><span class="line">    <span class="keyword">public</span> String address;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ColumnInfo</span>(name = <span class="string">"last_name"</span>)</span><br><span class="line">    <span class="keyword">public</span> String lastName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Ignore</span></span><br><span class="line">    Bitmap picture;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>索引唯一，添加unique属性</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span>(indices = &#123;<span class="meta">@Index</span>(value = &#123;<span class="string">"first_name"</span>, <span class="string">"last_name"</span>&#125;, unique = <span class="keyword">true</span>)&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PrimaryKey</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> id;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ColumnInfo</span>(name = <span class="string">"first_name"</span>)</span><br><span class="line">    <span class="keyword">public</span> String firstName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ColumnInfo</span>(name = <span class="string">"last_name"</span>)</span><br><span class="line">    <span class="keyword">public</span> String lastName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Ignore</span></span><br><span class="line">    Bitmap picture;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="支持AutoValue对象"><a href="#支持AutoValue对象" class="headerlink" title="支持AutoValue对象"></a>支持AutoValue对象</h3><p>啥是AutoValue？</p>
+<p><a href="https://github.com/google/auto/blob/master/value/userguide/index.md" target="_blank" rel="noopener">AutoValue说明</a>，我看了下文档，大概意思就是说书写JavaBean类，需要写很多get/set，equals等大量模板代码，通过使用<code>@AutoValue</code>注解一个抽象类，书写关键代码，模板代码交由注解处理器生成。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.google.auto.value.AutoValue;</span><br><span class="line"></span><br><span class="line"><span class="meta">@AutoValue</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">static</span> Animal <span class="title">create</span><span class="params">(String name, <span class="keyword">int</span> numberOfLegs)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> AutoValue_Animal(name, numberOfLegs);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">abstract</span> String <span class="title">name</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">abstract</span> <span class="keyword">int</span> <span class="title">numberOfLegs</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过apt注解处理器帮你生成大量的模板代码。诶，这不是和kotlin的Data类挺像的吗。hia~~</p>
+<p>而Room使用AutoValue也很简单，某些标注了注解的地方，一定要加上<code>@CopyAnnotations</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AutoValue</span></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Supported annotations must include `@CopyAnnotations`.</span></span><br><span class="line">    <span class="meta">@CopyAnnotations</span></span><br><span class="line">    <span class="meta">@PrimaryKey</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getFirstName</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getLastName</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Room uses this factory method to create User objects.</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> User <span class="title">create</span><span class="params">(<span class="keyword">long</span> id, String firstName, String lastName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> AutoValue_User(id, firstName, lastName);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="定义对象关系"><a href="#定义对象关系" class="headerlink" title="定义对象关系"></a>定义对象关系</h2><p>Room不允许对象引用</p>
+<h3 id="一对多"><a href="#一对多" class="headerlink" title="一对多"></a>一对多</h3><p>一对多的话就是通过外键制约。比如说一个人可以有多本书，一本书只能属于一个人。</p>
+<p>通过<code>@ForeignKey</code>定义外键，外键作用在于能够限定两条数据的级联操作</p>
+<p><code>onUpdate</code> </p>
+<p><code>onDelete</code></p>
+<p>有这么几种值，也是数据库的知识，提下就行了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int NO_ACTION = 1;</span><br><span class="line"></span><br><span class="line">int RESTRICT = 2;</span><br><span class="line"></span><br><span class="line">int SET_NULL = 3;</span><br><span class="line"></span><br><span class="line">int SET_DEFAULT = 4;</span><br><span class="line"></span><br><span class="line">int CASCADE = 5;</span><br></pre></td></tr></table></figure>
+
+<p>具体</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span>(foreignKeys = <span class="meta">@ForeignKey</span>(entity = User.class,</span><br><span class="line">                                  parentColumns = <span class="string">"id"</span>,</span><br><span class="line">                                  childColumns = <span class="string">"user_id"</span>))</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PrimaryKey</span> <span class="keyword">public</span> <span class="keyword">int</span> bookId;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String title;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ColumnInfo</span>(name = <span class="string">"user_id"</span>) <span class="keyword">public</span> <span class="keyword">int</span> userId;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="多对多"><a href="#多对多" class="headerlink" title="多对多"></a>多对多</h3><p>即比如一个歌单有n首歌，一首歌可以属于n个歌单</p>
+<p>定义实体</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Playlist</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PrimaryKey</span> <span class="keyword">public</span> <span class="keyword">int</span> id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line">    <span class="keyword">public</span> String description;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Song</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PrimaryKey</span> <span class="keyword">public</span> <span class="keyword">int</span> id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String songName;</span><br><span class="line">    <span class="keyword">public</span> String artistName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>多对多关联需要一个中间实体</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span>(tableName = <span class="string">"playlist_song_join"</span>,</span><br><span class="line">        primaryKeys = &#123; <span class="string">"playlistId"</span>, <span class="string">"songId"</span> &#125;,</span><br><span class="line">        foreignKeys = &#123;</span><br><span class="line">                <span class="meta">@ForeignKey</span>(entity = Playlist.class,</span><br><span class="line">                            parentColumns = <span class="string">"id"</span>,</span><br><span class="line">                            childColumns = <span class="string">"playlistId"</span>),</span><br><span class="line">                <span class="meta">@ForeignKey</span>(entity = Song.class,</span><br><span class="line">                            parentColumns = <span class="string">"id"</span>,</span><br><span class="line">                            childColumns = <span class="string">"songId"</span>)</span><br><span class="line">                &#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PlaylistSongJoin</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> playlistId;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> songId;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过中间实体来映射多对多操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">PlaylistSongJoinDao</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Insert</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(PlaylistSongJoin playlistSongJoin)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"SELECT * FROM playlist "</span> +</span><br><span class="line">           <span class="string">"INNER JOIN playlist_song_join "</span> +</span><br><span class="line">           <span class="string">"ON playlist.id=playlist_song_join.playlistId "</span> +</span><br><span class="line">           <span class="string">"WHERE playlist_song_join.songId=:songId"</span>)</span><br><span class="line">    <span class="function">List&lt;Playlist&gt; <span class="title">getPlaylistsForSong</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> songId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"SELECT * FROM song "</span> +</span><br><span class="line">           <span class="string">"INNER JOIN playlist_song_join "</span> +</span><br><span class="line">           <span class="string">"ON song.id=playlist_song_join.songId "</span> +</span><br><span class="line">           <span class="string">"WHERE playlist_song_join.playlistId=:playlistId"</span>)</span><br><span class="line">    <span class="function">List&lt;Song&gt; <span class="title">getSongsForPlaylist</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> playlistId)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="内嵌对象"><a href="#内嵌对象" class="headerlink" title="内嵌对象"></a>内嵌对象</h3><p>试着想下这么一个实体，比如人的信息，可以在次分割成小的对象表示，比如通过邮编，街道，街牌标注地址对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Address</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String street;</span><br><span class="line">    <span class="keyword">public</span> String state;</span><br><span class="line">    <span class="keyword">public</span> String city;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ColumnInfo</span>(name = <span class="string">"post_code"</span>) <span class="keyword">public</span> <span class="keyword">int</span> postCode;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PrimaryKey</span> <span class="keyword">public</span> <span class="keyword">int</span> id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String firstName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Embedded</span> <span class="keyword">public</span> Address address;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样生成表结构也是一样的，更加解耦，更加好理解，以及使用了。</p>
+<h2 id="创键视图"><a href="#创键视图" class="headerlink" title="创键视图"></a>创键视图</h2><p>sql 里面视图是用户查询使用的，实际生成的表结构也是通过查询的出来，实际上不存在。</p>
+<p>使用<code>@DatabaseView</code>创键一个视图实体，只能用于<strong>查询</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@DatabaseView</span>(<span class="string">"SELECT user.id, user.name, user.departmentId,"</span> +</span><br><span class="line">              <span class="string">"department.name AS departmentName FROM user "</span> +</span><br><span class="line">              <span class="string">"INNER JOIN department ON user.departmentId = department.id"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDetail</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">long</span> id;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">long</span> departmentId;</span><br><span class="line">    <span class="keyword">public</span> String departmentName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在数据库中关联</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Database</span>(entities = &#123;User.class&#125;, views = &#123;UserDetail.class&#125;,</span><br><span class="line">          version = <span class="number">1</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AppDatabase</span> <span class="keyword">extends</span> <span class="title">RoomDatabase</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> UserDao <span class="title">userDao</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用Dao"><a href="#使用Dao" class="headerlink" title="使用Dao"></a>使用Dao</h2><p><code>@Dao</code>可以注解接口和抽象类，取决于是否需要构造。默认dao的查询不能再主线程中，但是可以通过<code>allowMainThreadQueries()</code>再构建器中构建，或者异步的查询考虑返回<code>LiveData</code>或者<code>Flowable</code>。</p>
+<h3 id="insert"><a href="#insert" class="headerlink" title="insert"></a>insert</h3><p>使用<code>@Insert</code>来标注插入操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyDao</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Insert</span>(onConflict = OnConflictStrategy.REPLACE)<span class="comment">//冲突策略</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertUsers</span><span class="params">(User... users)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Insert</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertBothUsers</span><span class="params">(User user1, User user2)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Insert</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insertUsersAndFriends</span><span class="params">(User user, List&lt;User&gt; friends)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>插入方法可以返回long的值，这个值就是插入Id，如果是插入集合的话，返回的也就是<code>long[]或则List&lt;Long&gt;</code></p>
+<h3 id="update"><a href="#update" class="headerlink" title="update"></a>update</h3><p>根据主键去匹配行，可以返回<code>int</code>表示所影响的行数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyDao</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Update</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateUsers</span><span class="params">(User... users)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h3><p>通过主键去匹配行，可以返回<code>int</code>表示所影响的行数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyDao</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Delete</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteUsers</span><span class="params">(User... users)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Query"><a href="#Query" class="headerlink" title="Query"></a>Query</h3><h4 id="简单查询"><a href="#简单查询" class="headerlink" title="简单查询"></a>简单查询</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyDao</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"SELECT * FROM user"</span>)</span><br><span class="line">    <span class="keyword">public</span> User[] loadAllUsers();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="带参"><a href="#带参" class="headerlink" title="带参"></a>带参</h4><p>使用<code>:minAge</code>占位参数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyDao</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"SELECT * FROM user WHERE age &gt; :minAge"</span>)</span><br><span class="line">    <span class="keyword">public</span> User[] loadAllUsersOlderThan(<span class="keyword">int</span> minAge);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>多个占位参数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyDao</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"SELECT * FROM user WHERE age BETWEEN :minAge AND :maxAge"</span>)</span><br><span class="line">    <span class="keyword">public</span> User[] loadAllUsersBetweenAges(<span class="keyword">int</span> minAge, <span class="keyword">int</span> maxAge);</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"SELECT * FROM user WHERE first_name LIKE :search "</span> +</span><br><span class="line">           <span class="string">"OR last_name LIKE :search"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">findUserWithName</span><span class="params">(String search)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="查询的部分字段"><a href="#查询的部分字段" class="headerlink" title="查询的部分字段"></a>查询的部分字段</h4><p>有时候你不需要获得全部字段，只需要部分字段</p>
+<p>定义部分字段POJO，不需要用<code>@Entity</code>哟</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NameTuple</span> </span>&#123;</span><br><span class="line">    <span class="meta">@ColumnInfo</span>(name = <span class="string">"first_name"</span>)</span><br><span class="line">    <span class="keyword">public</span> String firstName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ColumnInfo</span>(name = <span class="string">"last_name"</span>)</span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="keyword">public</span> String lastName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyDao</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"SELECT first_name, last_name FROM user"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;NameTuple&gt; <span class="title">loadFullName</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="传入集合"><a href="#传入集合" class="headerlink" title="传入集合"></a>传入集合</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyDao</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"SELECT first_name, last_name FROM user WHERE region IN (:regions)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;NameTuple&gt; <span class="title">loadUsersFromRegions</span><span class="params">(List&lt;String&gt; regions)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="可观察数据"><a href="#可观察数据" class="headerlink" title="可观察数据"></a>可观察数据</h4><p>返回<code>LiveData</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyDao</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"SELECT first_name, last_name FROM user WHERE region IN (:regions)"</span>)</span><br><span class="line">    <span class="keyword">public</span> LiveData&lt;List&lt;User&gt;&gt; loadUsersFromRegionsSync(List&lt;String&gt; regions);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="RxJava支持"><a href="#RxJava支持" class="headerlink" title="RxJava支持"></a>RxJava支持</h4><p>首先需要加入RxJava支持依赖</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    <span class="keyword">def</span> room_version = <span class="string">"2.1.0"</span></span><br><span class="line">    implementation <span class="string">'androidx.room:room-rxjava2:$room_version'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以返回被压<code>Flowable</code>，<code>Maybe</code>，<code>Completeable</code>，<code>Single</code>等</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyDao</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"SELECT * from user where id = :id LIMIT 1"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Flowable&lt;User&gt; <span class="title">loadUserById</span><span class="params">(<span class="keyword">int</span> id)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Emits the number of users added to the database.</span></span><br><span class="line">    <span class="meta">@Insert</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Maybe&lt;Integer&gt; <span class="title">insertLargeNumberOfUsers</span><span class="params">(List&lt;User&gt; users)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Makes sure that the operation finishes successfully.</span></span><br><span class="line">    <span class="meta">@Insert</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Completable <span class="title">insertLargeNumberOfUsers</span><span class="params">(User... users)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Emits the number of users removed from the database. Always emits at</span></span><br><span class="line"><span class="comment">       least one user. */</span></span><br><span class="line">    <span class="meta">@Delete</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Single&lt;Integer&gt; <span class="title">deleteUsers</span><span class="params">(List&lt;User&gt; users)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>详情见 <a href="https://medium.com/google-developers/room-rxjava-acb0cd4f3757" target="_blank" rel="noopener">Room and RxJava</a></p>
+<h4 id="返回Cursor"><a href="#返回Cursor" class="headerlink" title="返回Cursor"></a>返回Cursor</h4><p>当然了，对原来的Cursor游标也是支持返回的</p>
+<p>非常不提倡使用<code>Cursor</code>，因为游标不保证能查询的行存在，以及行内元素存在，除非你的项目期待使用游标，或者重构困难才考虑返回游标</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyDao</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"SELECT * FROM user WHERE age &gt; :minAge LIMIT 5"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Cursor <span class="title">loadRawUsersOlderThan</span><span class="params">(<span class="keyword">int</span> minAge)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="多表联合查询"><a href="#多表联合查询" class="headerlink" title="多表联合查询"></a>多表联合查询</h4><p>允许多表联合查询，同时允许返回<code>LiveData</code>和<code>Flowable</code>等可观察数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyDao</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"SELECT * FROM book "</span> +</span><br><span class="line">           <span class="string">"INNER JOIN loan ON loan.book_id = book.id "</span> +</span><br><span class="line">           <span class="string">"INNER JOIN user ON user.id = loan.user_id "</span> +</span><br><span class="line">           <span class="string">"WHERE user.name LIKE :userName"</span>)</span><br><span class="line">   <span class="function"><span class="keyword">public</span> List&lt;Book&gt; <span class="title">findBooksBorrowedByNameSync</span><span class="params">(String userName)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>允许使用POJO</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyDao</span> </span>&#123;</span><br><span class="line">   <span class="meta">@Query</span>(<span class="string">"SELECT user.name AS userName, pet.name AS petName "</span> +</span><br><span class="line">          <span class="string">"FROM user, pet "</span> +</span><br><span class="line">          <span class="string">"WHERE user.id = pet.user_id"</span>)</span><br><span class="line">   <span class="keyword">public</span> LiveData&lt;List&lt;UserPet&gt;&gt; loadUserAndPetNames();</span><br><span class="line"></span><br><span class="line">   <span class="comment">// You can also define this class in a separate file, as long as you add the</span></span><br><span class="line">   <span class="comment">// "public" access modifier.</span></span><br><span class="line">   <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">UserPet</span> </span>&#123;</span><br><span class="line">       <span class="keyword">public</span> String userName;</span><br><span class="line">       <span class="keyword">public</span> String petName;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用kotlin协程"><a href="#使用kotlin协程" class="headerlink" title="使用kotlin协程"></a>使用kotlin协程</h4><p><code>suspend</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">MyDao</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Insert(onConflict = OnConflictStrategy.REPLACE)</span></span><br><span class="line">    <span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">insertUsers</span><span class="params">(<span class="keyword">vararg</span> users: <span class="type">User</span>)</span></span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Update</span></span><br><span class="line">    <span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">updateUsers</span><span class="params">(<span class="keyword">vararg</span> users: <span class="type">User</span>)</span></span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Delete</span></span><br><span class="line">    <span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">deleteUsers</span><span class="params">(<span class="keyword">vararg</span> users: <span class="type">User</span>)</span></span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Query(<span class="meta-string">"SELECT * FROM user"</span>)</span></span><br><span class="line">    <span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">loadAllUsers</span><span class="params">()</span></span>: Array&lt;User&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>声明事务</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Dao</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">UsersDao</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Transaction</span></span><br><span class="line">    <span class="function">open suspend fun <span class="title">setLoggedInUser</span><span class="params">(loggedInUser: User)</span> </span>&#123;</span><br><span class="line">        deleteUser(loggedInUser)</span><br><span class="line">        insertUser(loggedInUser)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Query</span>(<span class="string">"DELETE FROM users"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> fun <span class="title">deleteUser</span><span class="params">(user: User)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">    @Insert</span></span><br><span class="line"><span class="function">    <span class="keyword">abstract</span> suspend fun <span class="title">insertUser</span><span class="params">(user: User)</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="类型转换器"><a href="#类型转换器" class="headerlink" title="类型转换器"></a>类型转换器</h2><p>定义类型转化器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Converters</span> </span>&#123;</span><br><span class="line">    <span class="meta">@TypeConverter</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Date <span class="title">fromTimestamp</span><span class="params">(Long value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value == <span class="keyword">null</span> ? <span class="keyword">null</span> : <span class="keyword">new</span> Date(value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@TypeConverter</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Long <span class="title">dateToTimestamp</span><span class="params">(Date date)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> date == <span class="keyword">null</span> ? <span class="keyword">null</span> : date.getTime();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Database</span>(entities = &#123;User.class&#125;, version = <span class="number">1</span>)</span><br><span class="line"><span class="meta">@TypeConverters</span>(&#123;Converters.class&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AppDatabase</span> <span class="keyword">extends</span> <span class="title">RoomDatabase</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> UserDao <span class="title">userDao</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>自动将Java的Date和数据库中的时间戳互相转化</p>
+<h2 id="数据库迁移"><a href="#数据库迁移" class="headerlink" title="数据库迁移"></a>数据库迁移</h2><p>待补充</p>
+<p>数据库测试</p>
+<p>待补充</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    hujie
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://hujiejeff.github.io/2019/08/05/Android-Jetpack之Room/" title="Jetpacak之Room">http://hujiejeff.github.io/2019/08/05/Android-Jetpack之Room/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/db-Jetpack/" rel="tag"># db Jetpack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/03/算法-排序算法复习/" rel="next" title="算法-排序算法复习">
+                <i class="fa fa-chevron-left"></i> 算法-排序算法复习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/05/Android-RxJava之背压学习/" rel="prev" title="Android-RxJava之背压学习">
+                Android-RxJava之背压学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="hujie">
+            
+              <p class="site-author-name" itemprop="name">hujie</p>
+              <p class="site-description motion-element" itemprop="description">慎独</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义实体"><span class="nav-number">1.1.</span> <span class="nav-text">定义实体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义Dao"><span class="nav-number">1.2.</span> <span class="nav-text">定义Dao</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义room数据库"><span class="nav-number">1.3.</span> <span class="nav-text">定义room数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">1.4.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义实体-1"><span class="nav-number">2.</span> <span class="nav-text">定义实体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础注解"><span class="nav-number">2.1.</span> <span class="nav-text">基础注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询支持"><span class="nav-number">2.2.</span> <span class="nav-text">查询支持</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FTS支持"><span class="nav-number">2.2.1.</span> <span class="nav-text">FTS支持</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引支持"><span class="nav-number">2.2.2.</span> <span class="nav-text">索引支持</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#支持AutoValue对象"><span class="nav-number">2.3.</span> <span class="nav-text">支持AutoValue对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义对象关系"><span class="nav-number">3.</span> <span class="nav-text">定义对象关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一对多"><span class="nav-number">3.1.</span> <span class="nav-text">一对多</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多对多"><span class="nav-number">3.2.</span> <span class="nav-text">多对多</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内嵌对象"><span class="nav-number">3.3.</span> <span class="nav-text">内嵌对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创键视图"><span class="nav-number">4.</span> <span class="nav-text">创键视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Dao"><span class="nav-number">5.</span> <span class="nav-text">使用Dao</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#insert"><span class="nav-number">5.1.</span> <span class="nav-text">insert</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#update"><span class="nav-number">5.2.</span> <span class="nav-text">update</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delete"><span class="nav-number">5.3.</span> <span class="nav-text">delete</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Query"><span class="nav-number">5.4.</span> <span class="nav-text">Query</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单查询"><span class="nav-number">5.4.1.</span> <span class="nav-text">简单查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#带参"><span class="nav-number">5.4.2.</span> <span class="nav-text">带参</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询的部分字段"><span class="nav-number">5.4.3.</span> <span class="nav-text">查询的部分字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#传入集合"><span class="nav-number">5.4.4.</span> <span class="nav-text">传入集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可观察数据"><span class="nav-number">5.4.5.</span> <span class="nav-text">可观察数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RxJava支持"><span class="nav-number">5.4.6.</span> <span class="nav-text">RxJava支持</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#返回Cursor"><span class="nav-number">5.4.7.</span> <span class="nav-text">返回Cursor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多表联合查询"><span class="nav-number">5.4.8.</span> <span class="nav-text">多表联合查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用kotlin协程"><span class="nav-number">5.4.9.</span> <span class="nav-text">使用kotlin协程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类型转换器"><span class="nav-number">6.</span> <span class="nav-text">类型转换器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库迁移"><span class="nav-number">7.</span> <span class="nav-text">数据库迁移</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hujie</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'LX0pOgHmWGbSfTBRLIeigP0V-MdYXbMMI',
+        appKey: 'dVHN22lr7TN0QHXWEoIAdMhK',
+        placeholder: 'いらっしゃいませ',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "./public/search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

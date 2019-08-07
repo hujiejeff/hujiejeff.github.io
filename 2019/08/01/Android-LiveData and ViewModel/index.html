@@ -91,7 +91,7 @@
 <meta property="og:image" content="https://developer.android.google.cn/images/topic/libraries/architecture/viewmodel-loader.png">
 <meta property="og:image" content="https://developer.android.google.cn/images/topic/libraries/architecture/viewmodel-replace-loader.png">
 <meta property="og:image" content="https://developer.android.google.cn/topic/libraries/architecture/images/final-architecture.png">
-<meta property="og:updated_time" content="2019-08-01T12:11:05.241Z">
+<meta property="og:updated_time" content="2019-08-07T07:06:01.034Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android-MVVM之LiveData和ViewModel">
 <meta name="twitter:description" content="前言之前归纳了databinding，说到底databinding也只是承载实体数据和UI进行关联，以及它们之间互通，转换。但是呢们开发过程中需要有中间人来控制逻辑，连接后台数据到绑定数据。这个时候ViewModel加上DataBinding以及LiveData就可以很好的组成一种架构模式。我们还是在了解LiveData和ViewModel之后，再结合之前的DataBinding来说MVVM吧。">
@@ -383,7 +383,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.3k
+                  3.4k
                 </span>
               
 
@@ -511,7 +511,7 @@
 <h4 id="switchMap"><a href="#switchMap" class="headerlink" title="switchMap"></a>switchMap</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> LiveData&lt;User&gt; <span class="title">getUser</span><span class="params">(String id)</span> </span>&#123;</span><br><span class="line">  ...;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LiveData&lt;String&gt; userId = ...;</span><br><span class="line">LiveData&lt;User&gt; user = Transformations.switchMap(userId, id -&gt; getUser(id) );</span><br></pre></td></tr></table></figure>
 
 <p>变换是惰性的，只有在在正处于观察和返回数据时进行计算。</p>
-<h3 id="合并多个LiveData源"><a href="#合并多个LiveData源" class="headerlink" title="合并多个LiveData源"></a>合并多个LiveData源</h3><p>使用<code>MediatorLiveData</code>来合并多个<code>LiveData</code>，一旦其中的任何一个数据发生改变，<code>MediatorLiveData</code>的<code>Ovserver</code>会触发变化，一个典型的例子是我们有一个来自数据库的LiveData，一个来自网络的LiveData，以及聚合了二者的与UI相关的<code>MediatorLiveData</code>，无论在是数据库还是网络发生变化，都会触发UI的<code>MediatorLiveData</code>的observer。</p>
+<h3 id="合并多个LiveData源"><a href="#合并多个LiveData源" class="headerlink" title="合并多个LiveData源"></a>合并多个LiveData源</h3><p><code>MediatorLiveData</code>是一个包装了LiveData数据源集合的LiveData的，本质上是个包装类，也就是说完全可以当初LiveData使用，内部的话可以添加多个LiveData数据源，并且设置监听，一旦某数据源发生数据改变，可以触发监听，同时可以设置自身的数据，从而表现为一个LiveData。简单点说就是可以接受多个数据源，从而发生改变表现为一个数据源。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>总的来讲LiveData对象，就是一个具有生命周期感知的，持有可观察数据，不仅仅局限于UI。使用它可以在MVVM的结构中使得ViewModel不依赖View这一层从而完成View的变化。</p>
 <p>View-&gt;ViewModel-&gt;Model</p>
 <h2 id="ViewModel"><a href="#ViewModel" class="headerlink" title="ViewModel"></a>ViewModel</h2><p>定义：在生命周期中，用于存储管理UI关联的数据。ViewModel允许在配置发生改变时存活</p>
@@ -612,6 +612,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/08/03/算法-排序算法复习/" rel="prev" title="算法-排序算法复习">
+                算法-排序算法复习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -694,7 +698,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -705,7 +709,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -716,7 +720,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

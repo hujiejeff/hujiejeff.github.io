@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="树先生の博客">
 <meta property="og:description" content="MVVM一种android架构模式，谷歌官方架构中实现了，包括databinding，viewmodel，livedata，room，lifecycle，等一套用于mvvm架构的架构组件。  前言整体学习MVVM之前，我们可以先来单独看看DataBinding是干嘛的 首先附上官方文档地址：Data Binding Library ，以及官方demo 官方是这么说的：  数据绑定库是一种支持库，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-01T01:20:17.119Z">
+<meta property="og:updated_time" content="2019-08-02T09:30:12.434Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android-MVVM之DataBinding">
 <meta name="twitter:description" content="MVVM一种android架构模式，谷歌官方架构中实现了，包括databinding，viewmodel，livedata，room，lifecycle，等一套用于mvvm架构的架构组件。  前言整体学习MVVM之前，我们可以先来单独看看DataBinding是干嘛的 首先附上官方文档地址：Data Binding Library ，以及官方demo 官方是这么说的：  数据绑定库是一种支持库，">
@@ -543,7 +543,7 @@
 <p>声明处理器</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyHandlers</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClickFriend</span><span class="params">(View view)</span> </span>&#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>调用，<code>::</code> <code>.</code>两种都行</p>
+<p>调用，<code>::</code> <code>.</code>两种都行，最好别用吧，因为被废弃了。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">layout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">data</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">variable</span> <span class="attr">name</span>=<span class="string">"handlers"</span> <span class="attr">type</span>=<span class="string">"com.example.MyHandlers"</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">variable</span> <span class="attr">name</span>=<span class="string">"user"</span> <span class="attr">type</span>=<span class="string">"com.example.User"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">data</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">LinearLayout</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:orientation</span>=<span class="string">"vertical"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">TextView</span> <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:text</span>=<span class="string">"@&#123;user.firstName&#125;"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:onClick</span>=<span class="string">"@&#123;handlers::onClickFriend&#125;"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">layout</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="监听器绑定"><a href="#监听器绑定" class="headerlink" title="监听器绑定"></a>监听器绑定</h4><p>实际处理器</p>
@@ -628,7 +628,7 @@
 <h3 id="设置属性值"><a href="#设置属性值" class="headerlink" title="设置属性值"></a>设置属性值</h3><h4 id="自动选择方法"><a href="#自动选择方法" class="headerlink" title="自动选择方法"></a>自动选择方法</h4><p>通过名称和返回值类型来匹配对应的方法调用。比如<code>app:scrimColor=@{@color/scrim}</code>会调用<code>setScrimColor(int)</code>诸如此类，自动选择方法调用</p>
 <h4 id="指定属性触发方法"><a href="#指定属性触发方法" class="headerlink" title="指定属性触发方法"></a>指定属性触发方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@BindingMethods</span>(&#123;</span><br><span class="line">       <span class="meta">@BindingMethod</span>(type = <span class="string">"android.widget.ImageView"</span>,</span><br><span class="line">                      attribute = <span class="string">"android:tint"</span>,</span><br><span class="line">                      method = <span class="string">"setImageTintList"</span>),</span><br><span class="line">&#125;)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyBindingMethods</span></span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@BindingMethods</span>(</span><br><span class="line">        <span class="meta">@BindingMethod</span>(type = ImageView::<span class="class"><span class="keyword">class</span>,</span></span><br><span class="line"><span class="class">                <span class="title">attribute</span> </span>= <span class="string">"app:srcCompat"</span>,</span><br><span class="line">                method = <span class="string">"setImageResource"</span>))</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyBindingMethods</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@BindingMethods</span>(</span><br><span class="line">        <span class="meta">@BindingMethod</span>(type = ImageView.class,</span><br><span class="line">                attribute = <span class="string">"app:srcCompat"</span>,</span><br><span class="line">                method = <span class="string">"setImageResource"</span>))</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyBindingMethods</span></span></span><br></pre></td></tr></table></figure>
 
 <p>在这样的声明下，通过给app:srcCompat设置属性值，会触发调用setImageResource方法</p>
 <h4 id="自定义触发方法逻辑"><a href="#自定义触发方法逻辑" class="headerlink" title="自定义触发方法逻辑"></a>自定义触发方法逻辑</h4><p>设置<code>android:paddingLeft</code>就会调用自定义的<code>setPaddingLeft</code></p>
@@ -920,7 +920,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -931,7 +931,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -942,7 +942,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
