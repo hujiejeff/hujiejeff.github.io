@@ -284,7 +284,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/12/08/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2020/02/10/Kotlin-函数与lambda/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hujie">
@@ -303,7 +303,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/12/08/hello-world/" itemprop="url">Hello World</a></h1>
+                <a class="post-title-link" href="/2020/02/10/Kotlin-函数与lambda/" itemprop="url">Kotlin-函数与lambda</a></h1>
         
 
         <div class="post-meta">
@@ -315,8 +315,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-08T13:34:52+08:00">
-                2019-12-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-10T10:39:22+08:00">
+                2020-02-10
               </time>
             
 
@@ -326,6 +326,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kotlin/" itemprop="url" rel="index">
+                    <span itemprop="name">Kotlin</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -334,8 +356,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/12/08/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/12/08/hello-world/" itemprop="commentCount"></span>
+                <a href="/2020/02/10/Kotlin-函数与lambda/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/02/10/Kotlin-函数与lambda/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -357,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  73
+                  1.1k
                 </span>
               
 
@@ -373,7 +395,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -396,24 +418,614 @@
       
         
           
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new "My New Post"
+          函数函数应该市不陌生了。在kotlin中使用fun标志函数。标准格式如下，返回值为Unit即空时，省略不写返回类型
+123fun funName(param: ParamType): ReturnType&#123;	&#125;
 
-More info: Writing
-Run server1$ hexo server
+说说和java中不一样的。也是其他现代语言基本有的特点
+默认参数允许默认参数值，减少重载函数的数量。调用时后项可以省略
+123fun test(name: String, age: Int = 10) &#123;    &#125;
 
-More info: Server
-Generate static files1$ hexo generate
+具名参数像php那样，不需要关注参数位置，通过按照按照参数名进行传递参数
+1234567fun test(name: String, age: Int, mes: String) &#123;    &#125;fun main() &#123;    test(age = 10, mes = "hello", name ="jack")&#125;
 
-More info: Generating
-Deploy to remote sites1$ hexo deploy
-
-More info: Deployment
-
-          
+在参数比较多时，使用具名参数，代码可读性大大提高
+可变参数可变长参数，java中也有，相当于一个变长的数组
+123456fun test(vararg strings: S
+          ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/12/08/hello-world/#more" rel="contents">
+            <a class="btn" href="/2020/02/10/Kotlin-函数与lambda/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2020/02/07/Kotlin-类与对象/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hujie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="树先生の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/07/Kotlin-类与对象/" itemprop="url">Kotlin-类与对象</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-07T10:39:22+08:00">
+                2020-02-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kotlin/" itemprop="url" rel="index">
+                    <span itemprop="name">Kotlin</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/02/07/Kotlin-类与对象/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/02/07/Kotlin-类与对象/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.8k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          类与继承类的基本结构一个普通类应当包含属性、函数，构造函数，基本的样子
+以下三种都是合规的申明。
+123456789101112class Aclass B &#123;    &#125;class C() &#123;    val name: String    fun hello() &#123;        println("hello my namnis $name")    &#125;&#125;
+
+主构造函数一个对象产生必定经过类的构造函数进行构造。在类名后面使用constructor进行标志，并且添加构造参数。这就是主构造函数
+123class A constructor(name: String) &#123;   &#125;
+
+同时constructor前面是可以写入访问控制符和注解的
+123class A private constructor(name: String) &#123;    &#125;
+
+如果没有注解或者是访问修饰符。则就是可以略去constructor
+123class A(name: String) &#123;    &#125;
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/02/07/Kotlin-类与对象/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/12/19/Kotlin-协程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hujie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="树先生の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/19/Kotlin-协程/" itemprop="url">kotlin-协程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-19T08:41:53+08:00">
+                2019-12-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kotlin/" itemprop="url" rel="index">
+                    <span itemprop="name">Kotlin</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/19/Kotlin-协程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/12/19/Kotlin-协程/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          第一眼在kotlin官方文档中看到协程，哇什么东西，好像很厉害的样子。而文档中讲述线程之类的却不如它多，第一是因为kotlin可以运行在jvm中，自然是可以现成用java的并发库，所以也就简单的讲了讲。第二就是它希望开发者使用协程。关于协程的概念很多，有些语言有而有些没有。这里的话我们就只讲kotlin中的协程。
+what and why：什么是协程，为什么用协程关于名词解释有很多，比如官方文档：“本质上，协程是轻量级的线程”。还有“协作式”等等，乍一看，哦好像懂了。其实还是不懂，像极了学习计算机网络中的各种抽象的名词概念，而我们又拼命的想只知道这是什么，为什么叫协程。它和线程怎么比较。其实本质上名词只是指代一个具体事物的映射。所以当我们用抽象的东西去解释抽象东西，第一次真的想破头。所以我们不去管为啥叫协程，它的专业解释是什么。我们来看看它具体干了啥事，有什么用。有了具体事物就可以映射概念了。
+123456fun main(args: Array&lt;String&gt;) &#123;    GlobalScope.launch &#123;        println("hel
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/12/19/Kotlin-协程/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/12/12/Kotlin-基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hujie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="树先生の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/12/Kotlin-基础/" itemprop="url">Kotlin-基础</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-12T10:39:22+08:00">
+                2019-12-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kotlin/" itemprop="url" rel="index">
+                    <span itemprop="name">Kotlin</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/12/Kotlin-基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/12/12/Kotlin-基础/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          首先Kotlin是可以运行再JVM中的，因为Kotlin可以编译成class，可以调用Java的库，有一定的关联程度。但是本质上上来说还是一门不同的语言，这一点要清楚。不要生硬去联想对应是Java的什么什么的。当然会有一定的关联，但那都是熟练之后考虑的事情。
+hello wrold!123fun mian(args: Array&lt;String&gt;) &#123;    println("hello world!")&#125;
+
+首先kotlin文件main函数的入口不需要定义类，充分说明了kotlin是支持函数式编程的。
+现代化语言不需要分号分隔行结尾
+函数声明方式是形如
+123fun funName(argName: ArgType): ReturnType &#123;    //&#125;
+
+变量声明，采用后置形式，反正有关类型定义都是后置。不论是形参变量、变量、函数变量
+12fun setName(name: String)&#123;&#125;//形参变量后置声明var num: Int = 10
+
+基本类型Kotlin的所有东西都是对象，基础类型也是对象。所
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/12/12/Kotlin-基础/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1418,7 +2030,7 @@ The Paint class holds the style and color information about how to draw* geometr
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/08/05/Android-Jetpack之Room/">
+    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/08/05/Android-ViewModel记录/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hujie">
@@ -1437,7 +2049,7 @@ The Paint class holds the style and color information about how to draw* geometr
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/08/05/Android-Jetpack之Room/" itemprop="url">Jetpacak之Room</a></h1>
+                <a class="post-title-link" href="/2019/08/05/Android-ViewModel记录/" itemprop="url">Android-ViewModel探究</a></h1>
         
 
         <div class="post-meta">
@@ -1449,7 +2061,7 @@ The Paint class holds the style and color information about how to draw* geometr
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-05T09:09:38+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-05T14:09:56+08:00">
                 2019-08-05
               </time>
             
@@ -1490,8 +2102,8 @@ The Paint class holds the style and color information about how to draw* geometr
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/08/05/Android-Jetpack之Room/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/08/05/Android-Jetpack之Room/" itemprop="commentCount"></span>
+                <a href="/2019/08/05/Android-ViewModel记录/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/08/05/Android-ViewModel记录/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1513,7 +2125,7 @@ The Paint class holds the style and color information about how to draw* geometr
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.6k
+                  1.1k
                 </span>
               
 
@@ -1529,206 +2141,7 @@ The Paint class holds the style and color information about how to draw* geometr
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  13
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>google官方的数据库框架，可以无缝结合LiveData以及Rxjava结合使用。</p>
-<p>文档：<a href="https://developer.android.google.cn/training/data-storage/room" target="_blank" rel="noopener">Romm doc</a></p>
-<p>api详细：<a href="https://developer.android.google.cn/reference/androidx/room/package-summary" target="_blank" rel="noopener">Room summary</a></p>
-<p>基础使用步骤</p>
-<p>引入依赖，开启androidx哦</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    <span class="keyword">def</span> room_version = <span class="string">"2.2.0-alpha01"</span> <span class="comment">// 2.1.0 for latest stable version</span></span><br><span class="line"></span><br><span class="line">    implementation <span class="string">"androidx.room:room-runtime:$room_version"</span></span><br><span class="line">    annotationProcessor <span class="string">"androidx.room:room-compiler:$room_version"</span> <span class="comment">// For Kotlin use kapt instead of annotationProcessor</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// optional - Kotlin Extensions and Coroutines support for Room</span></span><br><span class="line">    implementation <span class="string">"androidx.room:room-ktx:$room_version"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// optional - RxJava support for Room</span></span><br><span class="line">    implementation <span class="string">"androidx.room:room-rxjava2:$room_version"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// optional - Guava support for Room, including Optional and ListenableFuture</span></span><br><span class="line">    implementation <span class="string">"androidx.room:room-guava:$room_version"</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Test helpers</span></span><br><span class="line">    testImplementation <span class="string">"androidx.room:room-testing:$room_version"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>定义实体类 - <code>Entity</code></li>
-<li>定义Dao类 - <code>Dao</code></li>
-<li>定义抽象数据库类 - <code>Database</code></li>
-<li>使用</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/08/05/Android-Jetpack之Room/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/08/03/算法-排序算法复习/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hujie">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="树先生の博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/08/03/算法-排序算法复习/" itemprop="url">算法-排序算法复习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-03T17:19:45+08:00">
-                2019-08-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/08/03/算法-排序算法复习/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/08/03/算法-排序算法复习/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  891
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
+                  5
                 </span>
               
             </div>
@@ -1751,411 +2164,16 @@ The Paint class holds the style and color information about how to draw* geometr
       
         
           
-          冒泡排序描述：相邻间的元素两两比较，依次交换，从一端到另一端冒出最大值，循环冒出最大值，完成排序。N^2^
-选择排序描述：依次循环扫描出最大值，放在另一端。
-插入排序描述：和打牌类似，依次遍历元素，将元素，插入到合适的位置。
-希尔排序描述：插入排序的变体，插入排序是相邻交换，而希尔排序是间隔为k的，通过大间隔的插入排序，在锐减到k=1即默认的插入排序。
-快速排序描述：分治思想，将一个数组分为两部分，中间是基准值，左边的都是比基准值小，右边都是比基准值大。然后对左区间和右区间执行同样的划分。最终划分到最小的时候，就完成了排序。
-归并排序描述：分治思想，借用存储空间，将一个数组划分两部分，左边排序，右边排序，将两个区间合并成一个有序。通过分治思想，左右两个区间同样可以进行排序归并，最终划分到最小区间。依次向上合并成有序。
-堆排序描述：堆是一种二叉树，某节点总是大于其子节点，利用这个特性，进行构建堆，然后将最顶上的值和最后的数进行交换，然后将交换后的堆进行下沉而维持堆的结构，重复交换堆顶元素和堆尾元素，从而构建有序。
-二叉树排序描述：利用BST的特性，父亲节点大于左节点，小于右节点，构建BS
+          ViewModel如何产生的？通常我们第一步都是通过ViewModelProviders.of()这个工具方法进行传入activity来获得。我们之间看源码
+传入FragmentActivity
+123public static ViewModelProvider of(@NonNull FragmentActivity activity) &#123;    return of(activity, null);&#125;
+
+走到重载方法
+12345678public static ViewModelProvider of(@NonNull FragmentActivity activity,                                   @Nullable Factory factory) &#123;    Application application = checkApplication(activity);    if (factory == null) &#123;        factory = ViewModelProvider.Android
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/08/03/算法-排序算法复习/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/08/01/Android-LiveData and ViewModel/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hujie">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="树先生の博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/08/01/Android-LiveData and ViewModel/" itemprop="url">Android-MVVM之LiveData和ViewModel</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-01T09:09:38+08:00">
-                2019-08-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/08/01/Android-LiveData and ViewModel/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/08/01/Android-LiveData and ViewModel/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  3.4k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  13
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前归纳了databinding，说到底databinding也只是承载实体数据和UI进行关联，以及它们之间互通，转换。但是呢们开发过程中需要有中间人来控制逻辑，连接后台数据到绑定数据。这个时候ViewModel加上DataBinding以及LiveData就可以很好的组成一种架构模式。我们还是在了解LiveData和ViewModel之后，再结合之前的DataBinding来说MVVM吧。</p>
-<h2 id="LiveData"><a href="#LiveData" class="headerlink" title="LiveData"></a>LiveData</h2><p>老规矩，首先附上官方文档地址：<a href="https://developer.android.google.cn/topic/libraries/architecture/livedata" target="_blank" rel="noopener">LiveData</a></p>
-<p>看看官方怎么定义LiveData的：</p>
-<blockquote>
-<p>LiveData是一个可观察对象持有类，不同于平常的可观察对象，LiveData是有生命周期感知的，意味着它会关心app组件的生命周期，比如Activity，fragment，service。这种感知特性保证LiveData只会在生命周期活跃的时候进行观察更新。</p>
-</blockquote>
-<p>LiveData考虑将观察者，在生命周期为<code>started</code>和<code>resumed</code>下保持活跃。LiveData仅仅会通知活跃的观察者进行更新，不活跃的观察者不会收到任何通知。</p>
-<p>你可以注册观察者并且给他配对实现了<a href="https://developer.android.google.cn/reference/androidx/lifecycle/LifecycleOwner.html" target="_blank" rel="noopener"><code>LifecycleOwner</code></a> 的接口的对象。在这层关系下，观察者会在<code>Lifecycle</code>对象进入<code>destory</code>时被移除，这个对于<code>fragment</code>和<code>activity</code>非常有用，它可以很安全的观察livedata对象，在<code>fragment</code>和<code>activity</code>生命周期销毁时，它们会立即解除订阅，不会产生内存泄漏。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/08/01/Android-LiveData and ViewModel/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/07/30/Android-DataBinding/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hujie">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="树先生の博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/30/Android-DataBinding/" itemprop="url">Android-MVVM之DataBinding</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-30T19:03:29+08:00">
-                2019-07-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/07/30/Android-DataBinding/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/30/Android-DataBinding/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  5k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  23
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>MVVM一种android架构模式，谷歌官方架构中实现了，包括databinding，viewmodel，livedata，room，lifecycle，等一套用于mvvm架构的架构组件。</p>
-</blockquote>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>整体学习MVVM之前，我们可以先来单独看看DataBinding是干嘛的</p>
-<p>首先附上官方文档地址：<a href="https://developer.android.google.cn/topic/libraries/data-binding" target="_blank" rel="noopener">Data Binding Library</a> ，以及<a href="https://github.com/googlesamples/android-databinding" target="_blank" rel="noopener">官方demo</a></p>
-<p>官方是这么说的：</p>
-<blockquote>
-<p>数据绑定库是一种支持库，借助该库，您可以使用声明性格式（而非程序化地）将布局中的界面组件绑定到应用中的数据源。</p>
-</blockquote>
-<p>就像下面这样：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">TextView</span> <span class="attr">android:text</span>=<span class="string">"@&#123;viewmodel.userName&#125;"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>诶，好像似曾相识，对了，和那个jsp的el表达式，以及spring中表达式有点像啊。这样就好理解了，xml UI通过某种数据绑定，可以通过这种声明式将数据传到UI中。不得不说有点亲切，哈哈。我下面的写东西也基本上是总结(翻译233)官方文档，所以结构也是一样的。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/07/30/Android-DataBinding/#more" rel="contents">
+            <a class="btn" href="/2019/08/05/Android-ViewModel记录/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2197,7 +2215,7 @@ The Paint class holds the style and color information about how to draw* geometr
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2247,7 +2265,7 @@ The Paint class holds the style and color information about how to draw* geometr
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2258,7 +2276,7 @@ The Paint class holds the style and color information about how to draw* geometr
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2306,7 +2324,7 @@ The Paint class holds the style and color information about how to draw* geometr
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

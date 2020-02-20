@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="基础,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="首先Kotlin是可以运行再JVM中的，因为Kotlin可以编译成class，可以调用Java的库，有一定的关联程度。但是本质上上来说还是一门不同的语言，这一点要清楚。不要生硬去联想对应是Java的什么什么的。当然会有一定的关联，但那都是熟练之后考虑的事情。 hello wrold!123fun mian(args: Array&amp;lt;String&amp;gt;) &amp;#123;    println(&quot;">
+<meta name="keywords" content="基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kotlin-基础">
+<meta property="og:url" content="http://hujiejeff.github.io/2019/12/12/Kotlin-基础/index.html">
+<meta property="og:site_name" content="树先生の博客">
+<meta property="og:description" content="首先Kotlin是可以运行再JVM中的，因为Kotlin可以编译成class，可以调用Java的库，有一定的关联程度。但是本质上上来说还是一门不同的语言，这一点要清楚。不要生硬去联想对应是Java的什么什么的。当然会有一定的关联，但那都是熟练之后考虑的事情。 hello wrold!123fun mian(args: Array&amp;lt;String&amp;gt;) &amp;#123;    println(&quot;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-12-12T07:07:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kotlin-基础">
+<meta name="twitter:description" content="首先Kotlin是可以运行再JVM中的，因为Kotlin可以编译成class，可以调用Java的库，有一定的关联程度。但是本质上上来说还是一门不同的语言，这一点要清楚。不要生硬去联想对应是Java的什么什么的。当然会有一定的关联，但那都是熟练之后考虑的事情。 hello wrold!123fun mian(args: Array&amp;lt;String&amp;gt;) &amp;#123;    println(&quot;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://hujiejeff.github.io/2019/12/12/Kotlin-基础/">
+
+
+
+
+
+  <title>Kotlin-基础 | 树先生の博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">树先生の博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">更好的成为更好的你</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hujiejeff.github.io/2019/12/12/Kotlin-基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hujie">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="树先生の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kotlin-基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-12T10:39:22+08:00">
+                2019-12-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kotlin/" itemprop="url" rel="index">
+                    <span itemprop="name">Kotlin</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/12/Kotlin-基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/12/12/Kotlin-基础/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>首先Kotlin是可以运行再JVM中的，因为Kotlin可以编译成class，可以调用Java的库，有一定的关联程度。但是本质上上来说还是一门不同的语言，这一点要清楚。不要生硬去联想对应是Java的什么什么的。当然会有一定的关联，但那都是熟练之后考虑的事情。</p>
+<h1 id="hello-wrold"><a href="#hello-wrold" class="headerlink" title="hello wrold!"></a>hello wrold!</h1><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">mian</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    println(<span class="string">"hello world!"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先kotlin文件main函数的入口不需要定义类，充分说明了kotlin是支持函数式编程的。</p>
+<p>现代化语言不需要分号分隔行结尾</p>
+<p>函数声明方式是形如</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">funName</span><span class="params">(argName: <span class="type">ArgType</span>)</span></span>: ReturnType &#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>变量声明，采用后置形式，反正有关类型定义都是后置。不论是形参变量、变量、函数变量</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">setName</span><span class="params">(name: <span class="type">String</span>)</span></span>&#123;&#125;<span class="comment">//形参变量后置声明</span></span><br><span class="line"><span class="keyword">var</span> num: <span class="built_in">Int</span> = <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h1><p>Kotlin的所有东西都是对象，基础类型也是对象。所以基本类型也是可以调用成员函数的。</p>
+<h2 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h2><ul>
+<li><code>Byte</code> 1字节</li>
+<li><code>Short</code> 2字节</li>
+<li><code>Int</code> 4字节</li>
+<li><code>Long</code> 8字节</li>
+<li><code>Float</code>  4字节</li>
+<li><code>Double</code> 8字节</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> one = <span class="number">1</span><span class="comment">//Int</span></span><br><span class="line"><span class="keyword">val</span> threeBillion = <span class="number">3000000000</span><span class="comment">//Long</span></span><br><span class="line"><span class="keyword">val</span> oneLong = <span class="number">1L</span><span class="comment">//Long</span></span><br><span class="line"><span class="keyword">val</span> oneByte: <span class="built_in">Byte</span> = <span class="number">1</span><span class="comment">//完整声明</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>首先量的声明有<code>val</code>表示value值，也就是常量，<code>var</code>表示variable值，也就是变量。</li>
+<li>量的类型可以根据右值进行自动推断。浮点值默认推断为Double，整数默认推断Int除非超过范围推断为Long，其它需要自行类型约束</li>
+<li>给值添加后缀表示类型<code>F</code>、<code>L</code></li>
+</ol>
+<h3 id="字面量"><a href="#字面量" class="headerlink" title="字面量"></a>字面量</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> a = <span class="number">10</span><span class="comment">//十进制	</span></span><br><span class="line"><span class="keyword">val</span> b = <span class="number">0xF</span><span class="comment">//16进制</span></span><br><span class="line"><span class="keyword">val</span> c = <span class="number">0b1111</span><span class="comment">//二进制</span></span><br><span class="line"><span class="keyword">val</span> d = <span class="number">100_000_000L</span><span class="comment">//下划线分割便于阅读</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>tips:无八进制</p>
+</blockquote>
+<h3 id="表达方式"><a href="#表达方式" class="headerlink" title="表达方式"></a>表达方式</h3><p>Kotlin默认类型是非空，就是不可以为null。但是JVM原生类型是可以为空的</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> boxA: <span class="built_in">Int</span>? = <span class="number">10</span><span class="comment">//通过再类型加上?表示为可空类型</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="转换"><a href="#转换" class="headerlink" title="转换"></a>转换</h3><p>kotlin不会隐式拓宽的，再运算式内会拓宽，这一点编程语言基本一致</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">test</span><span class="params">(num <span class="built_in">Double</span>)</span></span> &#123;</span><br><span class="line">	println(num)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">mian</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> i = <span class="number">1</span></span><br><span class="line">    test(i)<span class="comment">//不匹配</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">val</span> l = <span class="number">1L</span> + <span class="number">3</span><span class="comment">//Long + Int =&gt; Long</span></span><br></pre></td></tr></table></figure>
+
+<p>显示转化</p>
+<p>直接使用toXXX即可</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> a: <span class="built_in">Int</span> = <span class="number">6</span></span><br><span class="line"><span class="keyword">val</span> b: <span class="built_in">Long</span> = a.toLong()</span><br></pre></td></tr></table></figure>
+
+<h3 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">shl <span class="comment">//有符号左移</span></span><br><span class="line">shr <span class="comment">//有符号右移</span></span><br><span class="line">ushl <span class="comment">//无符号左移</span></span><br><span class="line">ushr <span class="comment">//有符号右移</span></span><br><span class="line">and <span class="comment">//位与</span></span><br><span class="line">or <span class="comment">//位或</span></span><br><span class="line">xor <span class="comment">//位异或</span></span><br><span class="line">inv <span class="comment">//位非</span></span><br><span class="line"><span class="keyword">val</span> a = <span class="number">6</span></span><br><span class="line">a.shr(<span class="number">3</span>)<span class="comment">//函数式</span></span><br><span class="line">a shlr <span class="number">3</span><span class="comment">//中缀式</span></span><br></pre></td></tr></table></figure>
+
+<p>其实都是中缀函数</p>
+<h2 id="字符"><a href="#字符" class="headerlink" title="字符"></a>字符</h2><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> a: <span class="built_in">Char</span> = <span class="string">'a'</span></span><br><span class="line"><span class="keyword">val</span> b: <span class="built_in">Char</span> = <span class="string">'\n'</span><span class="comment">//转义</span></span><br><span class="line"><span class="keyword">val</span> c: <span class="built_in">Char</span> = <span class="string">'\uFF00'</span><span class="comment">//Unicode转义</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="布尔"><a href="#布尔" class="headerlink" title="布尔"></a>布尔</h2><p>仅用<code>true</code>和<code>false</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> a: <span class="built_in">Boolean</span> = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>逻辑操作符</p>
+<ul>
+<li><code>||</code> 短路或</li>
+<li><code>&amp;&amp;</code> 短路与</li>
+<li><code>!</code>逻辑非</li>
+</ul>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>在kotlin中数组使用<code>Array</code>类表示</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Array</span>&lt;<span class="type">T</span>&gt; <span class="keyword">private</span> <span class="keyword">constructor</span></span>() &#123;</span><br><span class="line">    <span class="keyword">val</span> size: <span class="built_in">Int</span></span><br><span class="line">    <span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> <span class="title">get</span><span class="params">(index: <span class="type">Int</span>)</span></span>: T</span><br><span class="line">    <span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> <span class="title">set</span><span class="params">(index: <span class="type">Int</span>, value: <span class="type">T</span>)</span></span>: <span class="built_in">Unit</span></span><br><span class="line">    <span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> <span class="title">iterator</span><span class="params">()</span></span>: Iterator&lt;T&gt;</span><br><span class="line">    <span class="comment">// ……</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用set、get函数设置或获取，同时可以运算符重载语法</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> array = Array(<span class="number">5</span>)&#123;x-&gt;x&#125;<span class="comment">//通过new对象传入lmbda表达式进行构建对象</span></span><br><span class="line"><span class="keyword">val</span> array2 = arrayOf(<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">3</span>);<span class="comment">//通过工厂方法进行构建对象</span></span><br><span class="line">println(array[<span class="number">1</span>])</span><br><span class="line">println(array.<span class="keyword">get</span>(<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+
+<p>原生数组类型</p>
+<p>当然Java中是存在非类基本数值，Kotlin中也有对应的原生数组，通过相应的工厂方法进行构建</p>
+<p>它们对应的类型是<code>IntArray</code>、<code>ShortArray</code>等，它们和<code>Array</code>是不存继承关系的，对应着原生数组类型</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> array = intArrayOf(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><h3 id="字符串字面值"><a href="#字符串字面值" class="headerlink" title="字符串字面值"></a>字符串字面值</h3><p>普通，存在转义</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> stringA = <span class="string">"hello world! \n"</span><span class="comment">//可以存在转义字符</span></span><br></pre></td></tr></table></figure>
+
+<p>原始字符串，无转义，使用三引号包围，里面是怎么样表现的，输出就是怎样的。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> stringB = <span class="string">"""</span></span><br><span class="line"><span class="string">	fun mian() &#123;</span></span><br><span class="line"><span class="string">		println()</span></span><br><span class="line"><span class="string">	&#125;</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">fun mian() &#123;</span><br><span class="line">	println()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然是可以修剪trim，<code>trimMargin</code>通过特定字符裁剪，<code>trimIndent</code>缩进裁剪</p>
+<h3 id="字符串模板"><a href="#字符串模板" class="headerlink" title="字符串模板"></a>字符串模板</h3><p>加上<code>$</code>后在字符串中可以表现位一个变量使用了，复杂情况下使用括号限定，因为<code>$</code>在模板里属于特殊符，想要打出来就如下。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> a = <span class="number">10</span></span><br><span class="line"><span class="keyword">val</span> str = <span class="string">"a = <span class="variable">$a</span>"</span></span><br><span class="line">println(str)<span class="comment">//output =&gt; a = 10</span></span><br><span class="line"><span class="keyword">val</span> s = <span class="string">"abc"</span></span><br><span class="line"><span class="keyword">val</span> sArray = <span class="string">"<span class="variable">$s</span>.length is <span class="subst">$&#123;s.length&#125;</span>"</span></span><br><span class="line">println(sArray)<span class="comment">//output =&gt; abc.length is 3</span></span><br><span class="line">println(<span class="string">"$"</span>)<span class="comment">//output =&gt; $</span></span><br><span class="line">println(<span class="string">"<span class="subst">$&#123;<span class="string">'$'</span>&#125;</span>"</span>)<span class="comment">//output =&gt; $</span></span><br></pre></td></tr></table></figure>
+
+<p>虽然Java里面没有这个，PHP中倒是用的不少，所以有些亲切，反正各个语言基本上都有那么几个相似的地方。</p>
+<h1 id="包和导入"><a href="#包和导入" class="headerlink" title="包和导入"></a>包和导入</h1><p>这个就基本和Java一样了。不过Java没有别名语法，kotlin理由</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.example.Test <span class="keyword">as</span> MyTest</span><br></pre></td></tr></table></figure>
+
+<h1 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h1><p>特别注意，在kotlin中<code>if</code>和<code>when</code>不只是控制结构，同时也是表达式</p>
+<h2 id="if"><a href="#if" class="headerlink" title="if"></a>if</h2><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//普通用法</span></span><br><span class="line"><span class="keyword">val</span> a = <span class="number">3</span></span><br><span class="line"><span class="keyword">if</span> (a &gt; <span class="number">3</span>) &#123;</span><br><span class="line">    println(<span class="string">"大于3"</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//表达式用法，表达式用法必须含有`else`</span></span><br><span class="line">println(<span class="keyword">if</span>(a &gt; <span class="number">3</span>) <span class="string">"大于3"</span> <span class="keyword">else</span> <span class="string">"小于3"</span>)</span><br><span class="line"><span class="comment">//表达式用法，最后一行作为返回值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> max = <span class="keyword">if</span>(a &gt; <span class="number">3</span>) &#123;</span><br><span class="line">    println(<span class="string">"大于3"</span>)</span><br><span class="line">    a + <span class="number">1</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    prntln(<span class="string">"小于3"</span>)</span><br><span class="line">    a + <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="when"><a href="#when" class="headerlink" title="when"></a>when</h2><p>其实也就是分支符<code>switch</code>一样的功能</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">when</span>(x) &#123;</span><br><span class="line">    <span class="number">1</span> -&gt; println(<span class="string">"1"</span>)</span><br><span class="line">    <span class="number">2</span> -&gt; println(<span class="string">"2"</span>)</span><br><span class="line">    <span class="number">3</span>,<span class="number">4</span> -&gt; &#123;</span><br><span class="line">        println(<span class="string">"3 or 4"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> -&gt; &#123;</span><br><span class="line">        println(<span class="string">"else"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>分支条件不一定是常量</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">when</span>(x) &#123;</span><br><span class="line">    parseInt(b) -&gt; println(<span class="string">"使用函数"</span>)</span><br><span class="line">    <span class="keyword">in</span> <span class="number">1</span>..<span class="number">10</span> -&gt; println(<span class="string">"使用区间"</span>)</span><br><span class="line">    !<span class="keyword">in</span> <span class="number">10</span>..<span class="number">20</span> -&gt; println(<span class="string">"区间"</span>)</span><br><span class="line">    <span class="keyword">is</span> <span class="built_in">Int</span> -&gt; println(<span class="string">"类型判断"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>甚至可以进一步简化</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">when</span> &#123;</span><br><span class="line">	a <span class="keyword">is</span> <span class="built_in">Int</span> -&gt; println(<span class="string">""</span>)<span class="comment">//只要产出true值就可以分支选择</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>表达式，和if表达式使用类似，也是必须要要else结构</p>
+<p>1.3后when括号里面可以声明变量，并且用于when作用域</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> Request.<span class="title">getBody</span><span class="params">()</span></span> =</span><br><span class="line">        <span class="keyword">when</span> (<span class="keyword">val</span> response = executeRequest()) &#123;</span><br><span class="line">            <span class="keyword">is</span> Success -&gt; response.body</span><br><span class="line">            <span class="keyword">is</span> HttpError -&gt; <span class="keyword">throw</span> HttpException(response.status)</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="for"><a href="#for" class="headerlink" title="for"></a>for</h2><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (item <span class="keyword">in</span> items) <span class="comment">//对迭代器迭代</span></span><br><span class="line"><span class="keyword">for</span> (num : <span class="built_in">Int</span> <span class="keyword">in</span> nums) <span class="comment">//数组迭代</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1</span>..<span class="number">3</span>) <span class="comment">//开区间</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1</span> until <span class="number">3</span>) <span class="comment">//前开后闭区间</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">10</span> downTo <span class="number">0</span> step <span class="number">2</span>)<span class="comment">//倒序，带步长</span></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> array.indices) &#123;<span class="comment">//索引遍历</span></span><br><span class="line">    println(array[i])</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> ((index, value) <span class="keyword">in</span> array.withIndex)<span class="comment">// 索引和值遍历</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="while"><a href="#while" class="headerlink" title="while"></a>while</h2><p>这个就是老套路</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(x &gt; <span class="number">2</span>) &#123;</span><br><span class="line">	<span class="comment">//</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">&#125; <span class="keyword">while</span>(x &gt; <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="返回与跳转"><a href="#返回与跳转" class="headerlink" title="返回与跳转"></a>返回与跳转</h1><h2 id="return"><a href="#return" class="headerlink" title="return"></a>return</h2><h2 id="break"><a href="#break" class="headerlink" title="break"></a>break</h2><h2 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h2><p>标签返回</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">loop@</span> <span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1</span>..<span class="number">100</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (j <span class="keyword">in</span> <span class="number">1</span>..<span class="number">100</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (……) <span class="keyword">break</span><span class="symbol">@loop</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    hujie
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://hujiejeff.github.io/2019/12/12/Kotlin-基础/" title="Kotlin-基础">http://hujiejeff.github.io/2019/12/12/Kotlin-基础/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/基础/" rel="tag"># 基础</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/27/Android-相机/" rel="next" title="Android-相机">
+                <i class="fa fa-chevron-left"></i> Android-相机
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/19/Kotlin-协程/" rel="prev" title="kotlin-协程">
+                kotlin-协程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="hujie">
+            
+              <p class="site-author-name" itemprop="name">hujie</p>
+              <p class="site-description motion-element" itemprop="description">慎独</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hello-wrold"><span class="nav-number">1.</span> <span class="nav-text">hello wrold!</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本类型"><span class="nav-number">2.</span> <span class="nav-text">基本类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数字"><span class="nav-number">2.1.</span> <span class="nav-text">数字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字面量"><span class="nav-number">2.1.1.</span> <span class="nav-text">字面量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表达方式"><span class="nav-number">2.1.2.</span> <span class="nav-text">表达方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转换"><span class="nav-number">2.1.3.</span> <span class="nav-text">转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#位运算"><span class="nav-number">2.1.4.</span> <span class="nav-text">位运算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符"><span class="nav-number">2.2.</span> <span class="nav-text">字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#布尔"><span class="nav-number">2.3.</span> <span class="nav-text">布尔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组"><span class="nav-number">2.4.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串"><span class="nav-number">2.5.</span> <span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串字面值"><span class="nav-number">2.5.1.</span> <span class="nav-text">字符串字面值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串模板"><span class="nav-number">2.5.2.</span> <span class="nav-text">字符串模板</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#包和导入"><span class="nav-number">3.</span> <span class="nav-text">包和导入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#控制流"><span class="nav-number">4.</span> <span class="nav-text">控制流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#if"><span class="nav-number">4.1.</span> <span class="nav-text">if</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#when"><span class="nav-number">4.2.</span> <span class="nav-text">when</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#for"><span class="nav-number">4.3.</span> <span class="nav-text">for</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#while"><span class="nav-number">4.4.</span> <span class="nav-text">while</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#返回与跳转"><span class="nav-number">5.</span> <span class="nav-text">返回与跳转</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#return"><span class="nav-number">5.1.</span> <span class="nav-text">return</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#break"><span class="nav-number">5.2.</span> <span class="nav-text">break</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#continue"><span class="nav-number">5.3.</span> <span class="nav-text">continue</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hujie</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'LX0pOgHmWGbSfTBRLIeigP0V-MdYXbMMI',
+        appKey: 'dVHN22lr7TN0QHXWEoIAdMhK',
+        placeholder: 'いらっしゃいませ',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "./public/search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
