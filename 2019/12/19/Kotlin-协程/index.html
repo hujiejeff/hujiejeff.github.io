@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="第一眼在kotlin官方文档中看到协程，哇什么东西，好像很厉害的样子。而文档中讲述线程之类的却不如它多，第一是因为kotlin可以运行在jvm中，自然是可以现成用java的并发库，所以也就简单的讲了讲。第二就是它希望开发者使用协程。关于协程的概念很多，有些语言有而有些没有。这里的话我们就只讲kotlin中的协程。 what and why：什么是协程，为什么用协程关于名词解释有很多，比如官方文档：">
+<meta name="description" content="dd第一眼在kotlin官方文档中看到协程，哇什么东西，好像很厉害的样子。而文档中讲述线程之类的却不如它多，第一是因为kotlin可以运行在jvm中，自然是可以现成用java的并发库，所以也就简单的讲了讲。第二就是它希望开发者使用协程。关于协程的概念很多，有些语言有而有些没有。这里的话我们就只讲kotlin中的协程。 what and why：什么是协程，为什么用协程关于名词解释有很多，比如官方文">
 <meta name="keywords" content="基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kotlin-协程">
 <meta property="og:url" content="http://hujiejeff.github.io/2019/12/19/Kotlin-协程/index.html">
 <meta property="og:site_name" content="树先生の博客">
-<meta property="og:description" content="第一眼在kotlin官方文档中看到协程，哇什么东西，好像很厉害的样子。而文档中讲述线程之类的却不如它多，第一是因为kotlin可以运行在jvm中，自然是可以现成用java的并发库，所以也就简单的讲了讲。第二就是它希望开发者使用协程。关于协程的概念很多，有些语言有而有些没有。这里的话我们就只讲kotlin中的协程。 what and why：什么是协程，为什么用协程关于名词解释有很多，比如官方文档：">
+<meta property="og:description" content="dd第一眼在kotlin官方文档中看到协程，哇什么东西，好像很厉害的样子。而文档中讲述线程之类的却不如它多，第一是因为kotlin可以运行在jvm中，自然是可以现成用java的并发库，所以也就简单的讲了讲。第二就是它希望开发者使用协程。关于协程的概念很多，有些语言有而有些没有。这里的话我们就只讲kotlin中的协程。 what and why：什么是协程，为什么用协程关于名词解释有很多，比如官方文">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-12T07:46:48.230Z">
+<meta property="og:updated_time" content="2020-07-05T07:08:56.085Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kotlin-协程">
-<meta name="twitter:description" content="第一眼在kotlin官方文档中看到协程，哇什么东西，好像很厉害的样子。而文档中讲述线程之类的却不如它多，第一是因为kotlin可以运行在jvm中，自然是可以现成用java的并发库，所以也就简单的讲了讲。第二就是它希望开发者使用协程。关于协程的概念很多，有些语言有而有些没有。这里的话我们就只讲kotlin中的协程。 what and why：什么是协程，为什么用协程关于名词解释有很多，比如官方文档：">
+<meta name="twitter:description" content="dd第一眼在kotlin官方文档中看到协程，哇什么东西，好像很厉害的样子。而文档中讲述线程之类的却不如它多，第一是因为kotlin可以运行在jvm中，自然是可以现成用java的并发库，所以也就简单的讲了讲。第二就是它希望开发者使用协程。关于协程的概念很多，有些语言有而有些没有。这里的话我们就只讲kotlin中的协程。 what and why：什么是协程，为什么用协程关于名词解释有很多，比如官方文">
 
 
 
@@ -415,7 +415,7 @@
       
 
       
-        <p>第一眼在kotlin官方文档中看到协程，哇什么东西，好像很厉害的样子。而文档中讲述线程之类的却不如它多，第一是因为kotlin可以运行在jvm中，自然是可以现成用java的并发库，所以也就简单的讲了讲。第二就是它希望开发者使用协程。关于协程的概念很多，有些语言有而有些没有。这里的话我们就只讲kotlin中的协程。</p>
+        <p>dd第一眼在kotlin官方文档中看到协程，哇什么东西，好像很厉害的样子。而文档中讲述线程之类的却不如它多，第一是因为kotlin可以运行在jvm中，自然是可以现成用java的并发库，所以也就简单的讲了讲。第二就是它希望开发者使用协程。关于协程的概念很多，有些语言有而有些没有。这里的话我们就只讲kotlin中的协程。</p>
 <h1 id="what-and-why：什么是协程，为什么用协程"><a href="#what-and-why：什么是协程，为什么用协程" class="headerlink" title="what and why：什么是协程，为什么用协程"></a>what and why：什么是协程，为什么用协程</h1><p>关于名词解释有很多，比如官方文档：“本质上，协程是轻量级的线程”。还有“协作式”等等，乍一看，哦好像懂了。其实还是不懂，像极了学习计算机网络中的各种抽象的名词概念，而我们又拼命的想只知道这是什么，为什么叫协程。它和线程怎么比较。其实本质上名词只是指代一个具体事物的映射。所以当我们用抽象的东西去解释抽象东西，第一次真的想破头。所以我们不去管为啥叫协程，它的专业解释是什么。我们来看看它具体干了啥事，有什么用。有了具体事物就可以映射概念了。</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">    GlobalScope.launch &#123;</span><br><span class="line">        println(<span class="string">"hello"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    println(<span class="string">"world"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
