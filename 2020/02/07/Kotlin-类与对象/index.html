@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="树先生の博客">
 <meta property="og:description" content="类与继承类的基本结构一个普通类应当包含属性、函数，构造函数，基本的样子 以下三种都是合规的申明。 123456789101112class Aclass B &amp;#123;    &amp;#125;class C() &amp;#123;    val name: String    fun hello() &amp;#123;        println(&quot;hello my namnis $name&quot;)    &amp;#1">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-08T08:42:05.181Z">
+<meta property="og:updated_time" content="2020-04-06T09:06:59.872Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kotlin-类与对象">
 <meta name="twitter:description" content="类与继承类的基本结构一个普通类应当包含属性、函数，构造函数，基本的样子 以下三种都是合规的申明。 123456789101112class Aclass B &amp;#123;    &amp;#125;class C() &amp;#123;    val name: String    fun hello() &amp;#123;        println(&quot;hello my namnis $name&quot;)    &amp;#1">
@@ -567,7 +567,7 @@
 <p>有时候不需要继承，只是简单的聚合</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> xy = <span class="keyword">object</span> &#123;</span><br><span class="line">    <span class="keyword">val</span> x: <span class="built_in">Int</span> = <span class="number">10</span></span><br><span class="line">    <span class="keyword">val</span> y: <span class="built_in">Int</span> = <span class="number">20</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="对象声明"><a href="#对象声明" class="headerlink" title="对象声明"></a>对象声明</h2><p>声明式的创建一个有名称的对象。单例，就像声明一个类并且创建一个对象这句话。内容的写法和类相同但是没有构造函数了。而且创建过程是线程安全，和Java的中的饿汉单例一样。</p>
+<h2 id="对象声明"><a href="#对象声明" class="headerlink" title="对象声明"></a>对象声明</h2><p>声明式的创建一个有名称的对象。单例，就像声明一个类并且创建一个对象这句话。内容的写法和类相同但是没有构造函数了。而且创建过程是线程安全，延迟初始化</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">object</span> Preference &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> param: <span class="built_in">Int</span> = <span class="number">10</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">test</span><span class="params">()</span></span> &#123;</span><br><span class="line">        println(<span class="string">"test : "</span>+ param)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    Preference.test()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="伴生对象"><a href="#伴生对象" class="headerlink" title="伴生对象"></a>伴生对象</h2><p>在kotlin没有静态，于是出现了一个伴生对象的概念。类拥有伴生对象。使用对象声明描述，可以通过类名直接访问伴生对象成员。功能相似与Java的静态成员</p>
@@ -764,7 +764,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -775,7 +775,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -786,7 +786,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -839,7 +839,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

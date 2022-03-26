@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="树先生の博客">
 <meta property="og:description" content="what网络请求框架，底层是使用OkHttp请求实现的。通过动态代理来创键创键解耦的请求，具体的请求交给OkHttp。同时支持Rxjava，以及各种格式的转换。官方文档地址：Retrofit how定义请求API创键接口，以及请求定义方法 1234567import okhttp3.ResponseBody;import retrofit2.Call;import retrofit2.http.G">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-14T11:21:22.000Z">
+<meta property="og:updated_time" content="2020-04-06T08:49:27.920Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Retrofit学习">
 <meta name="twitter:description" content="what网络请求框架，底层是使用OkHttp请求实现的。通过动态代理来创键创键解耦的请求，具体的请求交给OkHttp。同时支持Rxjava，以及各种格式的转换。官方文档地址：Retrofit how定义请求API创键接口，以及请求定义方法 1234567import okhttp3.ResponseBody;import retrofit2.Call;import retrofit2.http.G">
@@ -532,7 +532,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Retrofit <span class="title">provideRetrofit</span><span class="params">(OkHttpClient client)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Retrofit.Builder()</span><br><span class="line">                .baseUrl(Constant.BASE_URL)</span><br><span class="line">                .client(client)</span><br><span class="line">                .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())<span class="comment">//这个</span></span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 <p>然后我们就能产生<code>Observale&lt;&gt;</code>的东西了。</p>
-<p>继续看OkHttpCall是个啥东西。它实现了Retrofi的Call，里面包裹着真正的OkHttp的Call。所以形式很明了了。</p>
+<p>继续看OkHttpCall是个啥东西。它实现了Retrofit的Call，里面包裹着真正的OkHttp的Call。所以形式很明了了。</p>
 <p>通过调Retorfit的Call的execute或者enqueue，去组建真正的Call然后调用到OkHttp了。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> Response&lt;T&gt; <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    okhttp3.Call call;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (executed) <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Already executed."</span>);</span><br><span class="line">      executed = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (creationFailure != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (creationFailure <span class="keyword">instanceof</span> IOException) &#123;</span><br><span class="line">          <span class="keyword">throw</span> (IOException) creationFailure;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (creationFailure <span class="keyword">instanceof</span> RuntimeException) &#123;</span><br><span class="line">          <span class="keyword">throw</span> (RuntimeException) creationFailure;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="keyword">throw</span> (Error) creationFailure;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      call = rawCall;</span><br><span class="line">      <span class="keyword">if</span> (call == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">          call = rawCall = createRawCall();<span class="comment">//组建真正的OkHttp的Call</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException | RuntimeException | Error e) &#123;</span><br><span class="line">          throwIfFatal(e); <span class="comment">//  Do not assign a fatal error to creationFailure.</span></span><br><span class="line">          creationFailure = e;</span><br><span class="line">          <span class="keyword">throw</span> e;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (canceled) &#123;</span><br><span class="line">      call.cancel();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> parseResponse(call.execute());<span class="comment">//调用</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
@@ -687,7 +687,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -698,7 +698,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -709,7 +709,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -762,7 +762,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

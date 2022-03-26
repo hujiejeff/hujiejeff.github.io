@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="树先生の博客">
 <meta property="og:description" content="绘图建议看启舰大神的系列博客，或者《android-自定义控件》， 在android的世界里面，你所看到的所有控件本质上都是通过逻辑概念绘画给“画”上去的，比如一张图片，也是“画”上去的，而我们看到如此多的动态效果其实是在每一帧绘制不同的图像，包装下形成动画，就是这么而来的。 基本而言我们所能用到的有这么几个逻辑概念：  Paint 英文词汇是绘画，是个动词，在这里我们可以理解为画笔画画这套动作，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-16T02:00:56.000Z">
+<meta property="og:updated_time" content="2020-04-06T07:42:56.817Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android-自定义View之绘图">
 <meta name="twitter:description" content="绘图建议看启舰大神的系列博客，或者《android-自定义控件》， 在android的世界里面，你所看到的所有控件本质上都是通过逻辑概念绘画给“画”上去的，比如一张图片，也是“画”上去的，而我们看到如此多的动态效果其实是在每一帧绘制不同的图像，包装下形成动画，就是这么而来的。 基本而言我们所能用到的有这么几个逻辑概念：  Paint 英文词汇是绘画，是个动词，在这里我们可以理解为画笔画画这套动作，">
@@ -378,7 +378,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  773
+                  780
                 </span>
               
 
@@ -436,7 +436,7 @@
 </blockquote>
 <p>画笔类承载着关于如何取绘画的颜色风格。</p>
 <p>绘制之前，我们需要了解，画笔有那些可以做的</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mPaint = <span class="keyword">new</span> Paint();</span><br><span class="line">mPaint.setAntiAlias(<span class="keyword">true</span>);<span class="comment">//抗锯齿</span></span><br><span class="line">mPaint.setStrokeWidth(<span class="number">45</span>);<span class="comment">//画笔宽度</span></span><br><span class="line">mPaint.setStyle(Paint.Style.STROKE);<span class="comment">//风格</span></span><br><span class="line">mPaint.setStrokeCap(Paint.Cap.ROUND);<span class="comment">//笔帽风格</span></span><br><span class="line">mPaint.setStrokeJoin(Paint.Join.ROUND);<span class="comment">//转角风格</span></span><br><span class="line">mPaint.setColor(Color.Red);<span class="comment">//颜色</span></span><br><span class="line">mPaint.setXfermode();<span class="comment">//图层叠加效果</span></span><br><span class="line">mPaint.setShader();<span class="comment">//设置印章</span></span><br><span class="line">mPaint.setColorFilter();<span class="comment">//设置颜色过滤，滤镜</span></span><br><span class="line">mPaint.setMaskFilter();<span class="comment">//设置阴影，发光</span></span><br><span class="line">mPaint.setShadowLayer();<span class="comment">//设置阴影</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mPaint = <span class="keyword">new</span> Paint();</span><br><span class="line">mPaint.setAntiAlias(<span class="keyword">true</span>);<span class="comment">//抗锯齿</span></span><br><span class="line">mPaint.setStrokeWidth(<span class="number">45</span>);<span class="comment">//画笔宽度</span></span><br><span class="line">mPaint.setStyle(Paint.Style.STROKE);<span class="comment">//画笔风格填充和描边</span></span><br><span class="line">mPaint.setStrokeCap(Paint.Cap.ROUND);<span class="comment">//笔帽风格</span></span><br><span class="line">mPaint.setStrokeJoin(Paint.Join.ROUND);<span class="comment">//转角风格</span></span><br><span class="line">mPaint.setColor(Color.Red);<span class="comment">//颜色</span></span><br><span class="line">mPaint.setXfermode();<span class="comment">//图层叠加效果</span></span><br><span class="line">mPaint.setShader();<span class="comment">//设置印章</span></span><br><span class="line">mPaint.setColorFilter();<span class="comment">//设置颜色过滤，滤镜</span></span><br><span class="line">mPaint.setMaskFilter();<span class="comment">//设置阴影，发光</span></span><br><span class="line">mPaint.setShadowLayer();<span class="comment">//设置阴影</span></span><br></pre></td></tr></table></figure>
 
 <p>额，可以设置东西非常多，还是建议看启舰大神的书。</p>
 <h2 id="坐标"><a href="#坐标" class="headerlink" title="坐标"></a>坐标</h2><p>首先需要介绍下android的坐标系，它是以画布左上角为圆点，向下为正坐标，向右为正坐标。</p>
@@ -597,7 +597,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -608,7 +608,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -619,7 +619,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -672,7 +672,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

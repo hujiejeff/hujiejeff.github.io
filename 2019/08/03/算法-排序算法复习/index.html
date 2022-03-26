@@ -88,7 +88,7 @@
 <meta property="og:description" content="冒泡排序描述：相邻间的元素两两比较，依次交换，从一端到另一端冒出最大值，循环冒出最大值，完成排序。N^2^ 选择排序描述：依次循环扫描出最大值，放在另一端。 插入排序描述：和打牌类似，依次遍历元素，将元素，插入到合适的位置。 希尔排序描述：插入排序的变体，插入排序是相邻交换，而希尔排序是间隔为k的，通过大间隔的插入排序，在锐减到k=1即默认的插入排序。 快速排序描述：分治思想，将一个数组分为两部分">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/944288-503476b174097dbc?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp">
-<meta property="og:updated_time" content="2019-08-04T08:16:50.000Z">
+<meta property="og:updated_time" content="2020-04-06T07:16:14.023Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法-排序算法复习">
 <meta name="twitter:description" content="冒泡排序描述：相邻间的元素两两比较，依次交换，从一端到另一端冒出最大值，循环冒出最大值，完成排序。N^2^ 选择排序描述：依次循环扫描出最大值，放在另一端。 插入排序描述：和打牌类似，依次遍历元素，将元素，插入到合适的位置。 希尔排序描述：插入排序的变体，插入排序是相邻交换，而希尔排序是间隔为k的，通过大间隔的插入排序，在锐减到k=1即默认的插入排序。 快速排序描述：分治思想，将一个数组分为两部分">
@@ -380,7 +380,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  891
+                  898
                 </span>
               
 
@@ -423,8 +423,8 @@
 <h2 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h2><p>描述：插入排序的变体，插入排序是相邻交换，而希尔排序是间隔为k的，通过大间隔的插入排序，在锐减到k=1即默认的插入排序。</p>
 <h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><p>描述：分治思想，将一个数组分为两部分，中间是基准值，左边的都是比基准值小，右边都是比基准值大。然后对左区间和右区间执行同样的划分。最终划分到最小的时候，就完成了排序。</p>
 <h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><p>描述：分治思想，借用存储空间，将一个数组划分两部分，左边排序，右边排序，将两个区间合并成一个有序。通过分治思想，左右两个区间同样可以进行排序归并，最终划分到最小区间。依次向上合并成有序。</p>
-<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><p>描述：堆是一种二叉树，某节点总是大于其子节点，利用这个特性，进行构建堆，然后将最顶上的值和最后的数进行交换，然后将交换后的堆进行下沉而维持堆的结构，重复交换堆顶元素和堆尾元素，从而构建有序。</p>
-<h2 id="二叉树排序"><a href="#二叉树排序" class="headerlink" title="二叉树排序"></a>二叉树排序</h2><p>描述：利用BST的特性，父亲节点大于左节点，小于右节点，构建BST，通过中序遍历，得出有序序列</p>
+<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><p>描述：堆是一种二叉树，使用最小堆，某节点总是小于其子节点，利用这个特性，进行构建堆，然后将最顶上的值和最后的数进行交换，然后将交换后的堆进行下沉而维持堆的结构，重复交换堆顶元素和堆尾元素，从而构建有序。</p>
+<h2 id="线索二叉树排序"><a href="#线索二叉树排序" class="headerlink" title="线索二叉树排序"></a>线索二叉树排序</h2><p>描述：利用BST的特性，父亲节点大于左节点，小于右节点，构建BST，通过中序遍历，得出有序序列</p>
 <h2 id="计数排序"><a href="#计数排序" class="headerlink" title="计数排序"></a>计数排序</h2><p>描述：非比较排序，通过借助数组存储，将元素的值映射到数组索引，来标记计数元素的重复个数，按照索引计数，得出有序序列</p>
 <h2 id="桶排序"><a href="#桶排序" class="headerlink" title="桶排序"></a>桶排序</h2><p>描述：计数排序的升级版，计数排序可以成是桶容量为1的桶排序。因为桶的容量为1，因此不需要桶内排序。所以正常的桶排序比计数排序更加的节省内存，通过特定的映射关系，将元素映射到桶内，此时映射完毕后每个桶是有序的。但是桶内需要通过其它的排序算法进行排序。</p>
 <h2 id="基数排序"><a href="#基数排序" class="headerlink" title="基数排序"></a>基数排序</h2><p>描述：巧妙的利用了计数排序，以及桶的思维，通过<strong>按位</strong>的数字进行计数排序，这里解释下按位，从低位到高位，比如123，低位到高位的位3，2，1。低位到高位是一个循环，循环里面将会根据位的数字进行计数排序，将数字分摊到10个桶中。执行到最高位的计数排序后，依次取出，后就是排好序的数组了。这个算法简单概括就是，根据数字的位数排序，比如一个数组内，我可以很轻松的通过借助10个数组排序好0-10的数字，接下来排序十位数的数字，之前的个位数，明显整除10为0，肯定会被有序的安排到0号桶里面去。继而排序十位数。依次类推。</p>
@@ -577,7 +577,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -588,7 +588,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -599,7 +599,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -632,7 +632,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#冒泡排序"><span class="nav-number">1.</span> <span class="nav-text">冒泡排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选择排序"><span class="nav-number">2.</span> <span class="nav-text">选择排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入排序"><span class="nav-number">3.</span> <span class="nav-text">插入排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#希尔排序"><span class="nav-number">4.</span> <span class="nav-text">希尔排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速排序"><span class="nav-number">5.</span> <span class="nav-text">快速排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归并排序"><span class="nav-number">6.</span> <span class="nav-text">归并排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆排序"><span class="nav-number">7.</span> <span class="nav-text">堆排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树排序"><span class="nav-number">8.</span> <span class="nav-text">二叉树排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计数排序"><span class="nav-number">9.</span> <span class="nav-text">计数排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#桶排序"><span class="nav-number">10.</span> <span class="nav-text">桶排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基数排序"><span class="nav-number">11.</span> <span class="nav-text">基数排序</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#冒泡排序"><span class="nav-number">1.</span> <span class="nav-text">冒泡排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选择排序"><span class="nav-number">2.</span> <span class="nav-text">选择排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入排序"><span class="nav-number">3.</span> <span class="nav-text">插入排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#希尔排序"><span class="nav-number">4.</span> <span class="nav-text">希尔排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速排序"><span class="nav-number">5.</span> <span class="nav-text">快速排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归并排序"><span class="nav-number">6.</span> <span class="nav-text">归并排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆排序"><span class="nav-number">7.</span> <span class="nav-text">堆排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线索二叉树排序"><span class="nav-number">8.</span> <span class="nav-text">线索二叉树排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计数排序"><span class="nav-number">9.</span> <span class="nav-text">计数排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#桶排序"><span class="nav-number">10.</span> <span class="nav-text">桶排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基数排序"><span class="nav-number">11.</span> <span class="nav-text">基数排序</span></a></li></ol></div>
             
 
           </div>
@@ -652,7 +652,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

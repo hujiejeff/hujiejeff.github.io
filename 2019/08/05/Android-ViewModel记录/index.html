@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="ViewModel如何产生的？通常我们第一步都是通过ViewModelProviders.of()这个工具方法进行传入activity来获得。我们之间看源码 传入FragmentActivity 123public static ViewModelProvider of(@NonNull FragmentActivity activity) &amp;#123;    return of(activity">
+<meta name="description" content="ViewModel如何产生的？通常我们第一步都是通过ViewModelProviders.of()这个工具方法进行传入activity来获得。我们直接看源码 传入FragmentActivity 123public static ViewModelProvider of(@NonNull FragmentActivity activity) &amp;#123;    return of(activity">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android-ViewModel探究">
 <meta property="og:url" content="http://hujiejeff.github.io/2019/08/05/Android-ViewModel记录/index.html">
 <meta property="og:site_name" content="树先生の博客">
-<meta property="og:description" content="ViewModel如何产生的？通常我们第一步都是通过ViewModelProviders.of()这个工具方法进行传入activity来获得。我们之间看源码 传入FragmentActivity 123public static ViewModelProvider of(@NonNull FragmentActivity activity) &amp;#123;    return of(activity">
+<meta property="og:description" content="ViewModel如何产生的？通常我们第一步都是通过ViewModelProviders.of()这个工具方法进行传入activity来获得。我们直接看源码 传入FragmentActivity 123public static ViewModelProvider of(@NonNull FragmentActivity activity) &amp;#123;    return of(activity">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-01-15T09:16:31.000Z">
+<meta property="og:updated_time" content="2020-04-06T08:03:45.324Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android-ViewModel探究">
-<meta name="twitter:description" content="ViewModel如何产生的？通常我们第一步都是通过ViewModelProviders.of()这个工具方法进行传入activity来获得。我们之间看源码 传入FragmentActivity 123public static ViewModelProvider of(@NonNull FragmentActivity activity) &amp;#123;    return of(activity">
+<meta name="twitter:description" content="ViewModel如何产生的？通常我们第一步都是通过ViewModelProviders.of()这个工具方法进行传入activity来获得。我们直接看源码 传入FragmentActivity 123public static ViewModelProvider of(@NonNull FragmentActivity activity) &amp;#123;    return of(activity">
 
 
 
@@ -414,7 +414,7 @@
       
 
       
-        <h2 id="ViewModel如何产生的？"><a href="#ViewModel如何产生的？" class="headerlink" title="ViewModel如何产生的？"></a>ViewModel如何产生的？</h2><p>通常我们第一步都是通过<code>ViewModelProviders.of()</code>这个工具方法进行传入activity来获得。我们之间看源码</p>
+        <h2 id="ViewModel如何产生的？"><a href="#ViewModel如何产生的？" class="headerlink" title="ViewModel如何产生的？"></a>ViewModel如何产生的？</h2><p>通常我们第一步都是通过<code>ViewModelProviders.of()</code>这个工具方法进行传入activity来获得。我们直接看源码</p>
 <p>传入<code>FragmentActivity</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ViewModelProvider <span class="title">of</span><span class="params">(@NonNull FragmentActivity activity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> of(activity, <span class="keyword">null</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -588,7 +588,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -599,7 +599,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -610,7 +610,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -663,7 +663,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; 2019 &mdash; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
